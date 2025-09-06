@@ -1,0 +1,20 @@
+digraph BuilderPattern {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#fff8e1"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+
+    Director [label="🎼 指挥者\nDirector", fillcolor="#e57373", color="#d32f2f"];
+    Builder [label="🎨 建造者接口\nBuilder", fillcolor="#64b5f6", color="#1976d2"];
+    ConcreteBuilder [label="🔧 具体建造者\nConcreteBuilder", fillcolor="#42a5f5", color="#1565c0"];
+    Product [label="🏢 产品\nProduct", fillcolor="#81c784", color="#388e3c"];
+
+    ConcreteBuilder -> Builder [style="dashed"];
+    Director -> Builder [style="bold"];
+    Builder -> Product [style="bold", arrowhead=odot];
+
+    labelloc="t";
+    label="建造者模式结构图";
+}
+

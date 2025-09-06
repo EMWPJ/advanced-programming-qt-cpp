@@ -1,0 +1,30 @@
+digraph IteratorPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#f3e5f5"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#f3e5f5";
+
+    Iterator [label="迭代器接口\nIterator", fillcolor="#e1bee7", color="#6a1b9a"];
+    ConcreteIterator [label="具体迭代器\nConcreteIterator", fillcolor="#f3e5f5", color="#8e24aa"];
+
+    Aggregate [label="聚合接口\nAggregate", fillcolor="#c8e6c9", color="#2e7d32"];
+    ConcreteAggregate [label="具体聚合\nConcreteAggregate", fillcolor="#a5d6a7", color="#388e3c"];
+
+    Client [label="客户端\nClient", fillcolor="#fff3e0", color="#f57c00", shape=box];
+
+    Iterator -> ConcreteIterator [label="实现", color="#6a1b9a", style="dashed"];
+    Aggregate -> ConcreteAggregate [label="实现", color="#2e7d32", style="dashed"];
+
+    ConcreteAggregate -> ConcreteIterator [label="🔄 创建迭代器", color="#388e3c", style="bold"];
+
+    Client -> Iterator [label="📖 遍历操作", color="#f57c00", style="bold"];
+
+    labelloc="t";
+    label="迭代器模式结构图";
+}
+
+
+
+

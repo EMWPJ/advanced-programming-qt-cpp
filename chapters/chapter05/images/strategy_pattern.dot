@@ -1,0 +1,21 @@
+digraph StrategyPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#fff8e1"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+    bgcolor="#fff8e1";
+
+    Strategy [label="策略接口\nStrategy", fillcolor="#e1bee7", color="#6a1b9a"];
+
+    ConcreteStrategy [label="具体策略\nConcreteStrategy", fillcolor="#f8bbd9", color="#c2185b"];
+
+    Context [label="上下文类\nContext", fillcolor="#fff9c4", color="#f9a825"];
+
+    ConcreteStrategy -> Strategy [label="实现", color="#6a1b9a", style="dashed"];
+
+    Context -> Strategy [label="🎯 组合策略", color="#f57f17", style="bold"];
+
+    labelloc="t";
+    label="策略模式结构图";
+}

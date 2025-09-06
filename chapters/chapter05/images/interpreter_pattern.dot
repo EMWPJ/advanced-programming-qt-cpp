@@ -1,0 +1,46 @@
+digraph InterpreterPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#f1f8e9"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#f1f8e9";
+
+    AbstractExpression [label="抽象表达式\nAbstractExpression", fillcolor="#c8e6c9", color="#2e7d32"];
+
+    TerminalExpression [label="终结符表达式\nTerminalExpression", fillcolor="#e8f5e8", color="#388e3c"];
+
+    NonterminalExpression [label="非终结符表达式\nNonterminalExpression", fillcolor="#a5d6a7", color="#1b5e20"];
+
+    Context [label="上下文\nContext", fillcolor="#fff9c4", color="#f9a825", shape=box];
+
+    Client [label="客户端\nClient", fillcolor="#b2dfdb", color="#00695c", shape=box];
+
+    AbstractExpression -> TerminalExpression [label="继承", color="#2e7d32", style="dashed"];
+    AbstractExpression -> NonterminalExpression [label="继承", color="#2e7d32", style="dashed"];
+
+    Client -> AbstractExpression [label="🎯 interpret()", color="#00695c", style="bold"];
+
+    AbstractExpression -> Context [label="⚙️ 操作上下文", color="#f9a825", style="bold"];
+
+    {
+        rank=same;
+        expression1 [label="变量", fillcolor="#e8f5e8", color="#388e3c", shape=box, style="filled"];
+        operator [label="+", fillcolor="#a5d6a7", color="#1b5e20", shape=box, style="filled"];
+        expression2 [label="常量", fillcolor="#e8f5e8", color="#388e3c", shape=box, style="filled"];
+    }
+
+    TerminalExpression -> expression1 [style="invis"];
+    NonterminalExpression -> operator [style="invis"];
+    TerminalExpression -> expression2 [style="invis"];
+
+    expression1 -> operator [label="左操作数", color="#388e3c"];
+    expression2 -> operator [label="右操作数", color="#388e3c"];
+
+    labelloc="t";
+    label="解释器模式结构图";
+}
+
+
+
+

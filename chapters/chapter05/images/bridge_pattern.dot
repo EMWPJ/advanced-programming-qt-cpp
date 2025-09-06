@@ -1,0 +1,22 @@
+digraph BridgePattern {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e8f5e8"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+
+    Abstraction [label="🎨 抽象类\nAbstraction", fillcolor="#ffb74d", color="#f57c00"];
+    RefinedAbstraction [label="🔧 精化抽象\nRefinedAbstraction", fillcolor="#ff9800", color="#e65100"];
+    Implementor [label="🎯 实现接口\nImplementor", fillcolor="#81c784", color="#388e3c"];
+    ConcreteImplementorA [label="🔩 具体实现A", fillcolor="#66bb6a", color="#2e7d32"];
+    ConcreteImplementorB [label="⚡ 具体实现B", fillcolor="#4caf50", color="#388e3c"];
+
+    RefinedAbstraction -> Abstraction [style="dashed"];
+    ConcreteImplementorA -> Implementor [style="dashed"];
+    ConcreteImplementorB -> Implementor [style="dashed"];
+    Abstraction -> Implementor [style="bold", dir=both];
+
+    labelloc="t";
+    label="桥接模式结构图";
+}
+

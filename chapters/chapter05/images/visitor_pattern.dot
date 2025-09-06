@@ -1,0 +1,43 @@
+digraph VisitorPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#fce4ec"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fce4ec";
+
+    Visitor [label="访问者接口\nVisitor", fillcolor="#f8bbd9", color="#c2185b"];
+    ConcreteVisitor1 [label="具体访问者1\nConcreteVisitor1", fillcolor="#fce4ec", color="#ad1457"];
+    ConcreteVisitor2 [label="具体访问者2\nConcreteVisitor2", fillcolor="#fce4ec", color="#ad1457"];
+
+    Element [label="元素接口\nElement", fillcolor="#e1bee7", color="#6a1b9a"];
+    ConcreteElementA [label="具体元素A\nConcreteElementA", fillcolor="#f3e5f5", color="#8e24aa"];
+    ConcreteElementB [label="具体元素B\nConcreteElementB", fillcolor="#f3e5f5", color="#8e24aa"];
+
+    ObjectStructure [label="对象结构\nObjectStructure", fillcolor="#b2dfdb", color="#00695c"];
+
+    Client [label="客户端\nClient", fillcolor="#fff3e0", color="#f57c00", shape=box];
+
+    Visitor -> ConcreteVisitor1 [label="实现", color="#c2185b", style="dashed"];
+    Visitor -> ConcreteVisitor2 [label="实现", color="#c2185b", style="dashed"];
+
+    Element -> ConcreteElementA [label="继承", color="#6a1b9a", style="dashed"];
+    Element -> ConcreteElementB [label="继承", color="#6a1b9a", style="dashed"];
+
+    ObjectStructure -> Element [label="📋 管理元素", color="#00695c", style="bold"];
+    Client -> ObjectStructure [label="🎯 accept(visitor)", color="#f57c00", style="bold"];
+    ObjectStructure -> Element [label="🎯 accept(visitor)", color="#00695c", style="bold"];
+    Element -> Visitor [label="🔄 接受访问", color="#6a1b9a", style="bold"];
+
+    ConcreteVisitor1 -> ConcreteElementA [label="visitElementA()", color="#ad1457", style="dotted"];
+    ConcreteVisitor1 -> ConcreteElementB [label="visitElementB()", color="#ad1457", style="dotted"];
+    ConcreteVisitor2 -> ConcreteElementA [label="visitElementA()", color="#ad1457", style="dotted"];
+    ConcreteVisitor2 -> ConcreteElementB [label="visitElementB()", color="#ad1457", style="dotted"];
+
+    labelloc="t";
+    label="访问者模式结构图";
+}
+
+
+
+

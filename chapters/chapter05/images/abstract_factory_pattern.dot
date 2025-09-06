@@ -1,0 +1,37 @@
+digraph AbstractFactoryPattern {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e0f2f1"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=LR;
+
+    AbstractFactory [label="🏭 抽象工厂\nAbstractFactory", fillcolor="#42a5f5", color="#1976d2"];
+    AbstractProductA [label="📦 抽象产品A\nAbstractProductA", fillcolor="#64b5f6", color="#1565c0"];
+    AbstractProductB [label="🎁 抽象产品B\nAbstractProductB", fillcolor="#64b5f6", color="#1565c0"];
+
+    ConcreteFactory1 [label="🏭 具体工厂1\nConcreteFactory1", fillcolor="#81c784", color="#388e3c"];
+    ConcreteProductA1 [label="⚙️ 产品A1", fillcolor="#66bb6a", color="#2e7d32"];
+    ConcreteProductB1 [label="🔧 产品B1", fillcolor="#4caf50", color="#388e3c"];
+
+    ConcreteFactory2 [label="🏭 具体工厂2\nConcreteFactory2", fillcolor="#ffb74d", color="#f57c00"];
+    ConcreteProductA2 [label="⚙️ 产品A2", fillcolor="#ff9800", color="#e65100"];
+    ConcreteProductB2 [label="🔧 产品B2", fillcolor="#ff9800", color="#e65100"];
+
+    AbstractFactory -> ConcreteFactory1 [style="dashed"];
+    AbstractFactory -> ConcreteFactory2 [style="dashed"];
+
+    AbstractProductA -> ConcreteProductA1 [style="dashed"];
+    AbstractProductA -> ConcreteProductA2 [style="dashed"];
+
+    AbstractProductB -> ConcreteProductB1 [style="dashed"];
+    AbstractProductB -> ConcreteProductB2 [style="dashed"];
+
+    ConcreteFactory1 -> ConcreteProductA1 [style="bold", arrowhead=odot];
+    ConcreteFactory1 -> ConcreteProductB1 [style="bold", arrowhead=odot];
+
+    ConcreteFactory2 -> ConcreteProductA2 [style="bold", arrowhead=odot];
+    ConcreteFactory2 -> ConcreteProductB2 [style="bold", arrowhead=odot];
+
+    labelloc="t";
+    label="抽象工厂模式结构图";
+}

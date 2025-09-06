@@ -1,0 +1,30 @@
+digraph StatePattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#fff8e1"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+    bgcolor="#fff8e1";
+
+    Context [label="上下文\nContext", fillcolor="#fff3e0", color="#f57c00"];
+
+    State [label="状态接口\nState", fillcolor="#fff9c4", color="#f9a825"];
+
+    ConcreteStateA [label="具体状态A\nConcreteStateA", fillcolor="#ffcc80", color="#ef6c00"];
+    ConcreteStateB [label="具体状态B\nConcreteStateB", fillcolor="#ffab91", color="#e65100"];
+
+    Context -> State [label="🔄 引用当前状态", color="#f57c00", style="bold"];
+
+    ConcreteStateA -> State [label="实现", color="#f9a825", style="dashed"];
+    ConcreteStateB -> State [label="实现", color="#f9a825", style="dashed"];
+
+    ConcreteStateA -> ConcreteStateB [label="状态转换", color="#e65100", style="bold", penwidth=1.5, arrowhead=vee];
+    ConcreteStateB -> ConcreteStateA [label="状态转换", color="#e65100", style="bold", penwidth=1.5, arrowhead=vee];
+
+    labelloc="t";
+    label="状态模式结构图";
+}
+
+
+
+

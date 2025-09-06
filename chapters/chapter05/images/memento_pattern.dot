@@ -1,0 +1,41 @@
+digraph MementoPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#fce4ec"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fce4ec";
+
+    Originator [label="发起人\nOriginator", fillcolor="#f8bbd9", color="#c2185b"];
+
+    Memento [label="备忘录\nMemento", fillcolor="#fff9c4", color="#f9a825"];
+
+    Caretaker [label="管理者\nCaretaker", fillcolor="#b2dfdb", color="#00695c"];
+
+    Originator -> Memento [label="📦 创建备忘录", color="#c2185b", style="bold", penwidth=1.5, arrowhead=odot];
+
+    Caretaker -> Memento [label="💾 安全存储", color="#00695c", style="bold", penwidth=1.5, dir=both];
+
+    Originator -> Memento [label="🔄 从备忘录恢复", color="#c2185b", style="bold", penwidth=1.5, dir=back];
+
+    {
+        rank=same;
+        OriginatorState1 [label="状态1", fillcolor="#ffcdd2", color="#d32f2f", shape=box, style="filled"];
+        OriginatorState2 [label="状态2", fillcolor="#ffcdd2", color="#d32f2f", shape=box, style="filled"];
+        OriginatorState3 [label="恢复到状态1", fillcolor="#ffcdd2", color="#d32f2f", shape=box, style="filled"];
+    }
+
+    Originator -> OriginatorState1 [style="invis"];
+    Originator -> OriginatorState2 [style="invis"];
+    Originator -> OriginatorState3 [style="invis"];
+
+    OriginatorState1 -> OriginatorState2 [label="修改", color="#d32f2f"];
+    OriginatorState2 -> OriginatorState3 [label="恢复", color="#d32f2f", style="dashed"];
+
+    labelloc="t";
+    label="备忘录模式结构图";
+}
+
+
+
+

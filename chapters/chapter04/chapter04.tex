@@ -1,0 +1,1254 @@
+\documentclass[UTF8,aspectratio=169]{beamer}
+
+\include{../setup.tex}
+
+% 文档信息
+\title{高等程序设计 - Qt/C++}
+\subtitle{第4章：编程范式详解}
+\author{王培杰}
+\institute{长江大学地球物理与石油资源学院}
+\date{\today}
+
+\begin{document}
+
+% 标题页
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录页
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[]
+    \end{multicols}
+\end{frame}
+
+\section{编程范式概述}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{编程范式概念}
+    \begin{ytublock}{什么是编程范式？}
+        \begin{itemize}
+            \item 编程的基本风格和方法论
+            \item 解决问题的思维方式和工具
+            \item 代码组织和结构的方法
+            \item 不同范式的组合使用
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{主要编程范式}
+        \begin{itemize}
+            \item 过程式编程（Procedural Programming）
+            \item 面向对象编程（Object-Oriented Programming）
+            \item 泛型编程（Generic Programming）
+            \item 函数式编程（Functional Programming）
+            \item 事件驱动编程（Event-Driven Programming）
+            \item 声明式编程（Declarative Programming）
+            \item 组件式编程（Component-Based Programming）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\section{过程式编程}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{过程式编程概述}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{过程式编程特点}
+                \begin{itemize}
+                    \item 以过程/函数为中心
+                    \item 数据与操作分离
+                    \item 顺序执行
+                    \item 模块化设计
+                    \item 易于理解和调试
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{适用场景}
+                \begin{itemize}
+                    \item 算法实现
+                    \item 数据处理
+                    \item 工具函数
+                    \item 系统编程
+                    \item 性能关键代码
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+    \begin{ytublock}{过程式编程示意图}
+        \begin{center}
+        \begin{tikzpicture}[node distance=2.2cm, every node/.style={font=\small}]
+            % 节点（横向排列）
+            \node[ytublock, minimum width= 1.8cm, minimum height=1.2cm, fill=blue!10] (start) {开始};
+            \node[ytublock, right of=start, fill=blue!10, minimum width=1.8cm, minimum height=1.2cm, xshift=0.2cm] (input) {输入数据};
+            \node[ytublock, right of=input, fill=green!10, minimum width=1.8cm, minimum height=1.2cm, xshift=0.2cm] (process) {过程/函数};
+            \node[ytublock, right of=process, fill=orange!10, minimum width=1.8cm, minimum height=1.2cm, xshift=0.2cm] (output) {输出结果};
+            \node[ytublock, right of=output, fill=red!10, minimum width=1.8cm, minimum height=1.2cm, xshift=0.2cm] (end) {结束};
+            % 箭头
+            \draw[->, thick] (start) -- (input);
+            \draw[->, thick] (input) -- (process);
+            \draw[->, thick] (process) -- (output);
+            \draw[->, thick] (output) -- (end);
+        \end{tikzpicture}
+        \end{center}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{过程式编程示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/process_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/process_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{过程式编程示例-算法实现}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/process_example_algorithm.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=39]{cpp}{code/process_example_algorithm.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{过程式编程示例-数据处理}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/process_example_data.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=36]{cpp}{code/process_example_data.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{过程式编程示例-工具函数}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/process_example_tool_function.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=36]{cpp}{code/process_example_tool_function.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{过程式编程示例-系统编程}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/process_example_system_function.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=34]{cpp}{code/process_example_system_function.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{过程式编程示例-性能关键代码}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/process_example_performance_critical.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=36]{cpp}{code/process_example_performance_critical.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{面向对象编程}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{面向对象编程概述}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{OOP核心概念}
+                \begin{itemize}
+                    \item 封装（Encapsulation）
+                    \item 继承（Inheritance）
+                    \item 多态（Polymorphism）
+                    \item 抽象（Abstraction）
+                \end{itemize}
+            \end{ytublock}
+            \begin{ytublock}{Qt中的OOP应用}
+                \begin{itemize}
+                    \item QWidget继承体系
+                    \item 信号槽机制
+                    \item 属性系统
+                    \item 事件处理
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{面向对象编程示意图}
+                \begin{center}
+                    \begin{tikzpicture}[scale=1.0, transform shape, node distance=1.3cm, auto, thick,
+                        every node/.style={rectangle, draw, minimum height=0.6cm, font=\small},
+                        process/.style={draw, rectangle, rounded corners, fill=blue!30},
+                        decision/.style={diamond, draw, fill=yellow!30, aspect=2},
+                        arrow/.style={thick, -{Latex[length=1.5mm,width=1.5mm]}}]
+
+                        % 节点定义
+                        \node (start) [process] {开始};
+                        \node (instantiateAnimal) [process, below of=start] {实例化 Animal};
+                        \node (createDog) [process, below of=instantiateAnimal] {创建 Dog 对象};
+                        \node (createCat) [process, right of=createDog, xshift=2.5cm] {创建 Cat 对象};
+                        \node (callBark) [process, below of=createDog] {调用 bark() 方法};
+                        \node (callMeow) [process, below of=createCat] {调用 meow() 方法};
+                        \node (end) [process, below of=callBark, yshift=-0.7cm] {结束};
+
+                        % 连接线
+                        \draw [arrow] (start) -- (instantiateAnimal);
+                        \draw [arrow] (instantiateAnimal) -- (createDog);
+                        \draw [arrow] (instantiateAnimal) -| (createCat);
+                        \draw [arrow] (createDog) -- (callBark);
+                        \draw [arrow] (createCat) -- (callMeow);
+                        \draw [arrow] (callBark) -- ++(0,-1) -| (end);
+                        \draw [arrow] (callMeow) -- ++(0,-1) -| (end);
+
+                    \end{tikzpicture}
+                \end{center}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/oop_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/oop_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象的适用场景}
+    \begin{itemize}
+        \item 代码重用 : 通过继承和多态实现代码重用。
+        \item GUI应用程序 : 通过面向对象设计实现GUI应用程序。
+        \item 模拟现实世界 : 在游戏开发中创建角色、车辆等对象。
+        \item 复杂系统 : 通过封装和抽象实现复杂系统。
+        \item 大型项目 : 通过模块化设计实现大型项目。
+        \item 团队协作 : 通过面向对象设计实现团队协作。
+        \item 框架开发 : 通过面向对象设计实现框架开发。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-代码重用（封装）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/oop_example_code_reuse_encapsulation.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/oop_example_code_reuse_encapsulation.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-代码重用（继承）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/oop_example_code_reuse_inheritance.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=39]{cpp}{code/oop_example_code_reuse_inheritance.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-代码重用（多态）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/oop_example_code_reuse_polymorphism.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=32]{cpp}{code/oop_example_code_reuse_polymorphism.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-GUI}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/oop_example_gui.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=32]{cpp}{code/oop_example_gui.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-模拟现实世界（图书馆-书籍-读者关系）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/oop_example_real_world.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=36]{cpp}{code/oop_example_real_world.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-模拟现实世界（图书馆-书籍-读者关系）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=37,lastline=52]{cpp}{code/oop_example_real_world.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=53,lastline=72]{cpp}{code/oop_example_real_world.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-模拟现实世界（图书馆-书籍-读者关系）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=73,lastline=90]{cpp}{code/oop_example_real_world.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=91,lastline=110]{cpp}{code/oop_example_real_world.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-复杂系统（机器人）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/oop_example_complex_system.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=36]{cpp}{code/oop_example_complex_system.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-复杂系统（机器人）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=37,lastline=54]{cpp}{code/oop_example_complex_system.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=55,lastline=72]{cpp}{code/oop_example_complex_system.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-复杂系统（机器人）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=73,lastline=91]{cpp}{code/oop_example_complex_system.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=92,lastline=112]{cpp}{code/oop_example_complex_system.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-大型项目（游戏引擎）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/oop_example_large_project.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=35]{cpp}{code/oop_example_large_project.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{面向对象编程示例-大型项目（游戏引擎）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=36,lastline=57]{cpp}{code/oop_example_large_project.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=58,lastline=78]{cpp}{code/oop_example_large_project.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\tikzstyle{startstop} = [ellipse, minimum width=2.5cm, minimum height=1cm,text centered, draw=black, fill=red!20]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=blue!20]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\begin{frame}[fragile]{面向对象编程示例-大型项目（游戏引擎）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=80,lastline=90]{cpp}{code/oop_example_large_project.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[node distance=0.40cm, scale=0.7, transform shape]
+
+                % 节点
+                \node (start) [startstop] {main() 启动};
+                \node (createscene) [process, below=of start] {创建 Scene 对象};
+                \node (addobjects) [process, below=of createscene] {向 Scene 添加 Player / Enemy};
+                \node (loadscene) [process, below=of addobjects] {加载 Scene 到 GameEngine};
+                \node (run) [process, below=of loadscene] {engine.run()};
+                \node (update) [process, below=of run] {Scene.update() 遍历更新对象};
+                \node (render) [process, below=of update] {Scene.render() 遍历渲染对象};
+                \node (close) [startstop, below=of render] {引擎关闭并释放资源};
+
+                % 箭头
+                \draw [arrow] (start) -- (createscene);
+                \draw [arrow] (createscene) -- (addobjects);
+                \draw [arrow] (addobjects) -- (loadscene);
+                \draw [arrow] (loadscene) -- (run);
+                \draw [arrow] (run) -- (update);
+                \draw [arrow] (update) -- (render);
+                \draw [arrow] (render) -- (close);
+
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{泛型编程}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{泛型编程概述}
+    \begin{ytublock}{什么是泛型编程}
+        \begin{itemize}
+            \item 泛型编程是一种编程范式，它允许你编写与类型无关的代码。例如：与类型无关的算法。
+            \item 泛型编程的目的是提高代码的复用性和可维护性。
+            \item 泛型编程的实现方式是使用模板。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{泛型编程特点}
+                \begin{itemize}
+                    \item 类型无关的算法
+                    \item 编译时多态
+                    \item 代码复用
+                    \item 性能优化
+                    \item 类型安全
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Qt中的泛型应用}
+                \begin{itemize}
+                    \item QList等容器类
+                    \item 算法模板
+                    \item 智能指针
+                    \item 类型推导
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{模板——编译时多态}
+    \begin{ytublock}{模板的编译时多态}
+        \begin{itemize}
+            \item 模板在编译阶段实例化，生成针对不同类型的高效代码，无运行时开销。
+            \item 编译器会对模板参数进行类型检查，保证类型安全。
+            \item 支持类型自动推导，简化模板的使用。
+            \item 通过模板特化和重载，实现灵活的类型适配。
+            \item C++20引入concepts（概念），可对模板参数类型进行约束，提升可读性和错误提示。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-函数模板-单参数模板}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/gp_function_template_1.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=40]{cpp}{code/gp_function_template_1.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-函数模板-多参数模板}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=12]{cpp}{code/gp_function_template_2.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=46,lastline=62]{cpp}{code/gp_function_template_2.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-函数模板-模板特化}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=13]{cpp}{code/gp_function_template_3.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=15,lastline=25]{cpp}{code/gp_function_template_3.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-函数模板-可变参数模板}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=13]{cpp}{code/gp_function_template_4.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=15,lastline=25]{cpp}{code/gp_function_template_4.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-函数模板-概念 (Concepts) - C++20}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=13]{cpp}{code/gp_function_template_5.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=15,lastline=32]{cpp}{code/gp_function_template_5.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-单参数模板}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/gp_class_template_1.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=22,lastline=40]{cpp}{code/gp_class_template_1.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-多参数模板}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=21]{cpp}{code/gp_class_template_2.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=23,lastline=40]{cpp}{code/gp_class_template_2.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-非类型模板参数（常量）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/gp_class_template_3.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=26]{cpp}{code/gp_class_template_3.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-非类型模板参数（指针和引用）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/gp_class_template_4.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=40]{cpp}{code/gp_class_template_4.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-模板模板参数（容器）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/gp_class_template_5.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=40]{cpp}{code/gp_class_template_5.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-默认模板参数}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/gp_class_template_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=32]{cpp}{code/gp_class_template_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-成员模板}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/gp_class_template_7.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=36]{cpp}{code/gp_class_template_7.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-继承模板}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/gp_class_template_8.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=35]{cpp}{code/gp_class_template_8.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-SFINAE (Substitution Failure Is Not An Error)}
+    \begin{ytublock}{SFINAE (Substitution Failure Is Not An Error)}
+        在编译时，如果模板参数不满足条件，编译器会尝试其他可能的模板参数。如果所有可能的模板参数都失败，编译器会报错。
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=13]{cpp}{code/gp_class_template_9.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=14,lastline=26]{cpp}{code/gp_class_template_9.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-类模板-变长模板参数（C++20）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/gp_class_template_10.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=40]{cpp}{code/gp_class_template_10.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{模板元编程概述}
+    \begin{ytublock}{模板元编程（Template Metaprogramming）}
+        \begin{itemize}
+            \item 利用C++模板机制，在\textbf{编译期}进行类型和常量的计算与推导。
+            \item 代码在编译阶段生成，\textbf{无运行时开销}，提升性能。
+            \item 可实现\textbf{编译时多态}，如类型选择、特化、SFINAE等。
+            \item 支持\textbf{递归}与\textbf{条件分支}，可实现复杂的编译期逻辑。
+            \item 常用于类型萃取（type traits）、静态断言、静态循环、类型变换等高级用法。
+            \item 现代C++（C++11及以后）引入了\texttt{constexpr}、\texttt{if constexpr}、\texttt{std::integral\_constant}等工具，极大简化了模板元编程。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{典型应用场景}
+        \begin{itemize}
+            \item 静态断言与类型检查（如\texttt{static\_assert}、SFINAE、concepts）
+            \item 编译期常量计算（如阶乘、斐波那契数列等）
+            \item 类型萃取与类型变换（如\texttt{std::remove\_const}、\texttt{std::is\_same}等）
+            \item 优化泛型代码的分支与选择（如根据类型选择不同实现）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-模板元编程-类型萃取}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=14]{cpp}{code/gp_template_metaprogramming_1.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=16,lastline=28]{cpp}{code/gp_template_metaprogramming_1.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-模板元编程-静态断言}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/gp_template_metaprogramming_2.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=38]{cpp}{code/gp_template_metaprogramming_2.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-模板元编程-编译期常量计算}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/gp_template_metaprogramming_3.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=34]{cpp}{code/gp_template_metaprogramming_3.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-模板元编程-类型变换}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=12]{cpp}{code/gp_template_metaprogramming_4.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=13,lastline=24]{cpp}{code/gp_template_metaprogramming_4.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-模板元编程-编译期循环}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/gp_template_metaprogramming_5.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=35]{cpp}{code/gp_template_metaprogramming_5.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-模板元编程-编译时多态}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/gp_template_metaprogramming_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=32]{cpp}{code/gp_template_metaprogramming_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-模板元编程-constexpr}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/gp_template_metaprogramming_7.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=36]{cpp}{code/gp_template_metaprogramming_7.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-模板元编程-if constexpr}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/gp_template_metaprogramming_8.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=16,lastline=35]{cpp}{code/gp_template_metaprogramming_8.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{泛型编程示例-模板元编程-std::integral\_constant}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/gp_template_metaprogramming_9.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=32]{cpp}{code/gp_template_metaprogramming_9.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{泛型编程小结}
+    \begin{itemize}
+        \item 泛型编程（Generic Programming）是一种以抽象和复用为核心思想的高级编程范式，强调算法与数据结构的分离，使代码能够适用于多种类型。
+        \item C++通过模板（Template）机制实现泛型编程，支持函数模板、类模板、变量模板，以及模板特化、偏特化等高级特性。
+        \item 模板不仅支持类型参数，还可结合非类型模板参数、模板模板参数，实现更高层次的抽象与灵活性。
+        \item 泛型编程推动了C++标准库（如STL容器、算法、迭代器等）的设计，极大提升了代码复用性和可维护性。
+        \item 现代C++泛型编程还包括模板元编程（Template Metaprogramming）、类型萃取（Type Traits）、SFINAE、constexpr等技术，实现编译期计算与类型推导，进一步提升类型安全与性能。
+        \item 泛型编程的优势：\textbf{代码复用}、\textbf{类型安全}、\textbf{零开销抽象}、\textbf{性能优化}，但也带来编译错误复杂、可读性下降等挑战。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{泛型编程的典型应用场景}
+    \begin{itemize}
+        \item \textbf{泛型排序算法}：如 \texttt{std::sort}、HeapSort、QuickSort 等，支持任意可比较类型。
+        \item \textbf{泛型容器与数据结构}：如 \texttt{std::vector}、\texttt{std::map}、\texttt{std::set} 等，适用于多种类型的数据存储与管理。
+        \item \textbf{泛型数值与科学计算}：如矩阵运算、数值积分、线性代数库等，支持不同数值类型。
+        \item \textbf{泛型算法库}：如 \texttt{STL} 算法（查找、变换、归约等），可作用于任意容器和类型。
+        \item \textbf{泛型AI与优化算法}：如神经网络、支持向量机、遗传算法、粒子群优化等，算法结构与数据类型解耦。
+        \item \textbf{泛型图像与信号处理}：如图像滤波、特征提取、信号变换等，支持不同像素/信号类型。
+    \end{itemize}
+\end{frame}
+
+\section{函数式编程}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{函数式编程概述}
+    \begin{ytublock}{什么是函数式编程}
+        \begin{itemize}
+            \item 函数式编程（Functional Programming）是一种编程范式，它将计算视为数学函数的求值过程。
+            \item 函数式编程的代码通常是不可变的（Immutable），避免副作用（Side Effect），并且函数本身也是第一类对象。
+            \item 函数式编程强调函数组合（Function Composition）和纯函数（Pure Function），避免状态变化和可变共享状态。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{函数式编程特点}
+                \begin{itemize}
+                    \item 函数是一等公民
+                    \item 不可变性（Immutability）
+                    \item 无副作用
+                    \item 高阶函数
+                    \item 递归和组合
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{C++中的函数式特性}
+                \begin{itemize}
+                    \item Lambda表达式
+                    \item std::function
+                    \item 函数对象
+                    \item 算法库
+                    \item 智能指针
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-纯函数}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=11]{cpp}{code/functional_programming_0.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=13,lastline=25]{cpp}{code/functional_programming_0.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-Lambda表达式}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/functional_programming_1.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=37]{cpp}{code/functional_programming_1.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-高阶函数-函数作为参数}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/functional_programming_2.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=39]{cpp}{code/functional_programming_2.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-高阶函数-函数作为返回值}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/functional_programming_3.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=35]{cpp}{code/functional_programming_3.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-递归与组合（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/functional_programming_4.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=33]{cpp}{code/functional_programming_4.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-递归与组合（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=35,lastline=50]{cpp}{code/functional_programming_4.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=51,lastline=63]{cpp}{code/functional_programming_4.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-递归与组合（三）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/functional_programming_7.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=36]{cpp}{code/functional_programming_7.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-函数对象 (Functors)-函数作为对象}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/functional_programming_5.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=38]{cpp}{code/functional_programming_5.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-标准库算法（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=31]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-标准库算法（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=33,lastline=47]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=49,lastline=60]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-标准库算法（三）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=62,lastline=76]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=78,lastline=91]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-标准库算法（四）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=93,lastline=107]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=109,lastline=122]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-标准库算法（五）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=124,lastline=143]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=145,lastline=159]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-标准库算法（六）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=161,lastline=174]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=176,lastline=190]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-标准库算法（七）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=192,lastline=204]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=206,lastline=213]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-标准库算法（八）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=215,lastline=223]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=225,lastline=233]{cpp}{code/functional_programming_6.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-模式匹配}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/functional_programming_8.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=33]{cpp}{code/functional_programming_8.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{函数式编程示例-惰性求值}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=21]{cpp}{code/functional_programming_9.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=22,lastline=37]{cpp}{code/functional_programming_9.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{函数式编程小结}
+    \begin{itemize}
+        \item 函数式编程是一种以数学函数为核心思想的编程范式，将计算过程抽象为函数的组合与变换。
+        \item 代码强调不可变性（Immutable），尽量避免副作用（Side Effect），函数作为“第一类对象”可以像变量一样传递和返回。
+        \item 推崇纯函数（Pure Function）和函数组合（Function Composition），减少状态变化和共享可变状态，使程序更易于推理和测试。
+        \item 常见特性包括高阶函数、递归、惰性求值、模式匹配等，提升代码的表达力和可维护性。
+    \end{itemize}
+    \begin{ytublock}{典型应用场景}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item 数学计算和科学计算
+                    \item 数据处理和转换
+                    \item 并行和并发编程
+                    \item 事件驱动编程
+                \end{itemize}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item 状态机和工作流
+                    \item 编译器和解释器
+                    \item 函数组合和管道
+                    \item 测试和验证
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{ytublock}
+\end{frame}
+
+\section{其他编程范式}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{事件驱动编程}
+    \begin{ytublock}{什么是事件驱动编程}
+        \begin{itemize}
+            \item 事件驱动编程（Event-Driven Programming）是一种编程范式，它将程序的执行过程看作是事件的响应和处理。
+            \item 事件驱动编程的代码通常是异步的（Asynchronous），事件的触发和处理是分离的。
+            \item 事件驱动编程强调事件的响应和处理，而不是按照顺序执行。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{事件驱动编程特点}
+                \begin{itemize}
+                    \item 以事件为中心
+                    \item 异步处理
+                    \item 松耦合设计
+                    \item 响应式编程
+                    \item 用户交互驱动
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Qt中的事件驱动}
+                \begin{itemize}
+                    \item 信号槽机制
+                    \item 事件循环
+                    \item 事件过滤器
+                    \item 定时器事件
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{事件驱动编程示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/event_driven_programming.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=32]{cpp}{code/event_driven_programming.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{声明式编程}
+    \begin{ytublock}{什么是声明式编程}
+        \begin{itemize}
+            \item 声明式编程（Declarative Programming）是一种编程范式，它将程序的执行过程看作是声明的执行。
+            \item 声明式编程的代码通常是声明式的，而不是命令式的。
+            \item 声明式编程强调声明的执行，而不是按照顺序执行。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{声明式编程特点}
+                \begin{itemize}
+                    \item 描述"做什么"而非"怎么做"
+                    \item 关注结果而非过程
+                    \item 更接近自然语言
+                    \item 减少副作用
+                    \item 提高可读性
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Qt中的声明式编程}
+                \begin{itemize}
+                    \item QML语言
+                    \item 属性绑定
+                    \item 状态机
+                    \item 样式表
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{声明式编程示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/declarative_programming.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=35]{cpp}{code/declarative_programming.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{组件式编程}
+    \begin{ytublock}{什么是组件式编程}
+        \begin{itemize}
+            \item 组件式编程（Component-Based Programming）是一种编程范式，它将程序的执行过程看作是组件的组合和交互。
+            \item 组件式编程的代码通常是模块化的，组件之间是松耦合的。
+            \item 组件式编程强调组件的复用和组合，而不是按照顺序执行。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{组件式编程特点}
+                \begin{itemize}
+                    \item 模块化设计
+                    \item 可重用组件
+                    \item 松耦合架构
+                    \item 标准化接口
+                    \item 组合优于继承
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Qt中的组件系统}
+                \begin{itemize}
+                    \item Qt Widgets
+                    \item Qt Quick Components
+                    \item 插件系统
+                    \item 自定义组件
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{组件式编程示例-组件接口与实现}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/component_programming_1.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=33]{cpp}{code/component_programming_1.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{组件式编程示例-组件管理器}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=24,lastline=40]{cpp}{code/component_programming_2.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=41,lastline=55]{cpp}{code/component_programming_2.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{组件式编程示例-Qt组件系统}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=7,lastline=23]{cpp}{code/component_programming_3.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=24,lastline=43]{cpp}{code/component_programming_3.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{总结}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{总结}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{本章要点}
+                \begin{itemize}
+                    \item 理解各种编程范式的特点和应用
+                    \item 掌握过程式编程的基本方法
+                    \item 学会面向对象编程的设计模式
+                    \item 理解泛型编程的优势和使用
+                    \item 掌握函数式编程的核心概念
+                    \item 学会事件驱动编程的实现
+                    \item 理解声明式编程的思维方式
+                    \item 掌握组件式编程的架构设计
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{实践建议}
+                \begin{itemize}
+                    \item 根据问题选择合适的编程范式
+                    \item 组合使用多种范式
+                    \item 注重代码的可读性和维护性
+                    \item 在实践中不断改进和优化
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\end{document}

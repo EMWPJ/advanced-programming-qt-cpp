@@ -1,0 +1,20 @@
+digraph AdapterPattern {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e8f5e8"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=LR;
+
+    Client [label="👤 客户端\nClient", fillcolor="#81c784", color="#388e3c"];
+    Target [label="🎯 目标接口\nTarget", fillcolor="#ffb74d", color="#f57c00"];
+    Adapter [label="🔧 适配器类\nAdapter", fillcolor="#ff9800", color="#e65100"];
+    Adaptee [label="🔌 被适配者\nAdaptee", fillcolor="#ef5350", color="#d32f2f"];
+
+    Adapter -> Target [style="dashed"];
+    Adapter -> Adaptee [style="bold"];
+    Client -> Target [style="bold"];
+
+    labelloc="t";
+    label="适配器模式结构图";
+}
+

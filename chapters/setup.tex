@@ -1,0 +1,225 @@
+
+
+% 基本包
+\usepackage[UTF8]{ctex}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% \usepackage{listings}  % 已替换为minted
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,arrows,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{minted}
+\usepackage{fontspec}
+\usepackage[most]{tcolorbox}
+
+% Beamer主题设置
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+% 校徽设置
+\logo{
+  \IfFileExists{../长江大学校徽.pdf}{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east, xshift=-0.2mm, yshift=-0.2mm] at (current page.north east) {
+        \includegraphics[height=1.0cm]{../长江大学校徽.pdf}
+      };
+    \end{tikzpicture}
+  }{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east, xshift=-3mm, yshift=-3mm] at (current page.north east) {
+        \textcolor{red}{\tiny [校徽文件未找到]}
+      };
+    \end{tikzpicture}
+  }
+}
+
+% ===== 使用推荐的 font themes =====
+\usefonttheme{professionalfonts}  % 允许自定义字体
+
+% 自定义frame标题栏，也缩短长度留出logo空间
+% 设置标题栏背景颜色为淡蓝色
+\definecolor{frametitlebg}{RGB}{200,215,250} % 淡蓝色，可根据需要调整
+\setbeamercolor{frametitle}{bg=frametitlebg, fg=ytublue!80!black}
+\setbeamertemplate{frametitle}{
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+  \begin{tcolorbox}[
+    enhanced,
+    width=0.90\paperwidth,
+    height=2.5ex,
+    colback=frametitlebg,
+    colframe=frametitlebg,
+    boxrule=0pt,
+    left=0pt,
+    right=0pt,
+    top=1pt,
+    bottom=0pt,
+    boxsep=0pt,
+    before skip=0pt,
+    after skip=0.1em,  % 减少标题栏和内容之间的间距
+  ]
+  \vspace{0.2ex} % 减少标题文字上方的空白
+  \usebeamerfont{frametitle}\textcolor{ytublue!80!black}{\hspace{1em}\insertframetitle}
+  \end{tcolorbox}
+}
+
+% ===== 设置现代字体 =====
+\setsansfont{Source Sans Pro}     % 正文字体
+\setmonofont{Source Code Pro}[Scale=0.9]  % 代码字体，稍微缩小一点
+
+\setbeamertemplate{navigation symbols}{}
+
+% 减少页面间距
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setlength{\itemsep}{0.1em}
+\setlength{\parskip}{0.1em}
+
+% 页码设置
+\setbeamertemplate{footline}[frame number]
+
+% 定义流程图样式
+\tikzset{
+    block/.style = {rectangle, draw, fill=blue!10,
+        minimum width=6em, align=center, rounded corners, minimum height=3em},
+    line/.style = {draw, -latex'}
+}
+% 水印设置
+\setbeamertemplate{background}{
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[rotate=-45,scale=0.8,opacity=0.1,color=gray]
+             at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+             {\large\textbf{WPJ}};
+    \end{tikzpicture}
+}
+
+% 自定义颜色
+\definecolor{qtgreen}{RGB}{41,128,185}
+\definecolor{qtblue}{RGB}{52,73,94}
+
+% 定义长江大学蓝主色调
+\definecolor{ytublue}{RGB}{0,84,159}
+% 统一block样式
+\newtcolorbox{ytublock}[1]{
+  colback=white,
+  colframe=ytublue!80!black,
+  colbacktitle=ytublue!20!white,
+  coltitle=ytublue!80!black,
+  title={#1},
+  fonttitle=\bfseries,
+  arc=3mm,
+  boxrule=1pt,
+  boxsep=1mm,
+  left=2mm,
+  right=2mm,
+  top=0.5mm,
+  bottom=0.5mm,
+  before skip=3pt,
+  after skip=3pt,
+  enhanced,
+  drop fuzzy shadow=ytublue!20!black
+}
+
+% 定义警告块样式
+\newtcolorbox{ytualertblock}[1]{
+  colback=white,
+  colframe=red!80!black,
+  colbacktitle=red!20!white,
+  coltitle=red!80!black,
+  title={#1},
+  fonttitle=\bfseries,
+  arc=3mm,
+  boxrule=1.5pt,
+  boxsep=1mm,
+  left=2mm,
+  right=2mm,
+  top=0.5mm,
+  bottom=0.5mm,
+  before skip=3pt,
+  after skip=3pt,
+  enhanced,
+  drop fuzzy shadow=red!20!black,
+  overlay={
+    \begin{tcbclipinterior}
+      \fill[red!10!white] (interior.south west) rectangle (interior.north east);
+    \end{tcbclipinterior}
+  }
+}
+
+% cpp代码高亮设置
+\setminted[cpp]{
+    fontsize=\tiny,
+    fontfamily=tt,             % 使用等宽字体
+    linenos=true,
+    frame=lines,               % 上下两条线，简洁清爽（比 tb 更现代）
+    framesep=3mm,              % 内边距
+    rulecolor=\color{blue!20}, % 线条颜色浅蓝，不刺眼
+    bgcolor=blue!10,           % 浅蓝色背景
+    baselinestretch=1.2,       % 行距稍大，更易读
+    breaklines=true,
+    breakautoindent=true,
+    tabsize=4,
+    xleftmargin=5mm,
+    xrightmargin=5mm,
+    numbersep=8pt,             % 行号与代码间距
+    % ===== 其他美化 =====
+    obeytabs=true,             % 尊重 tab 字符
+    samepage=false,            % 允许跨页（重要！避免空白）
+    escapeinside=||,           % 可在代码中使用 |LaTeX| 插入 LaTeX 命令
+}
+
+% 设置标题页颜色，与frame标题保持一致
+\setbeamercolor{title}{bg=frametitlebg, fg=ytublue!80!black}
+\setbeamercolor{subtitle}{bg=frametitlebg, fg=ytublue!70!black}
+\setbeamercolor{author}{bg=frametitlebg, fg=ytublue!80!black}
+\setbeamercolor{institute}{bg=frametitlebg, fg=ytublue!80!black}
+\setbeamercolor{date}{bg=frametitlebg, fg=ytublue!80!black}
+
+% 自定义标题页样式，全部内容同一个tcolorbox，居中排版，字体和间距区分
+\setbeamertemplate{title page}{
+  \vbox{}
+  \begingroup
+    \centering
+    \begin{tcolorbox}[
+      enhanced,
+      width=0.92\paperwidth,
+      colback=frametitlebg,
+      colframe=frametitlebg,
+      boxrule=0pt,
+      left=0pt,
+      right=0pt,
+      top=4mm,
+      bottom=4mm,
+      boxsep=0pt,
+      before skip=0pt,
+      after skip=1.2em,
+    ]
+    % 标题
+    {\centering
+      {\fontsize{24pt}{27pt}\selectfont\textcolor{ytublue!80!black}{\inserttitle}\par}
+      \vspace{1.2em}
+      % 副标题
+      {\fontsize{21pt}{24pt}\selectfont\textcolor{ytublue!70!black}{\insertsubtitle}\par}
+      \vspace{2.0em}
+      % 作者
+      {\fontsize{12pt}{15pt}\selectfont\insertauthor\par}
+      \vspace{0.7em}
+      % 单位
+      {\fontsize{12pt}{15pt}\selectfont\insertinstitute\par}
+      \vspace{0.7em}
+      % 日期
+      {\fontsize{12pt}{15pt}\selectfont\insertdate\par}
+    }
+    \vspace{0.5em}
+    \vfill
+    \end{tcolorbox}
+  \endgroup
+}

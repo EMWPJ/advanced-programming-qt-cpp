@@ -1,0 +1,1107 @@
+\documentclass[UTF8,aspectratio=169]{beamer}
+
+\include{../setup.tex}
+
+% 文档信息
+\title{高等程序设计 - Qt/C++}
+\subtitle{第1章：开发环境搭建}
+\author{王培杰}
+\institute{长江大学地球物理与石油资源学院}
+\date{\today}
+
+\begin{document}
+
+% 标题页
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录页
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[]
+    \end{multicols}
+\end{frame}
+
+\section{软件开发概述}
+
+\begin{frame}{软件开发概述}
+    \begin{ytublock}{软件开发概述}
+        \begin{itemize}
+            \item \textbf{软件开发}：软件开发是指使用编程语言和开发工具，按照一定的流程和规范，开发出满足用户需求的软件产品的过程。
+            \item \textbf{软件开发流程}：软件开发流程是指软件开发过程中的一系列步骤和活动，包括\textbf{需求分析、设计、编码、测试、部署和维护}等。
+            \item \textbf{软件开发工具}：软件开发工具是指软件开发过程中使用的工具，包括\textbf{编译器、调试器、集成开发环境（IDE）}等。
+            \item \textbf{软件开发语言}：软件开发语言是指软件开发过程中使用的语言，包括\textbf{C、C++、Java、Python}等。
+            \item \textbf{软件开发框架}：软件开发框架是指软件开发过程中使用的框架，包括\textbf{Qt、MFC、DotNet、Spring、Vue}等。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\section{开发环境概述}
+
+\begin{frame}{开发环境简介}
+    \begin{ytublock}{定义}
+        开发环境是程序员用于编写、调试和运行代码的一整套软件工具集合。正如木匠需要工具箱，程序员也需要合适的开发环境来高效完成工作。
+    \end{ytublock}
+
+    \begin{ytublock}{重要性}
+        \begin{itemize}
+            \item \textbf{降低学习门槛}：自动化配置，初学者易上手
+            \item \textbf{提升效率}：专注编程逻辑，自动编译、调试、部署
+            \item \textbf{减少错误}：标准化环境，避免"只在我电脑上能运行"
+            \item \textbf{养成规范}：使用专业工具，统一团队开发标准
+            \item \textbf{便于协作与管理}：集成版本控制和自动化构建，方便项目维护
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{开发环境的组成与流程}
+    \begin{columns}
+        \begin{column}{0.58\textwidth}
+            \begin{ytublock}{主要组成}
+                \begin{itemize}
+                    \item \textbf{编译器}：如GCC、Clang、MSVC、MinGW、Intel C++等，将源代码转为可执行程序
+                    \item \textbf{框架}：提供图形界面和跨平台支持，提供丰富的组件和工具，如Qt、MFC、DotNet、Spring、Vue等
+                    \item \textbf{集成开发环境（IDE）}：代码编辑、调试、项目管理，如Qt Creator、Visual Studio、Eclipse、VS Code等
+                    \item \textbf{调试工具}：定位和修复程序错误，如GDB、LLDB、MSVC等
+                    \item \textbf{版本控制系统}：管理代码历史与团队协作，如Git、SVN、TFS等
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.38\textwidth}
+            \begin{ytublock}{典型工作流程}
+                \begin{enumerate}
+                    \item \textbf{编写代码}：\\ 在IDE中进行代码编写
+                    \item \textbf{编译代码}：\\ 通过编译器生成可执行文件
+                    \item \textbf{调试程序}：\\ 利用调试器查找和修复问题
+                    \item \textbf{运行程序}：\\ 执行编译后的应用
+                    \item \textbf{版本控制}：\\ 保存和管理代码变更
+                \end{enumerate}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Qt开发环境安装}
+
+\begin{frame}{什么是Qt？}
+    \begin{ytublock}{Qt简介}
+        Qt是一个跨平台的C++应用程序开发框架，由Qt Company开发。它提供了丰富的图形界面组件和开发工具。
+    \end{ytublock}
+
+    \begin{ytublock}{Qt的优势}
+        \begin{itemize}
+            \item \textbf{跨平台}：一套代码可在Windows、macOS、Linux运行
+            \item \textbf{易学易用}：提供直观的图形界面设计工具
+            \item \textbf{功能丰富}：包含GUI、网络、数据库、多媒体等模块
+            \item \textbf{文档完善}：有详细的中文文档和示例
+            \item \textbf{社区活跃}：大量学习资源和社区支持
+            \item \textbf{免费使用}：开源免费，无需付费许可证
+            \item \textbf{基于C++}：C++是Qt的官方语言，使用C++开发Qt应用程序，可以充分发挥C++的性能和灵活性
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Qt安装方式}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{在线安装器（推荐）}
+                \begin{itemize}
+                    \item \textbf{Qt官方推荐}：最标准的安装方式
+                    \item \textbf{自动管理依赖}：自动下载所需组件
+                    \item \textbf{可选择组件}：只安装需要的模块
+                    \item \textbf{支持离线安装}：下载后可离线使用
+                    \item \textbf{免费账户}：注册Qt账户即可使用
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{离线安装包（不推荐）}
+                \begin{itemize}
+                    \item \textbf{完整安装包}：包含所有组件
+                    \item \textbf{无需网络连接}：适合网络受限环境
+                    \item \textbf{适合企业环境}：便于批量部署
+                    \item \textbf{文件较大}：通常几GB大小
+                    \item \textbf{需要许可证}：商业使用需要付费
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+    \begin{ytublock}{源码编译安装（太复杂、不推荐）}
+        \begin{itemize}
+            \item \textbf{下载源码}：从Qt官方网站下载源码
+            \item \textbf{编译源码}：使用编译器编译源码
+            \item \textbf{安装源码}：使用安装器安装源码
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{安装前的准备工作}
+    \begin{ytualertblock}{系统要求}
+        \begin{itemize}
+            \item \textbf{操作系统}：Windows 10/11、macOS 10.14+、Ubuntu 18.04+等
+            \item \textbf{硬件配置}：至少4GB内存，推荐8GB以上
+            \item \textbf{磁盘空间}：至少20GB可用空间
+            \item \textbf{网络连接}：稳定的网络连接（在线安装）
+        \end{itemize}
+    \end{ytualertblock}
+
+    \begin{ytualertblock}{需要准备的内容}
+        \begin{itemize}
+            \item \textbf{Qt账户}：在qt.io注册免费账户（推荐）
+            \item \textbf{邮箱地址}：用于注册和接收通知
+            \item \textbf{耐心}：首次安装可能需要较长时间
+        \end{itemize}
+    \end{ytualertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Qt安装步骤}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{enumerate}
+                \item \textbf{下载Qt在线安装器}
+                    \begin{itemize}
+                        \item 访问 \url{https://www.qt.io/download}
+                        \item 选择"Community User"
+                        \item 选择"Download Qt Online Installer"
+                        \item 下载适合您操作系统的版本（推荐Windows 10/11）
+                        \item 下载后运行安装器
+                    \end{itemize}
+                \item \textbf{注册Qt账户（免费）}
+                    \begin{itemize}
+                        \item 使用邮箱注册免费账户
+                        \item 验证邮箱地址
+                        \item 登录安装器
+                    \end{itemize}
+                \item \textbf{选择安装路径}
+                    \begin{itemize}
+                        \item 建议使用默认路径（推荐C:\textbackslash Qt）
+                        \item 足够的磁盘空间（推荐20GB以上）
+                        \item 避免中文路径
+                    \end{itemize}
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{enumerate}
+                \setcounter{enumi}{3}
+                \item \textbf{选择Qt版本和组件}
+                    \begin{itemize}
+                        \item 选择最新的LTS版本
+                        \item 选择MinGW和/或MSVC编译器
+                        \item 选择Qt Creator IDE
+                    \end{itemize}
+                \item \textbf{配置编译器}
+                    \begin{itemize}
+                        \item 安装器会自动配置
+                        \item 无需手动设置
+                        \item 等待安装完成
+                    \end{itemize}
+                \item \textbf{完成安装}
+                    \begin{itemize}
+                        \item 验证安装是否成功
+                        \item 运行Qt Creator测试
+                        \item 创建第一个项目
+                    \end{itemize}
+            \end{enumerate}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{推荐配置与安装时间}
+    \begin{ytublock}{推荐配置}
+        \begin{itemize}
+            \item \textbf{Qt 6.9.1 LTS版本}：长期支持，稳定可靠
+            \item \textbf{MinGW+MSVC编译器}：Windows下推荐
+            \item \textbf{Qt Creator IDE}：官方集成开发环境
+            \item \textbf{Qt Designer}：可视化界面设计工具
+            \item \textbf{Qt Debugging Tools}：调试工具集
+            \item \textbf{Qt Creator 17.0.0 (community)}：官方集成开发环境
+            \item \textbf{Qt Modules}：Qt模块，如Qt Charts、Qt Network、Qt PDF、Qt XML、Qt SVG、Qt WebView等
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{安装常见问题及解决方案}
+    \begin{ytualertblock}{网络问题}
+        \begin{itemize}
+            \item \textbf{下载慢}：用国内镜像或VPN
+            \item \textbf{中断、超时}：用下载器，支持断点续传，检查网络，重试
+        \end{itemize}
+    \end{ytualertblock}
+    \begin{ytualertblock}{安装问题}
+        \begin{itemize}
+            \item \textbf{权限不足}：用管理员身份运行，检查权限
+            \item \textbf{组件缺失}：检查安装选项，重新安装缺失组件
+            \item \textbf{安装失败}：查系统要求，重装，检查杀毒软件
+        \end{itemize}
+    \end{ytualertblock}
+    \begin{ytualertblock}{配置问题}
+        \begin{itemize}
+            \item \textbf{编译器未找到}：重装或手动配置，检查编译器路径
+            \item \textbf{项目无法编译}：查Qt版本与编译器，检查编译器路径
+        \end{itemize}
+    \end{ytualertblock}
+\end{frame}
+
+\section{Qt Creator IDE}
+
+\begin{frame}{什么是Qt Creator？}
+    \begin{ytublock}{Qt Creator简介}
+        Qt Creator是Qt官方提供的集成开发环境（IDE），专门为Qt开发而设计。它集成了代码编辑、调试、界面设计等功能于一体。
+    \end{ytublock}
+
+    \begin{ytublock}{为什么选择Qt Creator？}
+        \begin{itemize}
+            \item \textbf{官方支持}：Qt公司官方开发，与Qt框架完美集成
+            \item \textbf{免费使用}：开源免费，无需付费许可证
+            \item \textbf{功能完整}：包含开发所需的所有工具
+            \item \textbf{易于学习}：界面友好，适合初学者
+            \item \textbf{跨平台}：支持Windows、macOS、Linux
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Qt Creator特性}
+    \begin{columns}
+        \begin{column}{0.58\textwidth}
+            \begin{ytublock}{核心功能}
+                \begin{itemize}
+                    \item \textbf{智能代码补全}：自动提示函数、变量、类名
+                    \item \textbf{语法高亮}：不同颜色显示代码结构
+                    \item \textbf{实时错误检查}：编写时即时发现语法错误
+                    \item \textbf{集成调试器}：内置调试工具，支持断点
+                    \item \textbf{可视化设计器}：拖拽式界面设计
+                    \item \textbf{项目管理}：统一管理项目文件和配置
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.38\textwidth}
+            \begin{ytublock}{界面布局}
+                \begin{itemize}
+                    \item \textbf{编辑器区域}：主要代码编辑区域
+                    \item \textbf{项目导航}：文件树和项目结构
+                    \item \textbf{输出窗口}：编译输出和错误信息
+                    \item \textbf{调试控制台}：调试信息和变量查看
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Qt Creator界面详解}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{主要区域}
+                \begin{itemize}
+                    \item \textbf{菜单栏}：文件、编辑、构建、调试等菜单
+                    \item \textbf{工具栏}：常用功能的快捷按钮
+                    \item \textbf{模式选择器}：编辑、设计、调试等模式
+                    \item \textbf{项目导航}：文件树和项目结构
+                    \item \textbf{编辑器}：代码编辑主区域
+                    \item \textbf{输出窗口}：编译输出和错误信息
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{侧边栏面板}
+                \begin{itemize}
+                    \item \textbf{项目}：项目文件和结构
+                    \item \textbf{打开文档}：当前打开的文件
+                    \item \textbf{书签}：代码书签管理
+                    \item \textbf{文件系统}：本地文件浏览
+                    \item \textbf{类视图}：类和方法导航
+                    \item \textbf{大纲}：当前文件结构
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Qt Creator界面配置}
+    \begin{ytublock}{主题设置}
+        \begin{itemize}
+            \item \textbf{浅色主题（Light）}：适合白天使用，减少眼疲劳
+            \item \textbf{深色主题（Dark）}：适合夜间使用，保护眼睛
+            \item \textbf{高对比度主题}：适合视力不佳的用户
+            \item \textbf{自定义颜色方案}：根据个人喜好调整
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{编辑器设置}
+        \begin{itemize}
+            \item \textbf{字体和字号}：选择适合的编程字体（如Consolas、Source Code Pro）
+            \item \textbf{缩进设置}：设置Tab键和空格键的行为
+            \item \textbf{代码折叠}：隐藏不需要查看的代码块
+            \item \textbf{行号显示}：显示代码行号，便于定位
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Qt Creator使用技巧}
+    \begin{columns}[onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{快捷键（必学）}
+                \begin{itemize}
+                    \item \textbf{Ctrl+Space}：代码补全
+                    \item \textbf{F5}：开始调试
+                    \item \textbf{Ctrl+R}：运行程序
+                    \item \textbf{Ctrl+B}：构建项目
+                    \item \textbf{F9}：设置/取消断点
+                    \item \textbf{Ctrl+F}：查找文本
+                    \item \textbf{Ctrl+Shift+F}：全局查找
+                    \item \textbf{Ctrl+/}：注释/取消注释
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{初学者建议}
+                \begin{itemize}
+                    \item \textbf{熟悉界面}：先了解各个区域的功能
+                    \item \textbf{使用代码补全}：提高编程效率
+                    \item \textbf{学会调试}：掌握基本的调试技巧
+                    \item \textbf{查看帮助}：善用F1键查看文档
+                    \item \textbf{保存项目}：定期保存，避免丢失
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{编译器配置}
+
+\begin{frame}{什么是编译器？}
+    \begin{ytublock}{编译器的作用}
+        编译器是一种将人类编写的源代码转换为计算机能够理解和执行的机器语言的工具。它的作用类似于"翻译官"，将高级语言翻译成低级语言，使计算机能够正确执行我们的程序。
+    \end{ytublock}
+
+    \begin{ytublock}{编译器的分类}
+        \begin{itemize}
+            \item \textbf{本地编译器}：生成当前平台可执行代码，如GCC、MSVC
+            \item \textbf{交叉编译器}：生成其他平台可执行代码，如Android NDK
+            \item \textbf{即时编译器(JIT)}：运行时动态编译，如Java JVM、.NET CLR
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{编译过程-预处理}
+    \begin{ytublock}{什么是预处理？}
+        预处理是C/C++编译过程的第一步，主要由预处理器完成。它在正式编译前对源代码进行一系列文本处理，生成"预处理后的代码"，为后续编译、汇编和链接做好准备。
+    \end{ytublock}
+    \begin{ytublock}{预处理的主要功能}
+        \begin{itemize}
+            \item 宏替换（\#define）
+            \item 条件编译（\#ifdef/\#endif）
+            \item 头文件包含（\#include）
+            \item 特殊指令处理（如\#pragma）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{编译过程-预处理示例}
+    \begin{ytublock}{预处理常用指令及详细示例}
+        \inputminted{cpp}{code/preproc.cpp}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{编译过程-编译}
+    \begin{ytublock}{编译阶段简介}
+        \small
+        编译是C/C++编译流程的第二步，由编译器（如GCC、MSVC、Clang等）负责。其核心任务是将经过预处理的源代码转化为汇编代码，为后续的汇编和链接阶段打下基础。编译不仅仅是"翻译"，还包含一系列严密的分析与优化流程，主要包括：
+        \begin{itemize}
+            \item \textbf{词法分析}：将源代码拆分为Token（如关键字、标识符、常量、运算符等），并去除空白和注释。
+            \item \textbf{语法分析}：根据C/C++语法规则，将Token序列构建为语法树（AST），检查语法结构的正确性。
+            \item \textbf{语义分析}：进一步检查代码含义，如变量是否声明、类型是否匹配、函数参数是否正确等。
+            \item \textbf{中间代码生成与优化}：将语法树或IR转化为平台无关的中间代码（如三地址码、LLVM IR），并进行优化（如常量折叠、死代码消除、循环优化等），提高程序效率。
+            \item \textbf{目标代码生成}：将优化后的中间代码翻译为特定平台的汇编代码，为汇编阶段做准备。
+            \item \textbf{错误与警告报告}：在上述各阶段发现问题时，及时给出错误或警告，帮助开发者定位和修正代码。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{编译过程-汇编}
+    \begin{ytublock}{汇编阶段简介}
+        汇编是C/C++编译流程的第三步，由汇编器完成。其主要任务是将编译器生成的汇编代码转化为目标文件（如.obj或.o文件），为最终的链接阶段做准备。
+    \end{ytublock}
+    \begin{ytublock}{汇编阶段的主要工作}
+        \begin{itemize}
+            \item \textbf{目标文件生成}：将汇编代码转换为目标文件，包含机器指令和符号信息，供链接器使用。
+            \item \textbf{错误与警告报告}：在汇编过程中发现语法或格式错误时，及时报告，便于开发者修正。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{编译过程-链接}
+    \begin{ytublock}{链接阶段简介}
+        链接是C/C++编译流程的最后一步，由链接器（Linker）负责。其核心任务是将多个目标文件（.o/.obj）与所需的库文件（静态库或动态库）合并，解决符号引用，生成最终的可执行文件或库文件。
+    \end{ytublock}
+    \begin{ytublock}{链接阶段的主要工作}
+        \small
+        \begin{itemize}
+            \item \textbf{符号解析}：查找并匹配所有目标文件和库文件中的符号引用与符号定义，解决外部函数、全局变量等的引用关系。
+            \item \textbf{重定位}：将各目标文件中的相对地址和引用调整为最终可执行文件中的绝对地址，确保程序运行时各部分能正确访问。
+            \item \textbf{合并与优化}：合并相同的节（如代码段、数据段），去除未使用的符号，优化最终文件体积和加载效率。
+            \item \textbf{错误与警告报告}：在符号未定义、重复定义、地址冲突等问题发生时，及时报告错误或警告，帮助开发者定位问题。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{支持的编译器}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Windows平台}
+                \begin{itemize}
+                    \item \textbf{MinGW-w64}：GNU编译器套件，免费开源
+                    \item \textbf{MSVC}：微软Visual Studio编译器，功能强大
+                    \item \textbf{Clang}：LLVM编译器，编译速度快
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{跨平台}
+                \begin{itemize}
+                    \item \textbf{GCC}：Linux系统标准编译器
+                    \item \textbf{Clang}：macOS系统推荐编译器
+                    \item \textbf{Intel C++}：Intel优化编译器，性能优秀
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+
+    \begin{ytublock}{编译器选择建议}
+        \begin{itemize}
+            \item \textbf{初学者}：MinGW-w64（简单易用，免费）
+            \item \textbf{开发阶段}：MinGW-w64（快速编译，调试友好）
+            \item \textbf{发布阶段}：MSVC（优化更好，性能更高）
+            \item \textbf{跨平台}：GCC/Clang（兼容性好）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{编译器配置详解}
+    \begin{ytublock}{自动配置（推荐）}
+        \begin{itemize}
+            \item \textbf{Qt安装器自动配置}：安装时自动设置编译器路径
+            \item \textbf{Qt Creator自动检测}：启动时自动找到可用编译器
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{手动配置（高级）}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{工具 → 选项 → Kits}：配置编译套件
+                    \item \textbf{Qt版本}：选择Qt库版本
+                \end{itemize}
+            \end{column}
+            \hspace{0.02\textwidth}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{编译器路径}：指定编译器可执行文件位置
+                    \item \textbf{调试器}：配置调试工具
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{ytublock}
+
+    \begin{ytublock}{配置验证}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{创建测试项目}：验证配置是否正确
+                    \item \textbf{编译测试}：确保能正常编译
+                \end{itemize}
+            \end{column}
+            \hspace{0.02\textwidth}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{运行测试}：确保能正常运行
+                    \item \textbf{调试测试}：确保调试功能正常
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{编译器配置示例}
+    \begin{ytublock}{CMakeLists.txt配置代码}
+        \inputminted[fontsize=\tiny,breaklines=true,breakanywhere=true,linenos=true,frame=lines,framesep=3mm,rulecolor=\color{blue!20},bgcolor=blue!10]{cmake}{code/CMakeLists.txt}
+    \end{ytublock}
+\end{frame}
+
+\section{调试工具配置}
+
+\begin{frame}{调试工具介绍}
+    \begin{ytublock}{集成调试器}
+        \begin{itemize}
+            {\small
+            \item \textbf{GDB}：常用的开源调试器，适用于Linux等系统。
+            \item \textbf{LLDB}：LLVM项目的调试器，常用于macOS和部分Linux。
+            \item \textbf{CDB}：微软命令行调试器，适用于Windows平台。
+            \item \textbf{图形化调试界面}：如Qt Creator自带调试器，操作直观，适合初学者。
+            }
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{调试功能}
+        \begin{itemize}
+            {\small
+            \item \textbf{断点设置和管理}：可以在代码的任意行设置断点，程序运行到断点时会暂停，便于分析程序状态。支持启用、禁用、删除断点等操作。
+            \item \textbf{变量监视}：在调试过程中实时查看和修改变量的值，帮助定位变量赋值和变化过程中的问题。
+            \item \textbf{调用栈查看}：显示函数调用层级关系，便于分析程序执行流程和定位函数调用链中的错误。
+            \item \textbf{内存检查}：可以查看和修改内存中的数据，检测内存泄漏、越界访问等问题。
+            \item \textbf{条件断点}：设置满足特定条件时才触发的断点，便于定位复杂逻辑下的错误。
+            }
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{调试配置示例}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \inputminted[firstline=1,lastline=15]{cpp}{code/main.cpp}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \inputminted[firstline=16]{cpp}{code/main.cpp}
+            \end{column}
+        \end{columns}
+\end{frame}
+
+\section{版本控制集成}
+
+\begin{frame}{什么是Git？}
+    \begin{ytublock}{版本控制的意义}
+        \begin{itemize}
+            \item \textbf{版本控制}可以记录代码的每一次修改，方便回退、对比和协作。
+            \item \textbf{Git}是目前最流行的分布式版本控制系统，广泛应用于开源和企业项目。
+            \item 使用Git可以有效防止代码丢失，便于团队协作开发。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{核心术语}
+        \begin{itemize}
+            \item \textbf{仓库（Repository）}：存放项目代码和历史记录的地方。
+            \item \textbf{工作区（Working Directory）}：你当前编辑代码的本地文件夹。
+            \item \textbf{暂存区（Stage/Index）}：临时保存即将提交的更改。
+            \item \textbf{提交（Commit）}：将暂存区的内容保存到仓库历史中。
+            \item \textbf{分支（Branch）}：代码开发的平行线，便于多人协作和功能开发。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Git的安装与配置}
+    \begin{ytublock}{Git的下载安装}
+        \begin{itemize}
+            \item 访问Git官网：\url{https://git-scm.com/downloads}
+            \item 根据操作系统选择对应的安装包（Windows、macOS、Linux）。
+            \item 以Windows为例，下载后双击安装包，按照安装向导逐步操作：
+            \begin{itemize}
+                \item 选择安装路径（可使用默认设置）。
+                \item 选择组件（一般保持默认即可）。
+                \item 配置环境变量（建议选择"将Git添加到PATH"）。
+                \item 选择默认编辑器（可选Notepad++、VS Code等）。
+                \item 选择HTTPS传输方式（一般选择"Use the OpenSSL library"）。
+                \item 其他选项保持默认，点击"Install"开始安装。
+            \end{itemize}
+            \item 安装完成后，点击"Finish"退出安装向导。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Git的基本配置}
+\begin{ytualertblock}{Git的基本配置步骤}
+    \begin{enumerate}
+        \item \textbf{首次使用Git，需配置用户信息：}
+        \begin{itemize}
+            \item \texttt{git config --global user.name \"Your Name\"}
+            \item \texttt{git config --global user.email \"your.email@example.com\"}
+        \end{itemize}
+        \item \textbf{配置默认编辑器}：\texttt{git config --global core.editor \"code --wait\"}
+        \item \textbf{查看配置}：\texttt{git config --list}
+    \end{enumerate}
+\end{ytualertblock}
+\end{frame}
+
+\begin{frame}{Git的常用操作}
+    \small
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \item \textbf{初始化仓库}：\texttt{git init} \\
+                    在当前目录创建一个新的Git本地仓库。
+                \item \textbf{克隆远程仓库}：\texttt{git clone 仓库地址} \\
+                    下载远程仓库到本地，并自动初始化。
+                \item \textbf{查看当前状态}：\texttt{git status} \\
+                    显示工作区和暂存区的文件变动情况。
+                \item \textbf{添加文件到暂存区}：\texttt{git add 文件名} \\
+                    将指定文件的更改加入暂存区，准备提交。
+                \item \textbf{批量添加所有更改}：\texttt{git add .} \\
+                    一次性将所有变动文件加入暂存区。
+                \item \textbf{提交更改}：\texttt{git commit -m "提交说明"} \\
+                    将暂存区内容保存到本地仓库历史。
+                \item \textbf{查看提交历史}：\texttt{git log} \\
+                    按时间顺序显示提交记录。
+            \end{itemize}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \item \textbf{创建新分支}：\texttt{git branch 分支名} \\
+                    新建一个分支，便于并行开发。
+                \item \textbf{切换分支}：\texttt{git checkout 分支名} \\
+                    切换到指定分支。
+                \item \textbf{合并分支}：\texttt{git merge 分支名} \\
+                    将指定分支的更改合并到当前分支。
+                \item \textbf{推送到远程仓库}：\texttt{git push} \\
+                    将本地分支的提交推送到远程仓库。
+                \item \textbf{拉取远程更新}：\texttt{git pull} \\
+                    获取远程仓库最新内容并合并到本地。
+                \item \textbf{解决冲突}：手动编辑冲突文件，保存后用\texttt{git add 文件名}标记为已解决，再继续提交。
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{项目模板和示例}
+
+\begin{frame}{常见Qt项目模板}
+    \begin{ytublock}{应用程序模板}
+        \begin{itemize}
+            \item \textbf{Qt Widgets Application}：传统桌面窗口程序，适合大多数入门和实际项目。
+            \item \textbf{Qt Quick Application}：基于QML的现代界面应用，适合动画和移动端开发。
+            \item \textbf{Console Application}：命令行程序，适合学习C++基础和算法。
+            \item \textbf{Qt for Python Application}：使用Python语言开发Qt应用，语法简单，易于入门。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{库模板}
+        \begin{itemize}
+            \item \textbf{C++ Library}：通用C++静态或动态库。
+            \item \textbf{Qt Widgets Library}：基于Qt Widgets的自定义控件库。
+            \item \textbf{Qt Quick Library}：QML模块或自定义QML控件库。
+            \item \textbf{Plugin Library}：插件开发模板，便于扩展Qt应用功能。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{第一个Qt Widgets项目}
+    \begin{ytublock}{项目结构说明}
+        \begin{itemize}
+            \item \textbf{main.cpp}：程序入口，负责应用初始化和主窗口显示。
+            \item \textbf{CMakeLists.txt / .pro文件}：项目构建配置文件。
+            \item \textbf{其他源文件}：可根据需要添加窗口类、资源文件等。
+        \end{itemize}
+        代码文件已放在\texttt{code/}文件夹中，便于查阅和复用。
+    \end{ytublock}
+    \begin{ytublock}{主要步骤}
+        \begin{enumerate}
+            \item 新建"Qt Widgets Application"项目，命名如\texttt{HelloQt}。
+            \item 选择合适的构建工具（如CMake或qmake）。
+            \item 编写或替换\texttt{main.cpp}，实现主窗口和控件。
+            \item 构建并运行，看到窗口和控件效果。
+        \end{enumerate}
+    \end{ytublock}
+\end{frame}
+
+\section{集成开发环境（IDE）介绍}
+
+\begin{frame}{什么是IDE？}
+    \begin{ytublock}{IDE的定义}
+        集成开发环境（Integrated Development Environment，IDE）是一种软件应用程序，为程序员提供全面的开发工具，包括代码编辑器、编译器、调试器、项目管理等功能的统一界面。
+    \end{ytublock}
+
+    \begin{ytublock}{IDE vs 文本编辑器}
+        \begin{itemize}
+            \item \textbf{IDE}：功能全面，适合大型项目开发
+            \item \textbf{文本编辑器}：轻量级，适合简单脚本编写
+            \item \textbf{IDE优势}：代码补全、语法检查、集成调试
+            \item \textbf{编辑器优势}：启动快速、占用资源少
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{主流IDE介绍}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Qt Creator}
+                \begin{itemize}
+                    \item \textbf{专为Qt设计}：与Qt框架完美集成
+                    \item \textbf{免费开源}：无需付费许可证
+                    \item \textbf{跨平台}：Windows、macOS、Linux
+                    \item \textbf{可视化设计}：内置Qt Designer
+                    \item \textbf{适合初学者}：界面友好，易上手
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Visual Studio}
+                \begin{itemize}
+                    \item \textbf{微软官方}：Windows平台最强大IDE
+                    \item \textbf{功能丰富}：企业级开发工具
+                    \item \textbf{社区版免费}：个人和小团队使用
+                    \item \textbf{调试强大}：业界最佳调试体验
+                    \item \textbf{扩展丰富}：大量插件和扩展
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+
+    \begin{ytublock}{VS Code}
+        \begin{itemize}
+            \item \textbf{轻量级}：启动快速，占用资源少
+            \item \textbf{免费开源}：微软开发，完全免费
+            \item \textbf{扩展生态}：丰富的插件市场
+            \item \textbf{跨平台}：支持所有主流操作系统
+            \item \textbf{现代化}：界面美观，用户体验佳
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{IDE选择建议}
+    \begin{ytublock}{初学者推荐}
+        \begin{itemize}
+            \item \textbf{首选Qt Creator}：专为Qt开发设计，学习成本低
+            \item \textbf{界面友好}：可视化设计工具，直观易懂
+            \item \textbf{文档完善}：官方文档和教程丰富
+            \item \textbf{社区支持}：Qt社区活跃，问题容易解决
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{进阶用户选择}
+        \begin{itemize}
+            \item \textbf{Visual Studio}：大型项目，企业级开发
+            \item \textbf{VS Code}：轻量级开发，多语言支持
+            \item \textbf{Cursor}：AI辅助开发，提高效率
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\section{Qt在Visual Studio中的配置}
+
+\begin{frame}{Visual Studio简介}
+    \begin{ytublock}{Visual Studio概述}
+        Visual Studio是微软开发的集成开发环境，是Windows平台上最强大的IDE之一，支持多种编程语言和框架，包括C++和Qt开发。
+    \end{ytublock}
+
+    \begin{ytublock}{版本选择}
+        \begin{itemize}
+            \item \textbf{Community版}：免费，适合个人和小团队
+            \item \textbf{Professional版}：付费，适合专业开发
+            \item \textbf{Enterprise版}：付费，适合大型企业
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{安装要求}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{操作系统}：Windows 10/11
+                    \item \textbf{内存}：至少8GB RAM（推荐16GB）
+                \end{itemize}
+            \end{column}
+            \hspace{0.02\textwidth}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{硬盘空间}：至少20GB可用空间
+                    \item \textbf{网络连接}：下载和安装需要稳定网络
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Visual Studio安装配置}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \begin{enumerate}
+                \item \textbf{下载Visual Studio Installer}
+                    \begin{itemize}
+                        \item 访问 visualstudio.microsoft.com
+                        \item 下载Visual Studio Installer
+                        \item 选择Community版本（免费）
+                    \end{itemize}
+                \item \textbf{选择工作负载}
+                    \begin{itemize}
+                        \item 选择"使用C++的桌面开发"
+                        \item 选择"使用C++的游戏开发"（可选）
+                        \item 确保包含MSVC编译器
+                    \end{itemize}
+                \item \textbf{安装Qt VS Tools}
+                    \begin{itemize}
+                        \item 在扩展管理器中搜索"Qt Visual Studio Tools"
+                        \item 下载并安装该扩展
+                        \item 重启Visual Studio
+                    \end{itemize}
+                \item \textbf{配置Qt路径}
+                    \begin{itemize}
+                        \item 在Qt VS Tools中配置Qt安装路径
+                        \item 选择Qt版本和编译器
+                        \item 验证配置是否正确
+                    \end{itemize}
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{ytublock}{推荐配置}
+                \begin{itemize}
+                    \item \textbf{MSVC编译器}：Visual Studio自带
+                    \item \textbf{Qt 6.x版本}：最新稳定版本
+                    \item \textbf{CMake支持}：现代C++项目构建
+                    \item \textbf{调试工具}：集成调试器
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{安装时间}
+                \begin{itemize}
+                    \item \textbf{下载时间}：1-3小时
+                    \item \textbf{安装时间}：30分钟-2小时
+                    \item \textbf{配置时间}：15-30分钟
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Visual Studio中Qt开发流程}
+    \begin{ytublock}{Visual Studio中Qt项目开发流程}
+        \begin{itemize}
+            \item \textbf{使用Qt VS Tools}：通过扩展创建Qt项目，支持Qt Widgets、Qt Quick等多种项目类型
+            \item \textbf{配置项目}：选择Qt版本和编译器，设置包含路径、库路径等项目属性
+            \item \textbf{编写代码与界面设计}：在Visual Studio中编写C++代码，使用Qt Designer或代码方式设计UI
+            \item \textbf{编译与调试}：利用Visual Studio强大的编译和调试工具进行开发
+            \item \textbf{部署与发布}：生成可执行文件和安装包，完成项目发布
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{优势特点}
+        \begin{itemize}
+            \item \textbf{调试体验}：集成Visual Studio强大的断点、单步、变量监视等调试功能
+            \item \textbf{性能分析}：支持性能分析工具，便于优化Qt应用
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\section{Qt在VS Code中的配置}
+
+\begin{frame}{VS Code简介}
+    \begin{ytublock}{VS Code概述}
+        Visual Studio Code是微软开发的轻量级代码编辑器，具有IDE的强大功能，但保持了编辑器的轻量和快速特性，非常适合现代软件开发。
+    \end{ytublock}
+
+    \begin{ytublock}{VS Code优势}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{轻量级}：启动快速，占用资源少
+                    \item \textbf{免费开源}：完全免费，源代码开放
+                    \item \textbf{扩展丰富}：大量插件和扩展
+                \end{itemize}
+            \end{column}
+            \hspace{0.02\textwidth}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{跨平台}：Windows、macOS、Linux
+                    \item \textbf{现代化}：界面美观，用户体验佳
+                    \item \textbf{智能提示}：智能提示，提高开发效率
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{ytublock}
+
+    \begin{ytublock}{适用场景}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{小型项目}：快速开发和原型设计
+                    \item \textbf{多语言开发}：支持几乎所有编程语言
+                \end{itemize}
+            \end{column}
+            \hspace{0.02\textwidth}
+            \begin{column}{0.48\textwidth}
+                \begin{itemize}
+                    \item \textbf{学习编程}：轻量级，适合初学者
+                    \item \textbf{智能提示}：智能提示，提高开发效率
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{VS Code安装和基础配置}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{enumerate}
+                \item \textbf{下载安装VS Code}
+                    \begin{itemize}
+                        \item 下载适合操作系统的版本
+                        \item 安装并启动VS Code
+                    \end{itemize}
+                \item \textbf{安装必要扩展}
+                    \begin{itemize}
+                        \item C/C++ Extension Pack
+                        \item CMake Tools
+                        \item Qt tools
+                        \item GitLens（可选）
+                    \end{itemize}
+                \item \textbf{配置C++环境}
+                    \begin{itemize}
+                        \item 安装MinGW或MSVC编译器
+                        \item 配置编译器路径
+                        \item 设置IntelliSense
+                    \end{itemize}
+                \item \textbf{配置Qt环境}
+                    \begin{itemize}
+                        \item 设置Qt安装路径
+                        \item 配置CMake查找Qt
+                        \item 验证配置
+                    \end{itemize}
+            \end{enumerate}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{推荐扩展}
+                \begin{itemize}
+                    \item \textbf{C/C++}：Microsoft官方扩展
+                    \item \textbf{CMake Tools}：CMake项目支持
+                    \item \textbf{Qt tools}：Qt开发支持
+                    \item \textbf{GitLens}：Git集成增强
+                    \item \textbf{Code Runner}：快速运行代码
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{VS Code中Qt项目结构与管理}
+    \begin{ytublock}{项目结构建议}
+        \begin{itemize}
+            \item \textbf{使用CMake}：推荐采用CMake作为Qt项目的构建系统，便于跨平台和自动化管理。
+            \item \textbf{文件夹组织}：建议将源代码（\texttt{src}）、头文件（\texttt{include}）、资源文件（\texttt{resources}）、构建目录（\texttt{build}）等分门别类，结构清晰。
+            \item \textbf{版本控制}：集成Git，使用\texttt{.gitignore}忽略构建产物和IDE配置文件，便于多人协作和代码管理。
+            \item \textbf{多文件编辑}：VS Code支持分屏、标签页，便于同时编辑多个文件，提高开发效率。
+            \item \textbf{依赖管理}：通过CMake的\texttt{find\_package}等机制管理Qt及第三方库依赖。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{VS Code中Qt开发详细流程}
+    \begin{ytublock}{开发流程详解}
+        \begin{enumerate}
+            \item \textbf{创建项目}：新建CMake工程，配置Qt相关参数，初始化Git仓库。
+            \item \textbf{编写代码}：利用VS Code的智能补全、语法高亮、错误提示等功能高效编写C++/Qt代码。
+            \item \textbf{构建项目}：使用CMake Tools插件一键配置和编译，支持Debug/Release等多种构建类型。
+            \item \textbf{调试程序}：集成GDB/LLDB/MSVC等调试器，支持断点、单步、变量监视等调试操作。
+            \item \textbf{运行测试}：可集成Google Test、Catch2等单元测试框架，自动化测试代码质量。
+            \item \textbf{版本提交}：通过Git插件进行代码提交、分支管理、冲突解决等操作。
+        \end{enumerate}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{VS Code中Qt调试配置与技巧}
+    \begin{ytublock}{调试配置说明}
+        \begin{itemize}
+            \item \textbf{launch.json}：在.vscode目录下配置调试器参数，如可执行文件路径、调试类型、工作目录等。
+            \item \textbf{断点管理}：可在代码行号处点击设置/取消断点，支持条件断点和日志断点。
+            \item \textbf{变量查看}：调试时可实时查看局部变量、全局变量、表达式值，支持监视窗口。
+            \item \textbf{调用栈分析}：调试过程中可查看当前函数调用关系，快速定位问题源头。
+            \item \textbf{调试技巧}：利用"热重载"、多窗口调试、调试控制台等功能提升调试效率。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{IDE选择总结}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Qt Creator（推荐初学者）}
+                \begin{itemize}
+                    \item \textbf{优势}：专为Qt设计，学习成本低，免费
+                    \item \textbf{适用}：Qt初学者，中小型项目
+                    \item \textbf{特点}：集成Qt Designer，可视化设计
+                \end{itemize}
+            \end{ytublock}
+            \begin{ytublock}{Visual Studio（推荐专业开发）}
+                \begin{itemize}
+                    \item \textbf{优势}：功能强大，调试体验佳，企业级
+                    \item \textbf{适用}：大型项目，团队开发，Windows平台
+                    \item \textbf{特点}：集成Qt VS Tools，性能分析工具
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{VS Code（推荐轻量级开发）}
+                \begin{itemize}
+                    \item \textbf{优势}：轻量级，启动快速，扩展丰富
+                    \item \textbf{适用}：小型项目，多语言开发，跨平台
+                    \item \textbf{特点}：现代化界面，CMake集成，Git支持
+                \end{itemize}
+            \end{ytublock}
+            \begin{ytublock}{选择建议}
+                \begin{itemize}
+                    \item \textbf{初学者}：从Qt Creator开始，熟悉后再尝试其他
+                    \item \textbf{专业开发}：根据项目需求选择合适的IDE
+                    \item \textbf{团队协作}：统一IDE，便于代码规范和协作
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{环境验证}
+
+\begin{frame}{环境验证步骤}
+    \begin{columns}
+        \begin{column}{0.58\textwidth}
+            \begin{enumerate}
+                \item 编译FirstApp程序
+                \item 运行程序验证
+                \item 测试调试功能
+                \item 验证版本控制
+                \item Qt Creator 和 VS Code 的配置
+            \end{enumerate}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.38\textwidth}
+            \begin{ytublock}{常见问题解决}
+                \begin{itemize}
+                    \item 编译器路径配置
+                    \item Qt库路径设置
+                    \item 环境变量配置
+                    \item 权限问题处理
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{总结}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{本章要点}
+                \begin{itemize}
+                    \item 了解Qt开发环境的组成
+                    \item 掌握Qt Creator的安装和配置
+                    \item 学会配置编译器和调试工具
+                    \item 熟悉版本控制集成
+                    \item 能够创建和运行Qt项目
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{课后任务}
+                \begin{itemize}
+                    \item 安装Qt Creator
+                    \item 安装VS Code
+                    \item 配置Qt Creator和VS Code
+                    \item 完成FirstApp程序的编译和运行
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,22 @@
+digraph FacadePattern {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e8f5e8"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+
+    Client [label="👤 客户端\nClient", fillcolor="#81c784", color="#388e3c"];
+    Facade [label="🏛️ 外观类\nFacade", fillcolor="#ffb74d", color="#f57c00"];
+    Subsystem1 [label="🔧 子系统1", fillcolor="#9e9e9e", color="#616161"];
+    Subsystem2 [label="⚙️ 子系统2", fillcolor="#757575", color="#616161"];
+    Subsystem3 [label="🔩 子系统3", fillcolor="#616161", color="#424242"];
+
+    Client -> Facade [style="bold"];
+    Facade -> Subsystem1 [style="dashed"];
+    Facade -> Subsystem2 [style="dashed"];
+    Facade -> Subsystem3 [style="dashed"];
+
+    labelloc="t";
+    label="外观模式结构图";
+}
+

@@ -1,0 +1,22 @@
+digraph FlyweightPattern {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e8f5e8"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+
+    Flyweight [label="🪶 享元接口\nFlyweight", fillcolor="#4caf50", color="#2e7d32"];
+    ConcreteFlyweightA [label="🔵 具体享元A", fillcolor="#81c784", color="#388e3c"];
+    ConcreteFlyweightB [label="🔴 具体享元B", fillcolor="#66bb6a", color="#388e3c"];
+    FlyweightFactory [label="🏭 享元工厂\nFlyweightFactory", fillcolor="#ffb74d", color="#f57c00"];
+    Client [label="👤 客户端\nClient", fillcolor="#4db6ac", color="#00695c"];
+
+    ConcreteFlyweightA -> Flyweight [style="dashed"];
+    ConcreteFlyweightB -> Flyweight [style="dashed"];
+    FlyweightFactory -> Flyweight [style="bold", arrowhead=odot];
+    Client -> FlyweightFactory [style="bold"];
+    Client -> Flyweight [style="bold"];
+
+    labelloc="t";
+    label="享元模式结构图";
+}

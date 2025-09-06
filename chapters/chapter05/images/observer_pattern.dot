@@ -1,0 +1,22 @@
+digraph ObserverPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#e8f5e8"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+    bgcolor="#e8f5e8";
+
+    Subject [label="主题接口\nSubject", fillcolor="#c8e6c9", color="#2e7d32"];
+    ConcreteSubject [label="具体主题\nConcreteSubject", fillcolor="#a5d6a7", color="#388e3c"];
+
+    Observer [label="观察者接口\nObserver", fillcolor="#ffe0b2", color="#e65100"];
+    ConcreteObserver [label="具体观察者\nConcreteObserver", fillcolor="#ffcc80", color="#ef6c00"];
+
+    ConcreteSubject -> Subject [label="继承", color="#2e7d32", style="dashed"];
+    ConcreteObserver -> Observer [label="继承", color="#e65100", style="dashed"];
+
+    Subject -> Observer [label="📢 通知更新", color="#d32f2f", style="bold", penwidth=1.5, dir=both];
+
+    labelloc="t";
+    label="观察者模式结构图";
+}

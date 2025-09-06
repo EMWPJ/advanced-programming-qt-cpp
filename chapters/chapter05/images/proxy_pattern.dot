@@ -1,0 +1,20 @@
+digraph ProxyPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#e8f5e8"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=LR;
+
+    Client [label="👤 客户端\nClient", fillcolor="#81c784", color="#388e3c"];
+    Subject [label="🎯 主题接口\nSubject", fillcolor="#ffb74d", color="#f57c00"];
+    Proxy [label="🛡️ 代理类\nProxy", fillcolor="#ff9800", color="#e65100"];
+    RealSubject [label="🎨 真实主题\nRealSubject", fillcolor="#66bb6a", color="#2e7d32"];
+
+    Proxy -> Subject [style="dashed"];
+    RealSubject -> Subject [style="dashed"];
+    Proxy -> RealSubject [style="bold"];
+    Client -> Proxy [style="bold"];
+
+    labelloc="t";
+    label="代理模式结构图";
+}

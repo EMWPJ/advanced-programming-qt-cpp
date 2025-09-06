@@ -1,0 +1,88 @@
+digraph SingletonPattern {
+    graph [
+        fontname="Microsoft YaHei",
+        fontsize=12,
+        bgcolor="#e3f2fd",
+        pad=0.4,
+        ranksep=0.8,
+        nodesep=0.7
+    ];
+
+    node [
+        fontname="Microsoft YaHei",
+        fontsize=11,
+        style="filled,rounded",
+        penwidth=2,
+        margin=0.22
+    ];
+
+    edge [
+        fontname="Microsoft YaHei",
+        fontsize=9,
+        penwidth=1.5,
+        arrowsize=1.1
+    ];
+
+    rankdir=LR;
+
+    // 客户端
+    Client [
+        label="👤 客户端\nClient",
+        fillcolor="#42a5f5",
+        color="#1976d2",
+        fontcolor="white",
+        shape=box,
+        width=1.3,
+        height=0.7
+    ];
+
+    // 单例类
+    Singleton [
+        label="🏠 单例类\nSingleton",
+        fillcolor="#1565c0",
+        color="#0d47a1",
+        fontcolor="white",
+        shape=box,
+        width=1.6,
+        height=0.9
+    ];
+
+    // getInstance 静态方法
+    getInstance [
+        label="getInstance()\n静态方法",
+        fillcolor="#bbdefb",
+        color="#1976d2",
+        fontcolor="#0d47a1",
+        shape=component,
+        width=1.2,
+        height=0.5
+    ];
+
+    // 客户端调用 getInstance
+    Client -> getInstance [
+        label="调用",
+        color="#1976d2",
+        fontcolor="#1976d2",
+        style="bold"
+    ];
+
+    // getInstance 返回单例对象
+    getInstance -> Singleton [
+        label="返回唯一实例",
+        color="#1565c0",
+        fontcolor="#1565c0",
+        style="bold"
+    ];
+
+    // 单例类禁止外部构造
+    Singleton -> Singleton [
+        label="私有构造\n禁止外部new",
+        color="#ef5350",
+        fontcolor="#b71c1c",
+        style="dashed",
+        arrowhead="none"
+    ];
+
+    labelloc="t";
+    label="🎯 单例模式结构图\nSingleton Pattern Structure";
+}

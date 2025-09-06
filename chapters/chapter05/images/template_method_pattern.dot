@@ -1,0 +1,39 @@
+digraph TemplateMethodPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#fff8e1"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fff8e1";
+
+    AbstractClass [label="抽象类\nAbstractClass", fillcolor="#fff3e0", color="#f57c00"];
+
+    ConcreteClass [label="具体类\nConcreteClass", fillcolor="#ffcc80", color="#ef6c00"];
+
+    Client [label="客户端\nClient", fillcolor="#e8f5e8", color="#388e3c", shape=box];
+
+    {
+        rank=same;
+        PrimitiveOperation1 [label="基本方法1\nprimitiveOperation1()", fillcolor="#fff9c4", color="#f9a825"];
+        PrimitiveOperation2 [label="基本方法2\nprimitiveOperation2()", fillcolor="#fff9c4", color="#f9a825"];
+        PrimitiveOperation3 [label="模板方法\ntemplateMethod()", fillcolor="#fff3e0", color="#f57c00"];
+    }
+
+    AbstractClass -> ConcreteClass [label="继承", color="#f57c00", style="dashed"];
+
+    Client -> AbstractClass [label="🎯 调用模板方法", color="#388e3c", style="bold"];
+
+    AbstractClass -> PrimitiveOperation1 [label="调用步骤", color="#f57c00"];
+    AbstractClass -> PrimitiveOperation2 [label="调用步骤", color="#f57c00"];
+    AbstractClass -> PrimitiveOperation3 [label="定义算法", color="#f57c00", style="bold"];
+
+    ConcreteClass -> PrimitiveOperation1 [label="具体实现", color="#ef6c00", style="dashed"];
+    ConcreteClass -> PrimitiveOperation2 [label="具体实现", color="#ef6c00", style="dashed"];
+
+    labelloc="t";
+    label="模板方法模式结构图";
+}
+
+
+
+

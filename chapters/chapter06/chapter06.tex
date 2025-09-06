@@ -1,0 +1,553 @@
+\documentclass[UTF8,aspectratio=169]{beamer}
+
+% 基本包
+\usepackage[UTF8]{ctex}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{enumitem}
+
+% Beamer主题设置
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+% 减少页面间距
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setlength{\itemsep}{0.5em}
+\setlength{\parskip}{0.5em}
+
+% 页码设置
+\setbeamertemplate{footline}[frame number]
+
+% 水印设置
+\setbeamertemplate{background}{
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[rotate=-45,scale=0.8,opacity=0.1,color=gray]
+             at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+             {\large\textbf{WPJ}};
+    \end{tikzpicture}
+}
+
+% 代码高亮设置
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\tiny,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    numbersep=5pt,
+    frame=single,
+    breaklines=true,
+    showstringspaces=false,
+    escapechar=@,
+    linewidth=\textwidth,
+    xleftmargin=5pt,
+    xrightmargin=5pt
+}
+
+% 自定义颜色
+\definecolor{qtgreen}{RGB}{41,128,185}
+\definecolor{qtblue}{RGB}{52,73,94}
+
+% 文档信息
+\title{第6章：Qt高级特性与实战}
+\subtitle{高等程序设计 - Qt/C++}
+\author{课程讲义}
+\institute{高等程序设计课程}
+\date{\today}
+
+\begin{document}
+
+% 标题页
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录页
+\begin{frame}{目录}
+    \tableofcontents
+\end{frame}
+
+\section{Qt多线程编程}
+
+\begin{frame}{Qt多线程概述}
+    \begin{block}{Qt多线程特点}
+        \begin{itemize}
+            \item 基于QThread类
+            \item 信号槽跨线程通信
+            \item 线程安全的事件循环
+            \item 自动内存管理
+            \item 与Qt事件系统集成
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{多线程应用场景}
+        \begin{itemize}
+            \item 耗时计算
+            \item 网络请求
+            \item 文件I/O操作
+            \item 数据处理
+            \item 实时更新UI
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Qt多线程示例}
+    \begin{lstlisting}
+#include <QThread>
+#include <QObject>
+#include <QDebug>
+
+// worker thread class
+class Worker : public QObject
+{
+    Q_OBJECT
+
+public slots:
+    void doWork() {
+        qDebug() << "Worker thread:" << QThread::currentThread();
+
+        // simulate time-consuming work
+        for (int i = 0; i < 10; ++i) {
+            QThread::msleep(100);
+            emit progressUpdated(i * 10);
+        }
+
+        emit workFinished();
+    }
+
+signals:
+    void progressUpdated(int value);
+    void workFinished();
+};
+
+// main window class
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+private slots:
+    void startWork() {
+        m\_worker->doWork();
+    }
+
+    void onProgressUpdated(int value) {
+        m\_progressBar->setValue(value);
+    }
+
+    void onWorkFinished() {
+        qDebug() << "Work finished";
+    }
+
+private:
+    void setupThreading() {
+        // create worker thread
+        m\_thread = new QThread(this);
+        m\_worker = new Worker();
+        m\_worker->moveToThread(m\_thread);
+
+        // connect signal slot
+        connect(m\_worker, &Worker::progressUpdated,
+                this, &MainWindow::onProgressUpdated);
+        connect(m\_worker, &Worker::workFinished,
+                this, &MainWindow::onWorkFinished);
+
+        // start thread
+        m\_thread->start();
+    }
+
+private:
+    QThread *m\_thread;
+    Worker *m\_worker;
+    QProgressBar *m\_progressBar;
+};
+    \end{lstlisting}
+\end{frame}
+
+\section{Qt绘图系统}
+
+\begin{frame}{Qt绘图系统概述}
+    \begin{block}{Qt绘图组件}
+        \begin{itemize}
+            \item QPainter - 绘图引擎
+            \item QPaintDevice - 绘图设备
+            \item QPen - 画笔
+            \item QBrush - 画刷
+            \item QFont - 字体
+            \item QPixmap - 位图
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{绘图应用}
+        \begin{itemize}
+            \item 自定义控件绘制
+            \item 图表和图形
+            \item 图像处理
+            \item 动画效果
+            \item 游戏开发
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Qt绘图示例}
+    \begin{lstlisting}
+#include <QWidget>
+#include <QPainter>
+#include <QPen>
+#include <QBrush>
+
+// custom drawing widget
+class DrawingWidget : public QWidget
+{
+    Q_OBJECT
+
+protected:
+    void paintEvent(QPaintEvent *event) override {
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        // set background
+        painter.fillRect(rect(), QColor(240, 240, 240));
+
+        // draw rectangle
+        QPen pen(Qt::black, 2);
+        QBrush brush(QColor(100, 150, 200));
+        painter.setPen(pen);
+        painter.setBrush(brush);
+        painter.drawRect(10, 10, 80, 60);
+
+        // draw ellipse
+        pen.setColor(Qt::red);
+        brush.setColor(QColor(200, 100, 100));
+        painter.setPen(pen);
+        painter.setBrush(brush);
+        painter.drawEllipse(120, 10, 80, 60);
+
+        // draw text
+        QFont font("Arial", 16, QFont::Bold);
+        painter.setFont(font);
+        painter.setPen(Qt::blue);
+        painter.drawText(10, 100, "Qt drawing system example");
+    }
+};
+    \end{lstlisting}
+\end{frame}
+
+\section{QtCharts}
+
+\begin{frame}{QtCharts概述}
+    \begin{block}{QtCharts特性}
+        \begin{itemize}
+            \item 丰富的图表类型
+            \item 交互式图表
+            \item 实时数据更新
+            \item 自定义样式
+            \item 导出功能
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{图表类型}
+        \begin{itemize}
+            \item 折线图（Line Chart）
+            \item 柱状图（Bar Chart）
+            \item 饼图（Pie Chart）
+            \item 散点图（Scatter Chart）
+            \item 面积图（Area Chart）
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{QtCharts示例}
+    \begin{lstlisting}
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+
+QT_CHARTS_USE_NAMESPACE
+
+class ChartDemo : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    ChartDemo(QWidget *parent = nullptr) : QMainWindow(parent) {
+        setupCharts();
+    }
+
+private:
+    void setupCharts() {
+        // create chart
+        m\_chart = new QChart();
+        m\_chartView = new QChartView(m\_chart);
+        m\_chartView->setRenderHint(QPainter::Antialiasing);
+
+        // create data series
+        m\_lineSeries = new QLineSeries();
+
+        // add data
+        for (int i = 0; i < 10; ++i) {
+            m\_lineSeries->append(i, qrand() % 100);
+        }
+
+        // show chart
+        m\_chart->addSeries(m\_lineSeries);
+        m\_chart->setTitle("QtCharts example");
+        m\_chart->createDefaultAxes();
+
+        setCentralWidget(m\_chartView);
+    }
+
+private:
+    QChartView *m\_chartView;
+    QChart *m\_chart;
+    QLineSeries *m\_lineSeries;
+};
+    \end{lstlisting}
+\end{frame}
+
+\section{Qt网络编程}
+
+\begin{frame}{Qt网络编程概述}
+    \begin{block}{Qt网络模块}
+        \begin{itemize}
+            \item QNetworkAccessManager - 网络访问管理器
+            \item QNetworkRequest - 网络请求
+            \item QNetworkReply - 网络响应
+            \item QNetworkProxy - 网络代理
+            \item QSslSocket - SSL套接字
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{支持的网络协议}
+        \begin{itemize}
+            \item HTTP/HTTPS
+            \item FTP
+            \item WebSocket
+            \item TCP/UDP
+            \item SSL/TLS
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Qt网络编程示例}
+    \begin{lstlisting}
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+
+class NetworkDemo : public QMainWindow
+{
+    Q_OBJECT
+
+private slots:
+    void sendGetRequest() {
+        QString url = "https://httpbin.org/get";
+
+        QNetworkRequest request(QUrl(url));
+        request.setHeader(QNetworkRequest::UserAgentHeader,
+                         "Qt Network Demo/1.0");
+
+        QNetworkReply *reply = m\_networkManager->get(request);
+
+        connect(reply, &QNetworkReply::finished, [this, reply]() {
+            if (reply->error() == QNetworkReply::NoError) {
+                QString response = QString::fromUtf8(reply->readAll());
+                qDebug() << "Response:" << response;
+            } else {
+                qDebug() << "Error:" << reply->errorString();
+            }
+            reply->deleteLater();
+        });
+    }
+
+    void sendPostRequest() {
+        QString url = "https://httpbin.org/post";
+
+        QNetworkRequest request(QUrl(url));
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                         "application/json");
+
+        // create JSON data
+        QJsonObject jsonData;
+        jsonData["name"] = "Test user";
+        jsonData["age"] = 25;
+
+        QJsonDocument doc(jsonData);
+        QByteArray data = doc.toJson();
+
+        QNetworkReply *reply = m\_networkManager->post(request, data);
+
+        connect(reply, &QNetworkReply::finished, [this, reply]() {
+            if (reply->error() == QNetworkReply::NoError) {
+                QString response = QString::fromUtf8(reply->readAll());
+                qDebug() << "Response:" << response;
+            } else {
+                qDebug() << "Error:" << reply->errorString();
+            }
+            reply->deleteLater();
+        });
+    }
+
+private:
+    void setupNetwork() {
+        m\_networkManager = new QNetworkAccessManager(this);
+    }
+
+private:
+    QNetworkAccessManager *m\_networkManager;
+};
+    \end{lstlisting}
+\end{frame}
+
+\section{Qt数据库编程}
+
+\begin{frame}{Qt数据库编程概述}
+    \begin{block}{Qt数据库支持}
+        \begin{itemize}
+            \item QSqlDatabase - 数据库连接
+            \item QSqlQuery - SQL查询
+            \item QSqlTableModel - 表格模型
+            \item QSqlRelationalTableModel - 关系表格模型
+            \item QSqlQueryModel - 查询模型
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{支持的数据库}
+        \begin{itemize}
+            \item SQLite
+            \item MySQL
+            \item PostgreSQL
+            \item Oracle
+            \item Microsoft SQL Server
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Qt数据库编程示例}
+    \begin{lstlisting}
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QSqlTableModel>
+#include <QTableView>
+
+class DatabaseDemo : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    DatabaseDemo(QWidget *parent = nullptr) : QMainWindow(parent) {
+        setupDatabase();
+        setupModel();
+    }
+
+private slots:
+    void addRecord() {
+        QString name = "New user";
+        QString email = "newuser@example.com";
+        int age = 25;
+
+        QSqlQuery query;
+        query.prepare("INSERT INTO users (name, email, age) VALUES (?, ?, ?)");
+        query.addBindValue(name);
+        query.addBindValue(email);
+        query.addBindValue(age);
+
+        if (query.exec()) {
+            m\_model->select(); // refresh model
+            qDebug() << "Record added successfully";
+        } else {
+            qDebug() << "Add failed:" << query.lastError().text();
+        }
+    }
+
+private:
+    void setupDatabase() {
+        // create SQLite database connection
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        db.setDatabaseName("users.db");
+
+        if (!db.open()) {
+            qDebug() << "Cannot open database:" << db.lastError().text();
+            return;
+        }
+
+        // create table
+        QSqlQuery query;
+        query.exec("CREATE TABLE IF NOT EXISTS users ("
+                  "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                  "name TEXT NOT NULL,"
+                  "email TEXT NOT NULL,"
+                  "age INTEGER)");
+
+        // insert example data
+        query.exec("INSERT OR IGNORE INTO users (name, email, age) VALUES "
+                  "('Zhang San', 'zhangsan@example.com', 25),"
+                  "('Li Si', 'lisi@example.com', 30)");
+    }
+
+    void setupModel() {
+        m\_model = new QSqlTableModel(this);
+        m\_model->setTable("users");
+        m\_model->select();
+
+        // set table header
+        m\_model->setHeaderData(0, Qt::Horizontal, "ID");
+        m\_model->setHeaderData(1, Qt::Horizontal, "Name");
+        m\_model->setHeaderData(2, Qt::Horizontal, "Email");
+        m\_model->setHeaderData(3, Qt::Horizontal, "Age");
+
+        m\_tableView = new QTableView(this);
+        m\_tableView->setModel(m\_model);
+        setCentralWidget(m\_tableView);
+    }
+
+private:
+    QSqlTableModel *m\_model;
+    QTableView *m\_tableView;
+};
+    \end{lstlisting}
+\end{frame}
+
+\section{总结}
+
+\begin{frame}{总结}
+    \begin{block}{本章要点}
+        \begin{itemize}
+            \item 掌握Qt多线程编程
+            \item 学会使用Qt绘图系统
+            \item 理解QtCharts的使用
+            \item 掌握Qt网络编程
+            \item 学会Qt数据库编程
+            \item 理解Qt高级特性的应用
+            \item 能够开发完整的Qt应用程序
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{实践建议}
+        \begin{itemize}
+            \item 多练习实际项目开发
+            \item 关注性能优化
+            \item 学习最佳实践
+            \item 参与开源项目
+            \item 持续学习新技术
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\end{document}

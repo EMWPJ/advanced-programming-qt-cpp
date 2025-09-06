@@ -1,0 +1,26 @@
+digraph FactoryMethodPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+    bgcolor="#e3f2fd";
+
+    Creator [label="创建者\nCreator", fillcolor="#bbdefb", color="#1565c0"];
+    ConcreteCreator [label="具体创建者\nConcreteCreator", fillcolor="#90caf9", color="#1976d2"];
+
+    Product [label="产品接口\nProduct", fillcolor="#c8e6c9", color="#2e7d32"];
+    ConcreteProduct [label="具体产品\nConcreteProduct", fillcolor="#a5d6a7", color="#388e3c"];
+
+    Creator -> ConcreteCreator [label="继承", color="#1565c0", style="dashed"];
+    Product -> ConcreteProduct [label="继承", color="#2e7d32", style="dashed"];
+
+    ConcreteCreator -> ConcreteProduct [label="🏭 创建产品", color="#f57c00", style="bold", penwidth=1.5, arrowhead=odot];
+
+    labelloc="t";
+    label="工厂方法模式结构图";
+}
+
+
+
+

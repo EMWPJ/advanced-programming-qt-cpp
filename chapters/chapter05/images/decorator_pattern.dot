@@ -1,0 +1,30 @@
+digraph DecoratorPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#fce4ec"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+    bgcolor="#fce4ec";
+
+    Component [label="组件接口\nComponent", fillcolor="#ffcdd2", color="#b71c1c"];
+
+    ConcreteComponent [label="具体组件\nConcreteComponent", fillcolor="#f8bbd9", color="#880e4f"];
+
+    Decorator [label="装饰器\nDecorator", fillcolor="#e1bee7", color="#6a1b9a"];
+
+    ConcreteDecorator [label="具体装饰器\nConcreteDecorator", fillcolor="#ffe0b2", color="#e65100"];
+
+    ConcreteComponent -> Component [label="实现", color="#b71c1c", style="dashed"];
+    Decorator -> Component [label="实现", color="#6a1b9a", style="dashed"];
+
+    ConcreteDecorator -> Decorator [label="继承", color="#e65100", style="dashed"];
+
+    Decorator -> Component [label="🎨 装饰包装", color="#f57f17", style="bold", penwidth=1.5, dir=both];
+
+    labelloc="t";
+    label="装饰器模式结构图";
+}
+
+
+
+

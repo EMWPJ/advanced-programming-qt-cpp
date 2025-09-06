@@ -1,0 +1,36 @@
+digraph MediatorPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#e0f2f1"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#e0f2f1";
+
+    Mediator [label="中介者接口\nMediator", fillcolor="#b2dfdb", color="#00695c"];
+    ConcreteMediator [label="具体中介者\nConcreteMediator", fillcolor="#4db6ac", color="#00796b"];
+
+    Colleague [label="同事类\nColleague", fillcolor="#c8e6c9", color="#2e7d32"];
+    ConcreteColleague1 [label="具体同事1\nConcreteColleague1", fillcolor="#a5d6a7", color="#388e3c"];
+    ConcreteColleague2 [label="具体同事2\nConcreteColleague2", fillcolor="#81c784", color="#43a047"];
+
+    Client [label="客户端\nClient", fillcolor="#fff3e0", color="#f57c00", shape=box];
+
+    Mediator -> ConcreteMediator [label="实现", color="#00695c", style="dashed"];
+
+    Colleague -> ConcreteColleague1 [label="继承", color="#2e7d32", style="dashed"];
+    Colleague -> ConcreteColleague2 [label="继承", color="#2e7d32", style="dashed"];
+
+    Colleague -> Mediator [label="🔗 引用中介", color="#2e7d32", style="bold"];
+
+    ConcreteMediator -> ConcreteColleague1 [label="🎯 协调交互", color="#00796b", style="bold"];
+    ConcreteMediator -> ConcreteColleague2 [label="🎯 协调交互", color="#00796b", style="bold"];
+
+    ConcreteColleague1 -> ConcreteColleague2 [label="通过中介通信", color="#388e3c", style="dotted", penwidth=1.5, dir=both];
+
+    labelloc="t";
+    label="中介者模式结构图";
+}
+
+
+
+

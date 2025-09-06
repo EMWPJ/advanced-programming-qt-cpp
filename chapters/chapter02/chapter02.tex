@@ -1,0 +1,1233 @@
+\documentclass[UTF8,aspectratio=169]{beamer}
+
+\include{../setup.tex}
+
+% 文档信息
+\title{高等程序设计 - Qt/C++}
+\subtitle{第2章：C++语言基础与进阶}
+\author{王培杰}
+\institute{长江大学地球物理与石油资源学院}
+\date{\today}
+
+\begin{document}
+
+% 标题页
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录页
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[]
+    \end{multicols}
+\end{frame}
+
+\section{C、C++ 与 Qt}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{C、C++ 与 Qt 关系}
+    \centering
+    \begin{tikzpicture}[
+        font=\sffamily,
+        box/.style={rectangle, draw=black!70, rounded corners=5pt, minimum width=3.5cm, minimum height=1.2cm, align=center, fill=##1!15, text=black},
+        core/.style={ellipse, draw=black!80, thick, minimum width=4.2cm, minimum height=2.2cm, align=center, fill=red!10, text=black},
+        feat/.style={rectangle, draw=gray!50, rounded corners=3pt, fill=gray!10, minimum width=3.2cm, minimum height=1cm, align=center, text=black},
+        arrow/.style={-{Latex[length=3mm]}, thick, black!70},
+        node distance=0.5cm and 0.8cm
+    ]
+
+    % Main nodes
+    \node[core] (Qt) {Qt 框架\\\small 基于 C++ 的跨平台开发工具};
+    \node[box=green!60, above=of Qt] (Cpp) {C++ 语言\\\small 面向对象、泛型、继承C};
+    \node[box, above=of Cpp] (C) {C 语言\\\small 高效、过程式、接近硬件};
+
+    % Arrows for evolution
+    \draw[arrow] (C) -- (Cpp);
+    \draw[arrow] (Cpp) -- (Qt);
+
+    % Qt features
+    \node[feat, below left=0.5cm and 0.8cm of Qt] (gui) {图形界面 (GUI)};
+    \node[feat, below=of Qt] (signal) {信号槽机制};
+    \node[feat, below right=0.5cm and 0.8cm of Qt] (platform) {跨平台支持};
+    \node[feat, above left=0.5cm and 0.8cm of Qt] (tools) {模块化开发工具};
+    \node[feat, above right=0.5cm and 0.8cm of Qt] (multilanguage) {多语言支持};
+
+    % Arrows from Qt to features
+    \draw[arrow] (Qt) -- (gui);
+    \draw[arrow] (Qt) -- (signal);
+    \draw[arrow] (Qt) -- (platform);
+    \draw[arrow] (Qt) -- (tools);
+    \draw[arrow] (Qt) -- (multilanguage);
+
+    % Optional background grouping
+    \begin{scope}[on background layer]
+        \node[draw=gray!30, rounded corners=12pt, thick, fit=(C)(Cpp)(Qt)(gui)(signal)(platform)(tools), inner sep=0.8cm] {};
+    \end{scope}
+
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{C、C++ 与 Qt 关系}
+        \begin{itemize}
+            \item \textbf{C语言}：
+            \begin{itemize}
+                \item 诞生于20世纪70年代，是一种结构化、过程式的高级编程语言。
+                \item 以高效、接近底层硬件著称，广泛应用于操作系统、嵌入式开发、驱动程序等领域。
+                \item C语言为C++提供了坚实的基础，C++完全兼容C语言，是C的超集。
+            \end{itemize}
+            \item \textbf{C++}：
+            \begin{itemize}
+                \item 由Bjarne Stroustrup于20世纪80年代初开发，在C语言基础上引入了面向对象编程（OOP）、泛型编程等特性。
+                \item 支持类、继承、多态、模板等高级特性，适合开发大型复杂系统。
+                \item C++不仅能编写高效底层代码，还能实现高层次的抽象，兼容C语言代码，便于项目迁移和扩展。
+            \end{itemize}
+            \item \textbf{Qt}：
+            \begin{itemize}
+                \item Qt是一个基于C++的跨平台应用程序开发框架，现由Qt Company维护。
+                \item 提供了丰富的GUI（图形用户界面）组件、信号槽机制、网络、数据库、多媒体等模块，极大提升了C++开发效率。
+                \item 支持Windows、Linux、macOS、Android等多平台，代码可移植性强。
+                \item Qt不仅适用于桌面应用开发，也广泛应用于嵌入式系统、移动端等领域，是C++开发GUI和跨平台应用的首选框架之一。
+            \end{itemize}
+        \end{itemize}
+\end{frame}
+
+\begin{frame}{C、C++ 与 Qt 学习路线（正常版）}
+    \begin{itemize}
+        \item \textbf{第一阶段：C语言基础}
+        \begin{itemize}
+            \item 学习C语言的基本语法、数据类型、运算符、流程控制（顺序、选择、循环）。
+            \item 掌握函数、数组、指针、结构体、文件操作等核心内容。
+            \item 了解内存管理、编译与调试基础，为后续学习打下坚实基础。
+        \end{itemize}
+        \item \textbf{第二阶段：C++进阶}
+        \begin{itemize}
+            \item 在C语言基础上，学习C++的面向对象编程（OOP）思想，包括类、对象、继承、多态、封装等。
+            \item 掌握C++的模板、STL（标准模板库）、异常处理、运算符重载等高级特性。
+            \item 了解C++11/14/17等新标准的常用特性，为现代C++开发做准备。
+        \end{itemize}
+        \item \textbf{第三阶段：Qt开发实践}
+        \begin{itemize}
+            \item 学习Qt的基本概念、开发环境搭建、项目结构。
+            \item 掌握Qt的信号与槽机制、常用控件、布局管理、事件处理等GUI开发基础。
+            \item 进阶学习Qt的多线程、网络编程、数据库、多媒体、绘图等模块。
+            \item 了解Qt的跨平台特性，能够在不同操作系统下进行开发与部署。
+            \item 通过实际项目练习，提升综合开发能力。
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{C、C++ 与 Qt 学习路线（非常规路径）}
+    \begin{ytublock}{直接上手Qt}
+        \begin{itemize}
+            \item 跳过传统C/C++基础，直接从Qt入门，先体验图形界面开发的乐趣。
+            \item 以实际项目驱动学习，边做边学，遇到C++语法和概念时再查阅补充。
+            \item 重点掌握Qt的信号与槽、常用控件、布局管理、事件处理等GUI开发核心。
+            \item 随着项目深入，逐步接触Qt的多线程、网络、数据库、多媒体、绘图等高级模块。
+            \item 利用Qt的跨平台特性，尝试在不同操作系统下编译和运行项目，提升实战能力。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{以Qt为载体学习C++}
+        \begin{itemize}
+            \item 以Qt项目开发为主线，带动C++语法、面向对象、模板等知识的学习。
+            \item 在实际编码中理解类、继承、多态、信号槽等C++与Qt结合的用法。
+            \item 通过分析和修改Qt源码或示例，深入理解C++的高级特性和Qt的设计思想。
+            \item 结合Qt丰富的模块，逐步掌握C++在实际工程中的应用场景。
+            \item 以项目为驱动，理论与实践结合，快速提升C++与Qt的综合开发能力。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+
+\section{C语言基础知识}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{C语言概述}
+    \begin{ytublock}{C语言的重要性}
+        \begin{itemize}
+            \item \textbf{系统编程语言}：操作系统、驱动程序、嵌入式系统
+            \item \textbf{高效性}：直接内存操作，编译型语言，执行效率高
+            \item \textbf{强类型语言}：编译时类型检查，减少运行时错误
+            \item \textbf{底层控制}：指针、位操作、内存管理
+            \item \textbf{C++基础}：C++完全兼容C语言，是C的超集
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{C语言特点}
+        \begin{itemize}
+            \item \textbf{简洁高效}：语法简洁，编译后执行效率高
+            \item \textbf{可移植性}：标准C代码可在不同平台编译运行
+            \item \textbf{底层抽象}：提供硬件抽象，但不隐藏底层细节
+            \item \textbf{过程式编程}：函数式编程范式，模块化设计
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C语言基础语法}
+    \begin{ytublock}{基本数据类型}
+        \begin{itemize}
+            \item \textbf{整数类型}：
+            \begin{itemize}
+                \item \texttt{int}：标准整型，通常用于存储整数，大小一般为4字节（32位系统/编译器）。
+                \item \texttt{short}：短整型，通常为2字节，适合存储较小范围的整数。
+                \item \texttt{long}：长整型，通常为4或8字节，能表示更大范围的整数。
+                \item \texttt{char}：字符型，通常为1字节，用于存储单个字符或小整数。
+            \end{itemize}
+            \item \textbf{浮点类型}：
+            \begin{itemize}
+                \item \texttt{float}：单精度浮点型，通常为4字节，适合存储小数，精度有限。
+                \item \texttt{double}：双精度浮点型，通常为8字节，精度更高，适合需要更高精度的计算。
+            \end{itemize}
+            \item \textbf{修饰符}：
+            \begin{itemize}
+                \item \texttt{signed}：有符号类型，能表示正数和负数（如\texttt{signed int}）。
+                \item \texttt{unsigned}：无符号类型，只能表示非负数，范围更大（如\texttt{unsigned int}）。
+            \end{itemize}
+            \item \textbf{类型大小}：不同平台和编译器下，类型所占字节数可能不同。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C语言基础语法}
+    \begin{ytublock}{变量和常量}
+        \small
+        \begin{itemize}
+            \item \textbf{变量声明}：\texttt{类型 变量名;}。变量用于存储可变的数据，声明时可初始化（如\texttt{int b = 10;}）。
+            \item \textbf{常量定义}：
+            \begin{itemize}
+                \item \texttt{const}关键字：如\texttt{const int MAX = 100;}，定义只读变量，编译期间检查不可修改。
+                \item \texttt{\#define}宏定义：如\texttt{\#define PI 3.14}，在预处理阶段进行文本替换，常用于全局常量。
+            \end{itemize}
+            \item \textbf{作用域}：
+            \begin{itemize}
+                \item \textbf{局部变量}：在函数或代码块内部声明，只在其作用范围内有效。
+                \item \textbf{全局变量}：在所有函数外部声明，整个文件都可访问。
+                \item \textbf{静态变量}：用\texttt{static}修饰，静态变量在函数多次调用间保持值不变。
+            \end{itemize}
+            \item \textbf{存储类}：
+            \begin{itemize}
+                \item \texttt{auto}：自动存储类，局部变量默认类型，现代C已很少显式使用。
+                \item \texttt{static}：静态存储类，延长变量生命周期，见上。
+                \item \texttt{extern}：外部变量声明，用于引用其他文件的全局变量。
+                \item \texttt{register}：将变量存储在CPU寄存器中，提高访问速度，现代编译器通常自动优化。
+            \end{itemize}
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C语言条件语句：if-else}
+    \begin{ytublock}{if-else语句}
+        \begin{itemize}
+            \item \textbf{基本语法}：\texttt{if (条件) \{语句块1\} else \{语句块2\}}
+            \item \textbf{功能}：根据条件表达式的真假，选择执行不同的代码块。
+            \item \textbf{嵌套}：if语句可以嵌套使用，实现多级判断。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=9,lastline=17]{cpp}{code/c_control_structures.c}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=26]{cpp}{code/c_control_structures.c}
+        \end{column}
+    \end{columns}
+    % 代码片段说明：第1-15行为if-else结构及其嵌套的完整示例，含中文注释
+\end{frame}
+
+\begin{frame}[fragile]{C语言条件语句：switch-case}
+    \begin{ytublock}{switch-case语句}
+        \begin{itemize}
+            \item \textbf{基本语法}：\texttt{switch (表达式) \{ case 常量: 语句; break; ... default: 语句; \}}
+            \item \textbf{功能}：根据表达式的值，选择匹配的case分支执行。
+            \item \textbf{注意事项}：每个case后通常加\texttt{break}，否则会"贯穿"执行到下一个case。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=28,lastline=38]{cpp}{code/c_control_structures.c}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{switch条件表达式限定}
+                \begin{itemize}
+                    \item \textbf{switch条件表达式}：必须是整数类型（如\texttt{int}、\texttt{char}）。
+                    \item \textbf{case常量}：必须是整数常量，且每个case的常量值必须不同。
+                    \item \textbf{default}：可选，用于处理未匹配的case。
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{C语言循环结构详解}
+    \begin{ytublock}{for循环}
+        \begin{itemize}
+            \item \textbf{基本语法}：\texttt{for(初始化; 条件; 更新)\{循环体\}}
+            \item \textbf{功能}：适合已知循环次数的场景。
+            \item \textbf{执行顺序}：初始化 → 条件检查 → 循环体 → 更新 → 条件检查...
+        \end{itemize}
+    \end{ytublock}
+    \inputminted[firstline=44,lastline=49]{cpp}{code/c_control_structures.c}
+\end{frame}
+
+\begin{frame}{C语言循环结构详解}
+    \begin{ytublock}{while和do-while循环}
+        \begin{itemize}
+            \item \textbf{while循环语法}：\texttt{while(条件)\{循环体\}}
+            \item \textbf{特点}：先判断条件，后执行循环体，可能一次都不执行。
+            \item \textbf{do-while循环语法}：\texttt{do\{循环体\}while(条件);}
+            \item \textbf{特点}：先执行循环体，再判断条件，至少执行一次。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=51,lastline=58]{cpp}{code/c_control_structures.c}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=60,lastline=67]{cpp}{code/c_control_structures.c}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{C语言循环结构详解}
+    \begin{ytublock}{break和continue在循环中的应用}
+        \begin{itemize}
+            \item \textbf{break}：跳出当前循环，循环提前结束。
+            \item \textbf{continue}：跳过本次循环剩余部分，直接进入下一次循环判断。
+        \end{itemize}
+    \end{ytublock}
+    \inputminted[firstline=69,lastline=80]{cpp}{code/c_control_structures.c}
+\end{frame}
+
+\begin{frame}{C语言函数的基本概念}
+    \begin{ytublock}{什么是函数？}
+        \begin{itemize}
+            \item \textbf{函数}是实现特定功能的独立代码块，可以重复调用。
+            \item 通过函数可以将复杂问题分解为若干小问题，便于模块化设计和代码复用。
+            \item C语言的函数包括\textbf{标准库函数}（如\texttt{printf}、\texttt{scanf}）和\textbf{用户自定义函数}。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=7]{cpp}{code/c_function_simple.c}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=9,lastline=17]{cpp}{code/c_function_simple.c}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{C语言函数的声明与定义}
+    \begin{ytublock}{函数声明}
+        \begin{itemize}
+            \item 作用：告诉编译器函数的名称、返回值类型和参数类型。
+            \item 位置：一般写在文件开头或头文件中。
+            \item 语法：\texttt{返回类型 函数名(参数类型列表);}
+            \item 例：\texttt{int add(int a, int b);}
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{函数定义}
+        \begin{itemize}
+            \item 作用：给出函数的具体实现。
+            \item 位置：函数声明之后，函数调用之前。
+            \item 语法：\texttt{返回类型 函数名(参数列表)\{函数体\}}
+            \item 例：\texttt{int add(int a, int b)\{ return a+b; \}}
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C语言函数的调用}
+    \begin{ytublock}{函数调用的基本过程}
+        \begin{itemize}
+            \item 使用\texttt{函数名(实参列表)}的形式调用函数。
+            \item 调用时，实参的值会传递给函数的形参。
+            \item 函数执行完毕后，将结果（如果有）返回给调用处。
+        \end{itemize}
+    \end{ytublock}
+    \inputminted[firstline=11,lastline=12]{cpp}{code/c_function_simple.c}
+\end{frame}
+
+\begin{frame}{C语言参数传递方式}
+    \begin{ytublock}{值传递（pass by value）}
+        \begin{itemize}
+            \item 调用函数时，将实参的值复制一份传递给形参。
+            \item 在函数内部对形参的修改，不会影响到外部的实参变量。
+            \item 适用于基本数据类型（如\texttt{int}、\texttt{float}等）。
+        \end{itemize}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \textbf{值传递定义：}
+                \inputminted[firstline=12,lastline=15]{cpp}{code/c_function_example.c}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \textbf{值传递示例：}
+                \inputminted[firstline=46,lastline=47]{cpp}{code/c_function_example.c}
+            \end{column}
+        \end{columns}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C语言参数传递方式}
+    \begin{ytublock}{指针传递（地址传递，pass by pointer/address）}
+        \begin{itemize}
+            \item 通过传递变量的地址（指针）给函数，实现对外部变量的直接修改。
+            \item 在函数内部通过解引用指针，可以改变外部变量的值。
+            \item 适用于需要在函数内修改外部变量，或传递大型数据结构（如数组）。
+        \end{itemize}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \textbf{指针传递定义：}
+                \inputminted[firstline=17,lastline=22]{cpp}{code/c_function_example.c}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \textbf{指针传递示例：}
+                \inputminted[firstline=50,lastline=54]{cpp}{code/c_function_example.c}
+            \end{column}
+        \end{columns}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C语言函数的返回值与void类型}
+    \begin{ytublock}{返回值}
+        \begin{itemize}
+            \item C语言函数可以有返回值，也可以没有返回值。返回值用于将函数内部计算的结果传递给调用者。
+            \item 返回值类型在函数声明和定义时指定。例如，\texttt{int add(int a, int b)} 表示返回类型为\texttt{int}。
+            \item 使用\texttt{return}语句返回结果。例如：\texttt{return a + b;}。
+            \item 如果函数有返回值，必须保证所有可能的执行路径都能返回一个与声明类型一致的值。
+            \item 调用有返回值的函数时，通常用变量接收返回结果。
+            \item 如果函数声明为非\texttt{void}类型但未返回值，编译器会发出警告或错误。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{void类型}
+        \begin{itemize}
+            \item \texttt{void}类型表示函数没有返回值。此类函数只执行操作，不向调用者返回数据。
+            \item \texttt{void}函数可以使用\texttt{return;}语句提前结束函数，但不能带返回值。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C语言函数的作用与注意事项}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+    \begin{ytublock}{函数的优点}
+        \begin{itemize}
+            \item \textbf{可读性}
+            \item \textbf{可维护性}
+            \item \textbf{可测试性}
+            \item \textbf{可扩展性}
+            \item \textbf{可重用性}
+            \item \textbf{可移植性}
+            \item \textbf{模块化}
+        \end{itemize}
+    \end{ytublock}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+    \begin{ytublock}{注意事项}
+        \begin{itemize}
+            \item \textbf{函数名不能重复}
+            \item \textbf{函数声明与定义要一致}
+            \item \textbf{参数类型和个数要与声明一致}
+            \item \textbf{注意变量作用域和生命周期}
+            \item \textbf{返回值类型要匹配}
+            \item \textbf{避免递归陷入死循环}
+            \item \textbf{参数传递方式要明确}
+            \item \textbf{防止未初始化变量参与运算}
+        \end{itemize}
+    \end{ytublock}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{C语言指针基础}
+    \begin{ytublock}{什么是指针}
+        \begin{itemize}
+            \item 指针是存储变量内存地址的变量。通过指针可以间接访问和操作内存中的数据。
+            \item 声明指针：使用\texttt{*}声明指针类型，如\texttt{int *p;}表示\texttt{p}是一个指向\texttt{int}类型的指针。
+            \item 取地址操作符\texttt{\&}：\texttt{p = \&x;}将变量\texttt{x}的地址赋值给指针\texttt{p}。
+            \item 解引用操作符\texttt{*}：\texttt{*p}访问指针所指向的内存单元的值。
+        \end{itemize}
+    \end{ytublock}
+    \inputminted[firstline=9,lastline=16]{cpp}{code/c_pointer_example.c}
+\end{frame}
+
+\begin{frame}{指针与变量}
+    \begin{ytublock}{指针与变量}
+        \begin{itemize}
+            \item 通过指针可以修改变量的值。
+            \item 指针本身也是一个变量，存储的是地址。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{代码示例}
+        \inputminted[firstline=9,lastline=20]{cpp}{code/c_pointer_example.c}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{指针与数组}
+    \begin{ytublock}{指针与数组}
+        \begin{itemize}
+            \item 数组名本质上是首元素的指针，指针可以遍历数组元素。
+            \item 指针可以进行加减运算（如\texttt{p++}），步长为所指类型的字节数，常用于数组遍历。
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+    \begin{ytublock}{指针访问数组代码示例}
+        \inputminted[firstline=22,lastline=30]{cpp}{code/c_pointer_example.c}
+    \end{ytublock}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+        \begin{ytublock}{指针修改数组代码示例}
+            \inputminted[firstline=32,lastline=38]{cpp}{code/c_pointer_example.c}
+        \end{ytublock}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{C语言动态内存管理}
+    \begin{ytublock}{内存分区与动态分配}
+        \begin{itemize}
+            \item C程序运行时内存主要分为代码区、全局/静态区、栈区和堆区。
+            \item 栈内存：局部变量和函数参数存储在栈区，由系统自动分配和释放，空间有限，生命周期随函数调用结束而结束。
+            \item 堆内存：通过\texttt{malloc()}等函数动态分配，需手动用\texttt{free()}释放，适合存储生命周期较长或大小不确定的数据。
+        \end{itemize}
+        \inputminted[firstline=8,lastline=12]{cpp}{code/c_pointer_memory_example.c}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{指针常见错误与良好习惯}
+    \begin{ytublock}{常见错误}
+        \begin{itemize}
+            \item 未初始化指针，访问已释放内存，指针越界等都可能导致程序崩溃或不可预期行为。
+            \item 内存泄漏：动态分配的内存未及时释放会造成内存泄漏，长期运行会耗尽系统资源。
+            \item 野指针：指针指向的内存已被释放或未初始化，访问野指针会导致不可预期的错误。
+            \item 悬空指针：释放内存后未将指针置为\texttt{NULL}，指针仍然指向原地址，极易出错。
+            \item 内存越界：访问数组或内存块时超出分配范围，可能破坏数据或引发崩溃。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{良好习惯}
+        \begin{itemize}
+            \item 动态分配内存后及时检查返回值是否为\texttt{NULL}，用完后立即\texttt{free()}并将指针赋为\texttt{NULL}。
+            \item 初始化指针为\texttt{NULL}，避免野指针。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C语言结构体}
+    \begin{ytublock}{结构体概念}
+        \begin{itemize}
+            \item \textbf{复合数据类型}：将不同类型的数据组合在一起
+            \item \textbf{成员访问}：使用 \texttt{.} 运算符
+            \item \textbf{指针访问}：使用 \texttt{->} 运算符
+            \item \textbf{内存对齐}：结构体成员的内存布局
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{结构体应用}
+        \begin{itemize}
+            \item \textbf{数据封装}：将相关数据组织在一起
+            \item \textbf{函数参数}：传递复杂数据结构
+            \item \textbf{链表实现}：自引用结构体
+            \item \textbf{面向对象基础}：C++类的雏形
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C语言结构体示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=14]{cpp}{code/c_struct_example.c}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=15,lastline=28]{cpp}{code/c_struct_example.c}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{C语言与C++的关系}
+    \begin{ytublock}{兼容性}
+        \begin{itemize}
+            \item \textbf{完全兼容}：C++是C的超集，几乎所有的C代码都是有效的C++代码
+            \item \textbf{语法兼容}：C的基本语法在C++中完全支持
+            \item \textbf{库兼容}：C标准库在C++中可用（需要适当的头文件）
+            \item \textbf{编译兼容}：C++编译器可以编译C代码
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{C++对C的扩展}
+        \begin{itemize}
+            \item \textbf{面向对象}：类、继承、多态
+            \item \textbf{函数重载}：同名函数不同参数
+            \item \textbf{引用}：变量的别名
+            \item \textbf{模板}：泛型编程
+            \item \textbf{异常处理}：try-catch机制
+            \item \textbf{命名空间}：避免名称冲突
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{底层语言的特点}
+    \begin{ytublock}{强类型语言的优势}
+        \begin{itemize}
+            \item \textbf{编译时检查}：类型错误在编译时发现，减少运行时错误
+            \item \textbf{性能优化}：编译器可以根据类型信息进行优化
+            \item \textbf{内存安全}：类型系统帮助防止内存访问错误
+            \item \textbf{代码可读性}：类型信息使代码意图更清晰
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{底层语言的优势}
+        \begin{itemize}
+            \item \textbf{直接内存操作}：指针和位操作，精确控制内存
+            \item \textbf{高效执行}：编译为机器码，执行效率高
+            \item \textbf{硬件抽象}：提供硬件抽象但不隐藏底层细节
+            \item \textbf{系统编程}：适合操作系统、驱动程序开发
+            \item \textbf{资源控制}：精确控制CPU、内存等资源
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\section{C++基本语法}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{C++语言发展历程}
+    \begin{ytublock}{C++的起源与设计理念}
+        \begin{itemize}
+            \item \textbf{1980年代}：Bjarne Stroustrup在贝尔实验室开发
+            \item \textbf{设计目标}：结合C的高效性和Simula的面向对象特性
+            \item \textbf{核心理念}：零开销抽象原则（Zero-Overhead Principle）
+            \item \textbf{应用领域}：系统编程、应用开发、嵌入式系统
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{C++标准版本演进}
+        \begin{itemize}
+            \item \textbf{C++98} (1998年) - 第一个国际标准，确立基础语法
+            \item \textbf{C++03} (2003年) - 技术修正版本，修复缺陷
+            \item \textbf{C++11} (2011年) - 现代C++开始，重大更新
+            \item \textbf{C++14} (2014年) - 功能完善和优化
+            \item \textbf{C++17} (2017年) - 标准库增强
+            \item \textbf{C++20} (2020年) - 最新标准，重大特性
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++11：现代C++的转折点}
+    \begin{ytublock}{C++11的重大创新}
+        \begin{itemize}
+            \item \textbf{智能指针}：\texttt{std::unique\_ptr}, \texttt{std::shared\_ptr}
+            \item \textbf{Lambda表达式}：函数式编程支持
+            \item \textbf{移动语义}：性能优化的革命性改进
+            \item \textbf{auto关键字}：类型推导，简化代码
+            \item \textbf{范围for循环}：更简洁的迭代语法
+            \item \textbf{nullptr}：类型安全的空指针
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{对编程范式的影响}
+        \begin{itemize}
+            \item \textbf{从OOP到多范式}：支持面向对象、泛型、函数式编程
+            \item \textbf{性能优先}：移动语义显著提升性能
+            \item \textbf{安全性提升}：智能指针减少内存泄漏
+            \item \textbf{代码简化}：auto和Lambda减少样板代码
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++14/17/20：持续演进}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{C++14增强}
+                \begin{itemize}
+                    \item \textbf{泛型Lambda}：支持auto参数
+                    \item \textbf{变量模板}：模板变量声明
+                    \item \textbf{数字分隔符}：提高可读性
+                    \item \textbf{std::make\_unique}：智能指针工厂
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{C++17新特性}
+                \begin{itemize}
+                    \item \textbf{结构化绑定}：多返回值处理
+                    \item \textbf{std::optional}：可选值类型
+                    \item \textbf{std::variant}：类型安全联合
+                    \item \textbf{并行算法}：标准库并行化
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+
+    \begin{ytublock}{C++20重大更新}
+        \begin{itemize}
+            \item \textbf{概念(Concepts)}：模板约束系统
+            \item \textbf{协程(Coroutines)}：异步编程支持
+            \item \textbf{模块(Modules)}：编译时依赖管理
+            \item \textbf{三向比较}：\texttt{<=>}操作符
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++语言特点}
+    \begin{ytublock}{多范式编程语言}
+        \begin{itemize}
+            \item \textbf{面向对象编程}：封装、继承、多态，支持抽象和重用
+            \item \textbf{泛型编程}：模板、STL，编译时多态
+            \item \textbf{过程式编程}：函数、模块化设计（继承自C语言）
+            \item \textbf{函数式编程}：Lambda表达式、算法库
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{C语言兼容性}
+        \begin{itemize}
+            \item \textbf{完全兼容}：C++是C的超集，几乎所有的C代码都是有效的C++代码
+            \item \textbf{底层控制}：保留C语言的指针、内存管理、位操作等底层特性
+            \item \textbf{性能优先}：零开销抽象原则，高级特性不带来性能损失
+            \item \textbf{系统编程}：适合操作系统、驱动程序、嵌入式系统开发
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++的应用领域与优势}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{主要应用领域}
+                \begin{itemize}
+                    \item \textbf{系统软件}：操作系统、驱动程序
+                    \item \textbf{游戏开发}：引擎、图形渲染
+                    \item \textbf{嵌入式系统}：实时控制、IoT设备
+                    \item \textbf{高性能计算}：科学计算、金融交易
+                    \item \textbf{桌面应用}：Qt、MFC、WPF
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+                \begin{ytublock}{技术优势}
+        \begin{itemize}
+            \item \textbf{跨平台}：一次编写，多处运行
+            \item \textbf{类型安全}：编译时类型检查
+            \item \textbf{向后兼容}：C语言兼容性，平滑过渡
+            \item \textbf{标准化}：ISO标准，长期稳定
+            \item \textbf{生态系统}：丰富的库和工具链
+            \item \textbf{底层控制}：直接内存操作，高效执行
+        \end{itemize}
+    \end{ytublock}
+        \end{column}
+    \end{columns}
+
+    \begin{ytublock}{与其他语言的比较}
+        \begin{itemize}
+            \item \textbf{vs C}：更强的类型安全，面向对象支持，但保持底层控制能力
+            \item \textbf{vs Java}：更高的性能，更直接的内存控制，无虚拟机开销
+            \item \textbf{vs Python}：编译型语言，执行效率更高，强类型检查
+            \item \textbf{共同特点}：都是强类型语言，编译时检查，适合系统编程
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++与Qt的关系}
+    \begin{ytublock}{Qt框架的C++基础}
+        \begin{itemize}
+            \item \textbf{原生C++框架}：Qt完全用C++编写，无虚拟机依赖
+            \item \textbf{面向对象设计}：充分利用C++的封装、继承、多态特性
+            \item \textbf{现代C++支持}：支持C++11及以后特性，包括智能指针、Lambda等
+            \item \textbf{跨平台抽象}：统一不同操作系统的API，实现真正的跨平台
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Qt的C++特性应用}
+                \begin{itemize}
+                    \item \textbf{信号槽机制}：基于函数指针和回调
+                    \item \textbf{元对象系统}：运行时类型信息和反射
+                    \item \textbf{内存管理}：父子对象关系，自动清理
+                    \item \textbf{模板应用}：容器类、算法库
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{学习C++的优势}
+                \begin{itemize}
+                    \item \textbf{类型安全}：编译时错误检查，减少运行时错误
+                    \item \textbf{性能优化}：C++的高效执行
+                    \item \textbf{生态系统}：丰富的第三方库和工具支持
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Qt与C++的协同优势}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{开发效率提升}
+                \begin{itemize}
+                    \item \textbf{快速原型}：Qt Designer可视化设计
+                    \item \textbf{代码生成}：uic工具自动生成UI代码
+                    \item \textbf{调试支持}：集成调试器和性能分析
+                    \item \textbf{文档完善}：详细的API文档和示例
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{性能与稳定性}
+                \begin{itemize}
+                    \item \textbf{编译优化}：C++编译器深度优化
+                    \item \textbf{内存安全}：RAII和智能指针
+                    \item \textbf{异常处理}：C++异常机制
+                    \item \textbf{线程安全}：Qt的线程模型
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+
+    \begin{ytublock}{学习路径建议}
+        \begin{itemize}
+            \item \textbf{基础阶段}：掌握C++基本语法和面向对象概念
+            \item \textbf{进阶阶段}：学习现代C++特性和Qt框架
+            \item \textbf{实践阶段}：结合项目开发，深入理解两者结合
+            \item \textbf{高级阶段}：性能优化、设计模式、架构设计
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++基础语法概述}
+    \begin{ytublock}{C++对C的语法扩展}
+        \begin{itemize}
+            \item \textbf{完全兼容C}：C++是C的超集，所有C代码都是有效的C++代码
+            \item \textbf{面向对象扩展}：类、对象、继承、多态
+            \item \textbf{函数重载}：同名函数不同参数类型
+            \item \textbf{引用类型}：变量的别名，避免指针的复杂性
+            \item \textbf{命名空间}：避免名称冲突
+            \item \textbf{异常处理}：try-catch机制
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{C++语法特点}
+        \begin{itemize}
+            \item \textbf{强类型}：编译时类型检查，类型安全
+            \item \textbf{静态类型}：类型在编译时确定
+            \item \textbf{编译型语言}：直接编译为机器码
+            \item \textbf{多范式}：支持过程式、面向对象、泛型编程
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++基本数据类型}
+    \begin{ytublock}{C++数据类型扩展}
+        \begin{itemize}
+            \item \textbf{bool类型}：\texttt{true}和\texttt{false}，C++原生支持
+            \item \textbf{wchar\_t}：宽字符类型，支持Unicode
+            \item \textbf{引用类型}：\texttt{int\&}、\texttt{double\&}等
+            \item \textbf{类类型}：用户自定义类型
+            \item \textbf{模板类型}：泛型类型
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{类型安全增强}
+        \begin{itemize}
+            \item \textbf{类型转换}：显式类型转换，避免隐式转换错误
+            \item \textbf{const修饰符}：常量类型，防止意外修改
+            \item \textbf{类型推导}：auto关键字，编译器自动推导类型
+            \item \textbf{nullptr}：类型安全的空指针（C++11）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++变量和常量声明}
+    \begin{ytublock}{C++变量声明增强}
+        \begin{itemize}
+            \item \textbf{引用声明}：\texttt{int\& ref = x;} 创建变量的别名
+            \item \textbf{const引用}：\texttt{const int\& ref = x;} 只读引用
+            \item \textbf{auto关键字}：\texttt{auto x = 42;} 自动类型推导
+            \item \textbf{decltype}：\texttt{decltype(expr)} 推导表达式类型
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{常量声明}
+        \begin{itemize}
+            \item \textbf{const常量}：\texttt{const int MAX = 100;}
+            \item \textbf{constexpr}：编译时常量（C++11）
+            \item \textbf{constinit}：编译时初始化（C++20）
+            \item \textbf{const成员函数}：\texttt{void func() const;}
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C++变量和常量示例}
+    \inputminted[firstline=1,lastline=15]{cpp}{code/cpp_variables_constants.cpp}
+\end{frame}
+
+\begin{frame}{C++运算符和表达式}
+    \begin{ytublock}{C++运算符扩展}
+        \begin{itemize}
+            \item \textbf{作用域解析运算符}：\texttt{::} 访问全局变量或类成员
+            \item \textbf{成员访问运算符}：\texttt{.} 和 \texttt{->} 访问对象成员
+            \item \textbf{类型转换运算符}：\texttt{static\_cast}、\texttt{dynamic\_cast}
+            \item \textbf{条件运算符}：\texttt{?:} 三元运算符
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{表达式增强}
+        \begin{itemize}
+            \item \textbf{函数调用表达式}：支持函数重载和默认参数
+            \item \textbf{成员函数调用}：\texttt{obj.func()} 或 \texttt{ptr->func()}
+            \item \textbf{模板实例化}：\texttt{vector<int> v;}
+            \item \textbf{Lambda表达式}：\texttt{[](int x) \{ return x * 2; \}}
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++控制结构}
+    \begin{ytublock}{C++控制结构增强}
+        \begin{itemize}
+            \item \textbf{范围for循环}：\texttt{for (auto\& item : container)} （C++11）
+            \item \textbf{初始化语句}：\texttt{if (auto it = find(x); it != end())}
+            \item \textbf{结构化绑定}：\texttt{auto [x, y] = pair;} （C++17）
+            \item \textbf{switch增强}：支持初始化语句和fallthrough
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{异常处理}
+        \begin{itemize}
+            \item \textbf{try-catch}：异常捕获和处理
+            \item \textbf{throw}：抛出异常
+            \item \textbf{noexcept}：指定函数不抛出异常
+            \item \textbf{RAII}：资源获取即初始化
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++函数}
+    \begin{ytublock}{C++函数特性}
+        \begin{itemize}
+            \item \textbf{函数重载}：同名函数不同参数类型或数量
+            \item \textbf{默认参数}：\texttt{void func(int x = 0, int y = 0);}
+            \item \textbf{内联函数}：\texttt{inline} 关键字
+            \item \textbf{函数模板}：泛型函数
+            \item \textbf{Lambda表达式}：匿名函数
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{函数调用约定}
+        \begin{itemize}
+            \item \textbf{值传递}：\texttt{void func(int x);} 传递副本
+            \item \textbf{引用传递}：\texttt{void func(int\& x);} 避免拷贝
+            \item \textbf{const引用}：\texttt{void func(const int\& x);} 只读
+            \item \textbf{右值引用}：\texttt{void func(int\&\& x);} 移动语义
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C++函数示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+                \inputminted[firstline=1,lastline=18]{cpp}{code/cpp_function_basic.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+                \inputminted[firstline=20,lastline=36]{cpp}{code/cpp_function_basic.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{C++函数重载}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/cpp_function_overload.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+                \inputminted[firstline=21,lastline=37]{cpp}{code/cpp_function_overload.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Lambda表达式}
+    \begin{ytublock}{Lambda表达式语法}
+        \begin{itemize}
+            \item \texttt{[capture](parameters) -> return\_type \{ body \}}
+            \item capture：捕获外部变量
+            \item parameters：参数
+            \item return\_type：返回类型
+            \item body：函数体
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{Lambda表达式捕获}
+        \begin{itemize}
+            \item \texttt{[]}：不捕获任何外部变量。若在Lambda体内使用未捕获的外部变量会导致编译错误。
+            \item \texttt{[x, \&y]}：x以值捕获，y以引用捕获。
+            \item \texttt{[\&]}：所有被用到的外部变量都以引用方式捕获。
+            \item \texttt{[=]}：所有被用到的外部变量都以值方式捕获。
+            \item \texttt{[\&, x]}：x以值方式捕获，其余变量以引用方式捕获。
+            \item \texttt{[=, \&z]}：z以引用方式捕获，其余变量以值方式捕获。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C++ Lambda表达式示例}
+    \inputminted[firstline=1,lastline=18]{cpp}{code/cpp_lambda_example.cpp}
+\end{frame}
+
+\begin{frame}{C++数组}
+    \begin{ytublock}{C++数组增强与细节}
+        \begin{itemize}
+            \item \textbf{原生数组}：如 \texttt{int arr[5];}，大小固定，不能自动推断长度，越界不安全。
+            \item \textbf{std::array}：C++11引入，固定大小、类型安全，支持标准库算法，如 \texttt{std::array<int, 5> arr;}。
+            \item \textbf{std::vector}：动态数组，自动管理内存，可动态扩容，常用操作有 \texttt{push\_back}、\texttt{size}、\texttt{at} 等。
+            \item \textbf{初始化列表}：可用于原生数组、\texttt{std::array}、\texttt{std::vector}，如 \texttt{int arr[] = \{1, 2, 3\};} 或 \texttt{std::vector<int> v = \{1,2,3\};}。
+            \item \textbf{范围for循环}：C++11起支持，简化遍历，如 \texttt{for (auto x : arr) \{\}}，适用于原生数组、\texttt{std::array}、\texttt{std::vector}。
+            \item \textbf{迭代器遍历}：\texttt{std::vector} 和 \texttt{std::array} 支持迭代器，可用 \texttt{begin()} 和 \texttt{end()} 进行灵活遍历。
+            \item \textbf{内存安全}：\texttt{std::vector} 的 \texttt{at()} 方法有越界检查，原生数组无越界保护。
+            \item \textbf{多维数组}：原生数组、\texttt{std::array}、\texttt{std::vector} 均可实现多维数组。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C++原生数组示例}
+    \inputminted[firstline=1,lastline=20]{cpp}{code/cpp_array_example.cpp}
+\end{frame}
+
+\begin{frame}[fragile]{C++std::array示例}
+    \inputminted[firstline=1,lastline=20]{cpp}{code/cpp_stdarray_example.cpp}
+\end{frame}
+
+\begin{frame}[fragile]{C++std::vector示例}
+        \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/cpp_vector_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=38]{cpp}{code/cpp_vector_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{C++指针和引用}
+    \begin{ytublock}{C++指针增强}
+        \begin{itemize}
+            \item \textbf{nullptr}：类型安全的空指针（C++11）
+            \item \textbf{智能指针}：\texttt{std::unique\_ptr}、\texttt{std::shared\_ptr}
+            \item \textbf{void指针}：\texttt{void*} 通用指针
+            \item \textbf{函数指针}：指向函数的指针
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{C++引用}
+        \begin{itemize}
+            \item \textbf{左值引用}：\texttt{int\& ref = x;}
+            \item \textbf{常量引用}：\texttt{const int\& ref = x;}
+            \item \textbf{右值引用}：\texttt{int\&\& ref = 42;} （C++11）
+            \item \textbf{引用vs指针}：引用更安全，不能为空
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C++指针示例}
+    \inputminted[firstline=1,lastline=18]{cpp}{code/cpp_pointer_example.cpp}
+\end{frame}
+
+\begin{frame}[fragile]{C++引用示例}
+    \inputminted[firstline=1,lastline=15]{cpp}{code/cpp_reference_example.cpp}
+\end{frame}
+
+\section{C++面向对象编程}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{C++面向对象编程}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+    \begin{ytublock}{什么是类？}
+        \begin{itemize}
+            \item 类是对象的蓝图或模板
+            \item 类定义了对象的结构和行为
+            \item 类包含数据成员和成员函数
+            \item 类是抽象的，对象是具体的
+        \end{itemize}
+    \end{ytublock}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+    \begin{ytublock}{什么是对象？}
+        \begin{itemize}
+            \item 对象是类的实例
+            \item 对象具有类定义的结构和行为
+            \item 对象是具体的，有自己的状态和行为
+        \end{itemize}
+    \end{ytublock}
+    \end{column}
+    \end{columns}
+    \begin{ytublock}{面向对象的优点}
+        \begin{itemize}
+            \item 封装：将数据和方法封装在类中，隐藏实现细节，只暴露接口
+            \item 继承：继承父类的方法和属性，实现代码复用
+            \item 多态：实现接口的统一，不同实现方式
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C++类的定义、对象的创建与使用}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \inputminted[firstline=1,lastline=16]{cpp}{code/cpp_class_example.cpp}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \inputminted[firstline=18,lastline=30]{cpp}{code/cpp_class_example.cpp}
+            \end{column}
+        \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{C++继承}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+        \begin{itemize}
+            \item 基类：父类，被继承的类，基类中定义的属性和方法可以被派生类继承
+            \item 派生类：子类，继承父类的类，在基类的基础上扩展新的属性和方法
+            \item 继承：派生类继承基类的属性和方法，派生类可以重写基类的方法
+        \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/cpp_inherit_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=28]{cpp}{code/cpp_inherit_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{C++多继承}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/cpp_multi_inherit_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=33]{cpp}{code/cpp_multi_inherit_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{C++继承的规则}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \item 公有继承：基类的public和protected成员在派生类中保持原样，private成员不可访问
+                \item 保护继承：基类的public和protected成员在派生类中变为protected，private成员不可访问
+                \item 私有继承：基类的public和protected成员在派生类中变为private，private成员不可访问
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/cpp_inherit_rule.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{C++继承的规则}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=37]{cpp}{code/cpp_inherit_rule.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=38,lastline=57]{cpp}{code/cpp_inherit_rule.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{C++多态}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{多态}
+                \begin{itemize}
+                    \item 多态：派生类可以重写基类的方法，实现不同的行为
+                    \item 虚函数：基类中定义的虚函数，派生类可以重写
+                    \item 纯虚函数：基类中定义的纯虚函数，派生类必须重写
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/cpp_polymorphism_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{C++多态}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{多态的作用}
+                \begin{itemize}
+                    \item 代码复用：派生类直接使用基类的属性和方法，不需要重新实现
+                    \item 接口统一：派生类和基类具有相同的接口，可以相互替换
+                    \item 扩展性：新增子类时，不需要修改父类，只需要重写子类的方法
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=33]{cpp}{code/cpp_polymorphism_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{智能指针}
+    \begin{columns}
+        \begin{column}{0.58\textwidth}
+        \begin{ytublock}{智能指针的类型}
+        \begin{itemize}
+            \item \textbf{std::unique\_ptr} - 独占所有权，不能复制
+            \item \textbf{std::shared\_ptr} - 共享所有权，引用计数
+            \item \textbf{std::weak\_ptr} - 弱引用，不增加引用计数
+            \item \textbf{std::auto\_ptr} - 已废弃，C++17移除
+        \end{itemize}
+        \end{ytublock}
+        \end{column}
+        \begin{column}{0.38\textwidth}
+        \begin{ytublock}{智能指针的优势}
+            \begin{itemize}
+                \item \textbf{自动内存管理} - 避免内存泄漏
+                \item \textbf{异常安全} - 异常时自动清理
+                \item \textbf{RAII} - 资源获取即初始化
+                \item \textbf{线程安全} - shared\_ptr线程安全
+            \end{itemize}
+        \end{ytublock}
+        \end{column}
+    \end{columns}
+    \begin{ytublock}{什么是引用计数？}
+        \begin{itemize}
+            \item 创建对象时，引用计数为1
+            \item 当新的指针或者引用指向该对象时，引用计数加1
+            \item 当指针或者引用不再指向该对象时，引用计数减1
+            \item 当引用计数为0时，对象被销毁，资源被释放
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C++智能指针示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/cpp_smart_pointer_clean.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=35]{cpp}{code/cpp_smart_pointer_clean.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{总结}
+    \begin{itemize}
+        \item 本章介绍了C的基本语法、C++的基本语法、Lambda表达式、数组、指针和引用、面向对象编程、智能指针等概念，通过示例代码，我们了解了这些概念的用法和实现方式
+        \item 在实际开发中，我们可以根据需要选择合适的数据结构和算法，提高代码的效率和可读性
+        \item C++的语法还有很多，比如模板、异常处理、多线程、网络编程、数据库编程、图形编程等，这些内容可以参考其他书籍或者网络资源
+    \end{itemize}
+\end{frame}
+\end{document}

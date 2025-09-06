@@ -1,0 +1,2029 @@
+\documentclass[UTF8,aspectratio=169]{beamer}
+
+\include{../setup.tex}
+
+% 文档信息
+\title{高等程序设计 - Qt/C++}
+\subtitle{第3章：Qt框架基础知识}
+\author{王培杰}
+\institute{长江大学地球物理与石油资源学院}
+\date{\today}
+
+\begin{document}
+
+% 标题页
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录页
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[]
+    \end{multicols}
+\end{frame}
+
+
+\section{Qt框架概述}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{Qt框架简介}
+    \begin{columns}
+        \begin{column}{0.58\textwidth}
+    \begin{ytublock}{Qt是什么？}
+        \begin{itemize}
+            \item 跨平台C++应用程序开发框架
+            \item 由Trolltech公司开发（现为Qt Company）
+            \item 提供GUI、网络、数据库、多媒体等功能
+            \item 支持桌面、移动、嵌入式平台
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{Qt开发的优秀软件}
+        \begin{itemize}
+            \item Google Earth
+            \item Autodesk Maya
+            \item Adobe Photoshop
+            \item WPS Office
+            \item Virtual Box
+            \item COMSOL Multiphysics
+        \end{itemize}
+    \end{ytublock}
+\end{column}
+\begin{column}{0.38\textwidth}
+    \begin{ytublock}{技术优势}
+        \begin{itemize}
+            \item 跨平台支持
+            \item 丰富的API
+            \item 优秀的性能
+            \item 活跃的社区
+            \item 完善的文档
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{开发优势}
+        \begin{itemize}
+            \item 快速开发
+            \item 代码复用
+            \item 维护简单
+            \item 部署方便
+            \item 开源免费
+        \end{itemize}
+    \end{ytublock}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\section{Qt核心模块}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{Qt模块架构}
+    \begin{ytublock}{核心模块}
+        \begin{itemize}
+            \item \texttt{QtCore} - 基础核心类（对象模型、事件系统、线程、文件、容器等）
+            \item \texttt{QtGui} - 图形用户界面类（窗口、绘图、事件处理等）
+            \item \texttt{QtWidgets} - 桌面GUI组件类（按钮、对话框、布局等）
+            \item \texttt{QtNetwork} - 网络编程类（TCP/IP、UDP、HTTP等）
+            \item \texttt{QtSql} - 数据库支持类（数据库连接、查询、事务等）
+            \item \texttt{QtCharts} - 图表组件类（图表绘制）
+            \item \texttt{Qt3D} - 3D图形类（3D图形渲染）
+            \item \texttt{QtMultimedia} - 多媒体类（音频、视频、图像处理等）
+            \item \texttt{QtXml} - XML支持类（XML解析、生成等）
+            \item \texttt{QtSvg} - SVG支持类（SVG解析、生成等）
+            \item \texttt{QtQml} - QML支持类（QML支持）
+            \item \texttt{QtQuick} - 声明式UI类（QML支持）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{Qt应用程序结构}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/qt_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=40]{cpp}{code/qt_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{元对象系统}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{元对象系统概述}
+    \begin{ytublock}{什么是元对象系统？}
+        元对象系统（Meta-Object System）是 Qt 框架中一个核心的、强大的基础设施。它为 Qt 提供了标准 C++ 本身不具备的一些高级功能，使得 Qt 应用程序更加灵活、动态和易于开发。
+
+        简单来说，元对象系统是 Qt 在 C++ 基础上"扩展"出来的一套机制，它让对象能够"知道"关于自身的一些信息（如类名、属性、方法等），并支持对象间的动态通信。
+    \end{ytublock}
+
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{元对象系统的作用}
+                \begin{itemize}
+                    \item 提供运行时类型信息
+                    \item 支持信号槽机制
+                    \item 实现属性系统
+                    \item 支持动态属性
+                    \item 提供反射能力
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{核心组件}
+                \begin{itemize}
+                    \item \texttt{Q\_OBJECT}宏
+                    \item \texttt{moc}（Meta-Object Compiler）
+                    \item \texttt{QMetaObject}类
+                    \item \texttt{QObject}基类
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Q\_OBJECT宏}
+  \begin{columns}
+    \begin{column}{0.48\textwidth}
+      \inputminted[firstline=1,lastline=20]{cpp}{code/qobject_example.h}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \inputminted[firstline=20,lastline=40]{cpp}{code/qobject_example.h}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Meta-Object Compiler（moc）元对象编译器}
+    \begin{ytublock}{moc的作用}
+        \begin{itemize}
+            \item \textbf{moc（Meta-Object Compiler）} 是Qt框架中专门用于处理元对象系统的工具。
+            \item 它会扫描C++头文件，自动生成实现信号、槽、属性等元对象相关功能的代码。
+            \item 只有包含 \texttt{Q\_OBJECT} 宏的类才需要moc处理。
+            \item moc生成的代码会被编译并链接到最终的程序中，实现运行时类型信息、信号槽机制等高级特性。
+            \item 开发者无需手动编写这些元对象相关的底层代码，极大提升了开发效率和代码安全性。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{moc的运行过程}
+        \begin{itemize}
+            \item 扫描头文件，找到包含 \texttt{Q\_OBJECT} 宏的类。
+            \item 生成包含信号、槽、属性等元对象相关功能的代码。
+            \item 将生成的代码编译并链接到最终的程序中。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QMetaObject类}
+    \begin{ytublock}{QMetaObject类的作用}
+        \begin{itemize}
+            \item QMetaObject类是Qt元对象系统的核心，负责描述和管理QObject派生类的元信息。
+            \item 通过QMetaObject，可以在运行时获取类名、属性、信号、槽等信息，实现反射和动态调用。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{QMetaObject类的常用方法}
+        \begin{itemize}
+            \item \texttt{className()}：返回类的名称。
+            \item \texttt{indexOfMethod(const char *method)}：返回指定方法的索引。
+            \item \texttt{indexOfSignal(const char *signal)}：返回指定信号的索引。
+            \item \texttt{invokeMethod(QObject *obj, const char *member, ...)}：在运行时调用对象的方法（槽函数）。
+            \item \texttt{propertyCount()}、\texttt{methodCount()}：获取属性和方法的数量。
+            \item \texttt{property(int index)}、\texttt{method(int index)}：通过索引获取属性或方法的元信息。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QObject基类}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{QObject基类的作用}
+                \begin{itemize}
+                    \item \textbf{QObject} 是Qt框架中所有对象的基类，绝大多数Qt类都直接或间接继承自它。
+                    \item 提供了信号槽机制、事件处理、对象树（父子关系）、动态属性、对象名称等核心功能。
+                    \item 支持对象间通信、自动内存管理（父对象析构时自动析构子对象），便于资源管理。
+                    \item 通过 \texttt{Q\_OBJECT} 宏启用元对象系统，支持运行时类型信息和反射。
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{QObject基类的常用方法}
+                \begin{itemize}
+                    \item \texttt{connect()}：连接信号和槽。
+                    \item \texttt{disconnect()}：断开信号和槽的连接。
+                    \item \texttt{emit()}：发送信号。
+                    \item \texttt{parent()}：获取父对象。
+                    \item \texttt{children()}：获取子对象。
+                    \item \texttt{setProperty()}：设置属性。
+                    \item \texttt{property()}：获取属性。
+                    \item \texttt{metaObject()}：获取元对象。
+                    \item \texttt{inherits()}：检查是否继承自指定类。
+                    \item \texttt{findChild()}：查找子对象。
+                    \item \texttt{event()}：事件处理。
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{信号槽机制}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{事件}
+\begin{ytublock}{事件的概念}
+    \begin{itemize}
+        \item 事件（Event）是GUI编程中用于描述用户操作（如鼠标点击、键盘输入）、系统消息（如窗口重绘、定时器超时）等的对象。
+        \item 事件机制实现了对象与外部交互的基本方式，是GUI响应用户操作的基础。
+    \end{itemize}
+\end{ytublock}
+\begin{ytublock}{事件的缺陷}
+    \begin{itemize}
+        \item 事件处理函数通常需要重写基类方法，导致代码分散、可维护性差。
+        \item 事件只能在对象内部处理，难以实现对象间的灵活通信。
+        \item 事件机制不支持多对象同时响应同一事件，扩展性有限。
+        \item 事件的传递和处理流程较为复杂，难以实现解耦和灵活的响应机制。
+        \item 难以动态连接和断开事件响应，缺乏运行时的灵活性。
+    \end{itemize}
+\end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C++事件示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/cpp_event_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=40]{cpp}{code/cpp_event_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Qt事件示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/qt_event_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=40]{cpp}{code/qt_event_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{信号槽概念}
+    \begin{itemize}
+        \item \textbf{信号（Signal）}：对象在特定状态或事件发生时发出的通知。
+        \item \textbf{槽（Slot）}：用于接收和处理信号的普通成员函数或全局函数，是对信号的响应动作。
+        \item \textbf{连接（Connection）}：将信号与一个或多个槽函数绑定起来，信号发出时自动调用对应的槽。
+        \item \textbf{解耦}：信号的发送者和槽的接收者无需相互了解，提升代码的灵活性和可维护性。
+        \item \textbf{对象间通信}：信号槽机制是Qt实现对象间通信的核心方式，支持跨线程、跨对象的消息传递。
+        \item \textbf{动态连接与断开}：可以在运行时动态地连接和断开信号与槽，满足复杂场景下的需求。
+        \item \textbf{类型安全}：编译器会检查信号和槽的参数类型，避免类型不匹配导致的错误。
+        \item \textbf{松耦合设计}：发送者和接收者完全解耦，便于模块化开发和单元测试。
+        \item \textbf{支持多对多连接}：一个信号可以连接多个槽，一个槽也可以接收多个信号。
+        \item \textbf{自动内存管理}：当对象销毁时，相关的信号槽连接会自动断开。
+        \item \textbf{线程安全}：Qt支持跨线程的信号槽通信，自动进行事件队列投递，简化多线程编程。
+        \item \textbf{可扩展性强}：信号槽机制支持自定义信号和槽，适用于各种复杂的应用场景。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{信号槽机制原理}
+    \begin{ytublock}{信号槽对比事件}
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{|p{2.5cm}|p{5.2cm}|p{5.2cm}|}
+                \hline
+                & \textbf{事件机制} & \textbf{信号槽机制} \\
+                \hline
+                响应方式 & 通过重写事件处理函数（如 \texttt{event()}、\texttt{mousePressEvent()}），对象内部响应 & 通过信号（Signal）和槽（Slot）机制，对象间通信 \\
+                \hline
+                适用场景 & 适合处理底层、面向对象自身的消息 & 适合对象间的灵活响应和协作 \\
+                \hline
+                扩展性与灵活性 & 扩展性和灵活性有限，连接固定 & 支持多对多连接，动态连接和断开，灵活性高 \\
+                \hline
+                代码维护性 & 代码分散、耦合度高，维护较难 & 发送者和接收者解耦，易于维护和扩展 \\
+                \hline
+            \end{tabular}
+        \end{table}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{信号槽基本用法}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/qt_signal_slot_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=38]{cpp}{code/qt_signal_slot_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{信号槽连接方式（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/qt_connect_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=40]{cpp}{code/qt_connect_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{信号槽连接方式（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=26,lastline=38]{cpp}{code/qt_connect_advanced_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=39,lastline=56]{cpp}{code/qt_connect_advanced_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{事件系统}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{Qt事件系统}
+    \begin{ytublock}{事件类型}
+        \begin{itemize}
+            \item 鼠标事件（Mouse Events）
+            \item 键盘事件（Keyboard Events）
+            \item 窗口事件（Window Events）
+            \item 拖放事件（Drag \& Drop Events）
+            \item 定时器事件（Timer Events）
+            \item 自定义事件（Custom Events）
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{事件处理方式}
+        \begin{itemize}
+            \item 事件循环（Event Loop）
+            \item 事件过滤器（Event Filters）
+            \item 事件处理器（Event Handlers）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{鼠标事件示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_mouse_event_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=41]{cpp}{code/qt_mouse_event_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{键盘事件示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=21]{cpp}{code/qt_keyboard_event_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=22,lastline=38]{cpp}{code/qt_keyboard_event_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{窗口事件示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/qt_window_event_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=22,lastline=39]{cpp}{code/qt_window_event_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{拖放事件示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=22]{cpp}{code/qt_drag_drop_event_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=23,lastline=44]{cpp}{code/qt_drag_drop_event_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{定时器事件示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=21]{cpp}{code/qt_timer_event_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=22,lastline=39]{cpp}{code/qt_timer_event_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{自定义事件示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=22]{cpp}{code/qt_custom_event_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=23,lastline=41]{cpp}{code/qt_custom_event_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{事件循环（Event Loop）}
+    \begin{ytublock}{事件循环简介}
+        \begin{itemize}
+            \item 事件循环是Qt应用程序的核心机制，负责持续接收、分发和处理事件与消息，保证界面响应和程序流畅运行。
+            \item 事件循环通过 \texttt{QApplication::exec()} 启动，主线程进入循环，等待并处理各种事件（如鼠标、键盘、定时器、自定义事件等）。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{事件循环实现方式}
+        \begin{itemize}
+            \item 通过重写 \texttt{event(QEvent *event)} 方法，可以自定义事件的处理逻辑，实现对特定事件的拦截与响应。
+            \item 事件循环自动调用事件处理函数，无需手动轮询，大大简化了事件驱动编程。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{事件循环示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/qt_event_loop_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=40]{cpp}{code/qt_event_loop_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{事件过滤器（Event Filter）}
+    \begin{ytublock}{事件过滤器简介}
+        \begin{itemize}
+            \item Qt事件过滤器允许一个对象监视和拦截另一个QObject对象的事件。。
+            \item 常用于全局快捷键、特殊控件行为、日志记录等场景。
+            \item 安装事件过滤器：\texttt{target->installEventFilter(filterObject);}
+            \item 移除事件过滤器：\texttt{target->removeEventFilter(filterObject);}
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{事件过滤器实现}
+        \begin{itemize}
+            \item 定义一个自定义类，继承自 \texttt{QObject}，并重写 \texttt{eventFilter(QObject *watched, QEvent *event)} 方法。
+            \item 创建事件过滤器对象，并通过 \texttt{installEventFilter()} 安装到目标对象上。
+            \item 在 \texttt{eventFilter} 方法中判断事件类型，进行自定义处理，返回 \texttt{true} 表示事件被拦截，\texttt{false} 表示继续传递。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{事件过滤器示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_event_filter_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/qt_event_filter_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{事件处理器（Event Handler）}
+    \begin{ytublock}{事件处理器简介}
+        \begin{itemize}
+            \item Qt事件处理器允许一个对象处理另一个QObject对象的事件。
+            \item 通过重写 \texttt{event(QEvent *event)} 方法，可以在事件到达目标对象前进行处理或拦截。
+            \item 常用于全局快捷键、特殊控件行为、日志记录等场景。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{事件处理器实现}
+        \begin{itemize}
+            \item 定义一个自定义类，继承自 \texttt{QObject}，并重写 \texttt{event(QEvent *event)} 方法。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{事件处理器示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=14]{cpp}{code/qt_event_handler_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=15,lastline=27]{cpp}{code/qt_event_handler_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Qt容器类}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{Qt容器类概述}
+    \begin{ytublock}{Qt容器特点}
+        \begin{itemize}
+            \item 隐式共享（Implicit Sharing）: 多个对象共享同一块内存，当其中一个对象修改时，会创建一个新的副本。
+            \item 写时复制（Copy-on-Write）: 当一个对象被修改时，会创建一个新的副本。
+            \item 内存效率高: 容器类使用内存池管理内存，避免频繁的内存分配和释放。
+            \item 线程安全: 容器类是线程安全的，可以在多线程环境下使用。
+            \item 类型安全: 容器类是类型安全的，可以存储任意类型的数据，可以动态调整大小。
+            \item std兼容: 容器类是std兼容的，可以与std容器相互转换。
+            \item 算法支持: 容器类支持算法，可以对容器中的数据进行排序、查找、统计等操作。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Qt容器类对比}
+    \begin{ytublock}{常用容器特性一览}
+        \begin{table}[H]
+            \centering
+            \renewcommand{\arraystretch}{1.2}
+            \begin{tabular}{|p{2.6cm}|p{2.5cm}|p{5.5cm}|}
+                \hline
+                \textbf{容器类型} & \textbf{底层结构} & \textbf{主要特点} \\
+                \hline
+                \texttt{QList/QVector} & 动态数组 & 动态增删高效，随机访问快，适合频繁插入/删除 \\
+                \hline
+                \texttt{QMap} & 平衡二叉树 & 按键有序，查找/插入/删除效率高 \\
+                \hline
+                \texttt{QHash} & 哈希表 & 键无序，查找/插入/删除极快 \\
+                \hline
+                \texttt{QSet} & 哈希表/平衡树 & 唯一元素，查找/插入/删除高效 \\
+                \hline
+                \texttt{QStack} & 顺序容器封装 & LIFO结构，只访问栈顶 \\
+                \hline
+                \texttt{QQueue} & 顺序容器封装 & FIFO结构，只访问队首/队尾 \\
+                \hline
+            \end{tabular}
+        \end{table}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QList使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_list_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/qt_list_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QMap使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_map_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/qt_map_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QHash使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_hash_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/qt_hash_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QSet使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/qt_set_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=35]{cpp}{code/qt_set_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QStack使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/qt_stack_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=34]{cpp}{code/qt_stack_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QQueue使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/qt_queue_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=34]{cpp}{code/qt_queue_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Qt工具类}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{QString}
+    \begin{ytublock}{QString简介}
+        \begin{itemize}
+            \item \textbf{QString} 是Qt中用于处理Unicode字符串的核心类，支持多语言环境下的高效字符串处理。
+            \item 提供丰富的字符串操作：高效的拼接、查找、替换、分割、格式化、截取、大小写转换、去除空白、插入、移除、重复等。
+            \item 支持与标准C++字符串类型（如\texttt{std::string}、\texttt{char*}）的相互转换，便于与C++标准库协作。
+            \item 可以与Qt的其他类（如\texttt{QTextStream}、\texttt{QFile}、\texttt{QByteArray}等）无缝集成，广泛应用于界面、文件IO、网络通信和数据处理等场景。
+            \item 内置对Unicode的支持，适合国际化应用开发，能够正确处理多种语言和字符集。
+            \item 提供灵活的格式化方法（如\texttt{arg()}、静态格式化等），便于生成动态文本。
+            \item 支持与\texttt{QStringList}等容器类协作，方便字符串的批量处理和转换。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QString使用示例（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/qt_string_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=35]{cpp}{code/qt_string_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QString使用示例（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=37,lastline=55]{cpp}{code/qt_string_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=57,lastline=70]{cpp}{code/qt_string_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QString使用示例（三）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=72,lastline=85]{cpp}{code/qt_string_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=87,lastline=101]{cpp}{code/qt_string_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QStringList使用示例（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/qt_string_list_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=30]{cpp}{code/qt_string_list_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QStringList使用示例（二）}
+
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=31,lastline=42]{cpp}{code/qt_string_list_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=43,lastline=54]{cpp}{code/qt_string_list_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QByteArray}
+    \begin{ytublock}{QByteArray简介}
+        \begin{itemize}
+            \item \textbf{QByteArray} 是Qt中专门用于高效处理原始二进制数据和字节序列的类，底层采用引用计数和写时复制（copy-on-write）机制，内存管理高效。
+            \item 支持与C++标准库的 \texttt{std::string}、\texttt{char*}、\texttt{std::vector<char>} 等类型的无缝互转，便于与标准C++代码协作。
+            \item 可与Qt的 \texttt{QTextStream}、\texttt{QFile}、\texttt{QIODevice}、\texttt{QDataStream} 等类直接配合，广泛应用于文件读写、网络通信、数据序列化、加密解密等场景。
+            \item 支持多种编码（如Base64、十六进制、URL编码等）与解码操作，便于数据的存储与传输。
+            \item 提供丰富的成员函数：如 \texttt{append()}、\texttt{insert()}、\texttt{remove()}、\texttt{replace()}、\texttt{split()}、\texttt{toInt()}、\texttt{toHex()}、\texttt{fromHex()}、\texttt{toBase64()}、\texttt{fromBase64()} 等，满足各种二进制和文本数据处理需求。
+            \item 可以与 \texttt{QString} 互相转换，便于文本与二进制数据的混合处理。
+            \item 支持直接操作底层数据指针（\texttt{data()}、\texttt{constData()}），适合高性能场景。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QByteArray使用示例（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/qt_bytearray_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=34]{cpp}{code/qt_bytearray_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QByteArray使用示例（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=35,lastline=52]{cpp}{code/qt_bytearray_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=53,lastline=68]{cpp}{code/qt_bytearray_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QByteArray使用示例（三）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=69,lastline=85]{cpp}{code/qt_bytearray_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=86,lastline=95]{cpp}{code/qt_bytearray_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QVariant}
+    \begin{ytublock}{QVariant简介}
+        \begin{itemize}
+            \item \textbf{QVariant} 是Qt中用于存储和管理任意类型数据的通用容器类，底层实现了类型安全的类型擦除（type erasure）。
+            \item 可以存储Qt内置的各种基本类型（如 \texttt{int}、\texttt{double}、\texttt{bool}、\texttt{QString}、\texttt{QDateTime}、\texttt{QByteArray} 等）、Qt容器类（如 \texttt{QStringList}、\texttt{QList<int>} 等），也支持注册自定义类型。
+            \item 常用于通用接口、模型/视图框架（如 \texttt{QAbstractItemModel}）、动态属性、信号槽参数等场景，实现类型无关的数据传递和存储。
+            \item 提供类型判断（\texttt{type()}、\texttt{typeName()}）、类型转换（\texttt{toInt()}、\texttt{toString()}、\texttt{toList()} 等）、类型安全访问（\texttt{value<T>()}）、类型设置（\texttt{setValue()}）等丰富接口。
+            \item 支持与C++标准类型的互转，便于与标准库协作。
+            \item 通过 \texttt{QVariant::isNull()} 和 \texttt{QVariant::isValid()} 判断内容是否为空或有效。
+            \item 适合需要存储"任意类型"或"类型不确定"数据的场景，是Qt元对象系统和动态特性的基础之一。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QVariant使用示例（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/qt_variant_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=30]{cpp}{code/qt_variant_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QVariant使用示例（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=31,lastline=46]{cpp}{code/qt_variant_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=47,lastline=61]{cpp}{code/qt_variant_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QVariant使用示例（三）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=62,lastline=79]{cpp}{code/qt_variant_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=80,lastline=93]{cpp}{code/qt_variant_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QVariant使用示例（四）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=94,lastline=113]{cpp}{code/qt_variant_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=12,lastline=16]{cpp}{code/qt_variant_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QFile}
+    \begin{ytublock}{QFile简介}
+        \begin{itemize}
+            \item \textbf{QFile} 是Qt中用于文件操作的核心类，继承自 \texttt{QIODevice}，可用于对本地文件进行读写、创建、删除、重命名、拷贝等操作。
+            \item 支持文本和二进制文件的读写，能够以只读、只写、读写、追加等多种模式打开文件。
+            \item 常用方法包括 \texttt{open()}（打开文件）、\texttt{close()}（关闭文件）、\texttt{read()}、\texttt{write()}、\texttt{exists()}、\texttt{remove()}、\texttt{rename()}、\texttt{copy()} 等。
+            \item 支持与 \texttt{QTextStream}、\texttt{QDataStream} 等流类配合，实现高效的文本和二进制数据读写。
+            \item 可通过 \texttt{QFileInfo} 获取文件的详细信息（如大小、创建时间、权限等）。
+            \item 跨平台，自动处理不同操作系统下的文件路径和编码问题。
+            \item 适用于配置文件、日志文件、数据文件等各种文件操作场景。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QFile使用示例（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/qt_file_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=33]{cpp}{code/qt_file_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QFile使用示例（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=34,lastline=51]{cpp}{code/qt_file_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=52,lastline=67]{cpp}{code/qt_file_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QFile使用示例（三）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=68,lastline=81]{cpp}{code/qt_file_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=82,lastline=93]{cpp}{code/qt_file_example.cpp}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]{QDir使用示例（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/qt_dir_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=34]{cpp}{code/qt_dir_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QDir使用示例（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=35,lastline=53]{cpp}{code/qt_dir_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=54,lastline=71]{cpp}{code/qt_dir_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QDir使用示例（三）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=72,lastline=85]{cpp}{code/qt_dir_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=86,lastline=98]{cpp}{code/qt_dir_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QDir使用示例（四）}
+    \inputminted[firstline=99,lastline=119]{cpp}{code/qt_dir_example.cpp}
+\end{frame}
+
+\begin{frame}[fragile]{QFileInfo使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=23]{cpp}{code/qt_fileinfo_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=24,lastline=42]{cpp}{code/qt_fileinfo_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QTextStream简介}
+    \begin{itemize}
+        \item \textbf{QTextStream} 类是Qt中用于文本流操作的类，主要用于读写文本文件。
+        \item 继承自 \textbf{QIODevice}，可以像操作二进制文件一样操作文本文件。
+        \item 提供了简单易用的接口，支持多种文本编码（如UTF-8、UTF-16、UTF-32等）。
+        \item 常用于文件的逐行读取、写入、格式化输出等场景。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{QTextStream使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_textstream_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=34]{cpp}{code/qt_textstream_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QDataStream简介}
+    \begin{itemize}
+        \item \textbf{QDataStream} 类是Qt中用于二进制数据流读写的类，常用于对象、结构体、基本数据类型的序列化与反序列化。
+        \item 支持多种Qt数据类型（如QString、QList、QMap等）以及自定义类型的读写。
+        \item 主要用于文件、网络等场景下的数据持久化和传输。
+        \item 通过重载 \texttt{<<} 和 \texttt{>>} 运算符实现数据的序列化与反序列化。
+        \item 可以设置版本号，保证不同Qt版本间的数据兼容性。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{QDataStream使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=23]{cpp}{code/qt_datastream_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=24,lastline=42]{cpp}{code/qt_datastream_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QT日期与时间}
+    \begin{ytublock}{QDateTime简介}
+    \begin{itemize}
+        \item \textbf{QDateTime} 类是Qt中用于处理日期和时间的类，提供了一个统一的接口来处理各种日期和时间相关的操作。
+        \item 支持多种时区、时区转换、日期计算、格式化输出等。
+        \item 常用于日期时间计算、格式化输出、数据库操作等场景。
+        \item 支持与QDate、QTime、QElapsedTimer等类协作，方便处理日期时间相关操作。
+    \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QT日期与时间示例（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_datetime_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=32]{cpp}{code/qt_datetime_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QT日期与时间示例（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=33,lastline=45]{cpp}{code/qt_datetime_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=46,lastline=62]{cpp}{code/qt_datetime_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QT日期与时间示例（三）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=63,lastline=82]{cpp}{code/qt_datetime_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=83,lastline=97]{cpp}{code/qt_datetime_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QProcess}
+    \begin{ytublock}{QProcess简介}
+        \begin{itemize}
+            \item \textbf{QProcess} 类是Qt中用于启动和管理外部进程的类，提供了丰富的接口用于与外部程序进行交互。
+            \item 支持异步和同步启动外部进程，可以读取和写入子进程的标准输入、标准输出和标准错误。
+            \item 可用于执行系统命令、脚本、调用其他可执行程序，并获取其输出结果。
+            \item 支持跨平台，自动处理不同操作系统下的进程调用方式。
+            \item 常用方法包括 \texttt{start()}（启动进程）、\texttt{waitForFinished()}（等待进程结束）、\texttt{readAllStandardOutput()}（读取标准输出）、\texttt{readAllStandardError()}（读取标准错误）、\texttt{write()}（向进程写入数据）等。
+            \item 适用于需要与外部程序协作、自动化脚本、批处理等场景。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QProcess使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=21]{cpp}{code/qt_process_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=22,lastline=40]{cpp}{code/qt_process_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QSettings}
+    \begin{ytublock}{QSettings简介}
+        \begin{itemize}
+            \item \textbf{QSettings} 类是Qt中用于读写应用程序配置文件的工具类，支持跨平台，自动适配不同操作系统的配置存储方式（如Windows注册表、INI文件、macOS的plist等）。
+            \item 通过键值对的方式存储和读取各种类型的数据（如int、double、QString、QVariant等），支持分组（Group）和层级结构，便于组织复杂配置。
+            \item 常用方法包括 \texttt{setValue(key, value)}（写入配置）、\texttt{value(key, default)}（读取配置）、\texttt{remove(key)}（删除配置）、\texttt{contains(key)}（判断配置项是否存在）等。
+            \item 支持自动保存和加载，无需手动管理文件读写，适合保存用户设置、应用参数、窗口状态等。
+            \item 支持多种构造方式，可指定组织名、应用名、文件格式等，灵活适配不同项目需求。
+            \item 典型用法示例见下页代码。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QSettings使用示例（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/qt_settings_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=32]{cpp}{code/qt_settings_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QSettings使用示例（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=33,lastline=53]{cpp}{code/qt_settings_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Ini文件内容}
+                \begin{verbatim}
+[MyCompany/MyApp]
+username=alice
+window/width=800
+window/height=600
+volume=0.75
+isAdmin=true
+[network]
+host=192.168.1.100
+port=8080
+                \end{verbatim}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QTimer}
+    \begin{ytublock}{QTimer简介}
+        \begin{itemize}
+            \item \textbf{QTimer} 类是Qt中用于定时器的类，提供了简单的定时器功能。
+            \item 支持单次定时和多次定时，可以设置定时器的间隔时间。
+            \item 常用方法包括 \texttt{start()}（启动定时器）、\texttt{stop()}（停止定时器）、\texttt{setInterval()}（设置定时器间隔时间）、\texttt{setSingleShot()}（设置定时器是否单次定时）等。
+            \item 适用于需要定时执行某些操作的场景。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QTimer使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/qt_timer_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=34]{cpp}{code/qt_timer_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QThread}
+    \begin{ytublock}{QThread简介}
+        \begin{itemize}
+            \item \textbf{QThread} 类是Qt中用于线程的类，提供了简单的线程功能。
+            \item 支持线程的创建、启动、停止、暂停、恢复等操作。
+            \item 常用方法包括 \texttt{start()}（启动线程）、\texttt{stop()}（停止线程）、\texttt{pause()}（暂停线程）、\texttt{resume()}（恢复线程）等。
+            \item 适用于需要多线程处理的场景。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QThread使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/qt_thread_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=32]{cpp}{code/qt_thread_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QtConcurrent}
+    \begin{ytublock}{QtConcurrent简介}
+        \begin{itemize}
+            \item \textbf{QtConcurrent} 类是Qt中用于并行计算的类，提供了简单的并行计算功能。
+            \item 支持并行计算，可以设置并行计算的线程数。
+            \item 常用方法包括 \texttt{run()}（启动并行计算）、\texttt{waitForFinished()}（等待并行计算结束）等。
+            \item 适用于需要并行计算的场景。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QtConcurrent使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_concurrent_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/qt_concurrent_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QPainter}
+    \begin{ytublock}{QPainter简介}
+        \begin{itemize}
+            \item \textbf{QPainter} 类是Qt中用于绘图的类，提供了强大的绘图功能。
+            \item 支持绘制各种图形、文本、图像等。
+            \item 支持路径、笔刷、渐变等。
+            \item 支持绘制到各种QPaintDevice，如QWidget、QImage等。
+            \item 常用在paintEvent()中进行自定义绘制。
+            \item 支持多种绘制模式，如填充、描边、剪切等。
+            \item 支持多种绘制效果，如阴影、透明、渐变等。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QPainter使用示例（一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_painter_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=35]{cpp}{code/qt_painter_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QPainter使用示例（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=36,lastline=54]{cpp}{code/qt_painter_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=55,lastline=71]{cpp}{code/qt_painter_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QPainter使用示例（三）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=72,lastline=87]{cpp}{code/qt_painter_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=88,lastline=96]{cpp}{code/qt_painter_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Qt-Widgets编程}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+
+\begin{frame}{Qt 桌面GUI组件类}
+    \begin{ytublock}{常用Qt桌面GUI组件}
+        {\scriptsize
+        \begin{multicols}{2}
+        \begin{itemize}
+            \item \textbf{QWidget}：所有窗口组件的基类，提供窗口管理功能。
+            \item \textbf{QDialog}：对话框组件，支持模态和非模态对话框。
+            \item \textbf{QMainWindow}：主窗口组件，集成菜单栏、工具栏、状态栏等。
+            \item \textbf{QFrame}：框架组件，提供边框和背景。
+            \item \textbf{QScrollArea}：滚动区域组件，支持内容滚动。
+            \item \textbf{QSplitter}：分割器组件，可拖动分割线调整子窗口大小。
+            \item \textbf{QTabWidget}：标签页组件，支持多标签切换。
+            \item \textbf{QStackedWidget}：堆叠组件，多个子窗口堆叠显示。
+            \item \textbf{QToolBar}：工具栏组件，放置常用操作按钮。
+            \item \textbf{QStatusBar}：状态栏组件，显示状态信息。
+            \item \textbf{QMenu}、\textbf{QMenuBar}：菜单组件，提供菜单栏和下拉菜单。
+            \item \textbf{QAction}：动作组件，封装可复用的操作。
+            \item \textbf{QButtonGroup}：按钮组组件，管理一组按钮。
+            \item \textbf{QGroupBox}：分组框组件，分组相关控件。
+            \item \textbf{QLineEdit}：单行文本输入框。
+            \item \textbf{QTextEdit}：多行文本输入框。
+            \item \textbf{QComboBox}：下拉列表框。
+            \item \textbf{QListWidget}：列表控件。
+            \item \textbf{QTreeWidget}：树形控件。
+            \item \textbf{QTableWidget}：表格控件。
+            \item \textbf{QCalendarWidget}：日历控件。
+            \item \textbf{QDateEdit}、\textbf{QTimeEdit}、\textbf{QDateTimeEdit}：日期/时间输入控件。
+            \item \textbf{QSpinBox}、\textbf{QDoubleSpinBox}：整数/浮点数输入框。
+            \item \textbf{QSlider}：滑块控件。
+            \item \textbf{QScrollBar}：滚动条控件。
+            \item \textbf{QProgressBar}：进度条控件。
+            \item \textbf{QRubberBand}：橡皮筋选择框。
+        \end{itemize}
+        \end{multicols}
+        }
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{QWidget}
+    \begin{ytublock}{QWidget 详解}
+        \begin{itemize}
+            \item \textbf{QWidget} 是 Qt 所有用户界面对象的基类，几乎所有可视化控件（如按钮、文本框、窗口等）都直接或间接继承自 QWidget。
+            \item 它提供了窗口的基本管理功能，包括显示、隐藏、移动、调整大小、设置父子关系、事件处理等。
+            \item QWidget 支持层次化的父子结构，子控件会自动跟随父控件移动和显示，便于界面组织和管理。
+            \item 通过重写 QWidget 的 \texttt{paintEvent()}、\texttt{mousePressEvent()}、\texttt{keyPressEvent()} 等虚函数，可以实现自定义绘制和事件响应。
+            \item QWidget 支持多种属性设置，如背景色、字体、光标、焦点策略、透明度等，灵活性极高。
+            \item QWidget 既可以作为顶层窗口（无父对象），也可以作为其他控件的子部件嵌入到界面中。
+            \item 典型用法：自定义控件时，继承 QWidget 并实现相关事件处理和绘制逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QWidget 使用示例（一）  }
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=16]{cpp}{code/qt_widget_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=31]{cpp}{code/qt_widget_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QWidget 使用示例 （二）  }
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=33,lastline=51]{cpp}{code/qt_widget_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=52,lastline=68]{cpp}{code/qt_widget_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QWidget 使用示例（三）  }
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=69,lastline=83]{cpp}{code/qt_widget_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=84,lastline=98]{cpp}{code/qt_widget_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QDialog}
+    \begin{ytublock}{QDialog 详解}
+        \begin{itemize}
+            \item \textbf{QDialog} 是 Qt 中用于实现对话框窗口的基类，广泛用于弹出式交互界面，如设置窗口、消息提示、文件选择等。
+            \item QDialog 支持模态（Modal）和非模态（Modeless）两种显示方式。模态对话框会阻塞父窗口的输入，常用于需要用户立即处理的情况；非模态对话框则允许用户继续操作主窗口。
+            \item QDialog 提供了丰富的窗口管理功能，包括显示（\texttt{show()}）、隐藏（\texttt{hide()}）、移动（\texttt{move()}）、调整大小（\texttt{resize()}）、设置父子关系、事件处理等。
+            \item 可以通过重写 QDialog 的虚函数（如 \texttt{accept()}、\texttt{reject()}、\texttt{done()}）自定义对话框的关闭行为和结果返回。
+            \item QDialog 通常配合标准按钮（如“确定”、“取消”）使用，支持信号槽机制，便于与主窗口或其他控件交互。
+            \item QDialog 支持布局管理，可以灵活地添加各种控件，实现复杂的对话界面。
+            \item 典型用法：自定义对话框时，继承 QDialog 并实现界面布局、事件处理和业务逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QDialog 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/qt_dialog_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=40]{cpp}{code/qt_dialog_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QMainWindow}
+    \begin{ytublock}{QMainWindow 详解}
+        \begin{itemize}
+            \item \textbf{QMainWindow} 是 Qt 中用于实现主窗口的基类，通常用于构建应用程序的主界面。
+            \item QMainWindow 提供了丰富的窗口管理功能，包括菜单栏、工具栏、状态栏、中央窗口区域等。
+            \item 中央窗口区域可以放置各种控件，如 QWidget、QDialog 等。
+            \item QMainWindow 支持布局管理，可以灵活地添加各种控件，实现复杂的界面。
+            \item 典型用法：构建应用程序主界面时，继承 QMainWindow 并实现界面布局、事件处理和数据交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QMainWindow 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/qt_mainwindow_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=17,lastline=32]{cpp}{code/qt_mainwindow_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QFrame}
+    \begin{ytublock}{QFrame 详解}
+        \begin{itemize}
+            \item \textbf{QFrame} 是 Qt 中用于实现可定制边框和背景的基类控件，常作为其他控件的容器或分隔线。
+            \item QFrame 支持多种边框样式（如 Box、Panel、HLine、VLine、StyledPanel 等），可通过 \texttt{setFrameShape()} 和 \texttt{setFrameShadow()} 设置形状和阴影效果。
+            \item 可以通过 \texttt{setLineWidth()}、\texttt{setMidLineWidth()} 等方法调整边框宽度。
+            \item QFrame 支持设置背景色、背景图片等属性，便于实现美观的界面分隔和装饰。
+            \item QFrame 作为基类，常被用来自定义控件，重写其事件处理函数（如 \texttt{paintEvent()}）可实现自定义绘制逻辑。
+            \item 典型用法包括：作为分隔线（水平线/垂直线）、面板容器、装饰性边框等。
+            \item QFrame 也常用于布局中，帮助组织和美化界面结构。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QFrame 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/qt_frame_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=34]{cpp}{code/qt_frame_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QPushButton}
+    \begin{ytublock}{QPushButton 详解}
+        \begin{itemize}
+            \item \textbf{QPushButton} 是 Qt 中常用的按钮控件，适用于各种窗口和对话框，作为用户交互的主要入口。
+            \item 支持设置文本、图标，或图标与文本组合，灵活满足不同界面需求。
+            \item 可通过 \texttt{setCheckable()} 设置为可切换（开关）状态，适合实现切换类功能。
+            \item 支持信号槽机制，常用于触发操作、提交表单、切换状态等场景。
+            \item 应用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QPushButton，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QPushButton 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/qt_pushbutton_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=34]{cpp}{code/qt_pushbutton_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QLabel}
+    \begin{ytublock}{QLabel 详解}
+        \begin{itemize}
+            \item \textbf{QLabel} 是 Qt 中用于显示文本或图像的控件，常用于界面中的标签、提示信息、图片展示等场景。
+            \item 支持设置文本、图片、对齐方式、字体、颜色等属性。
+            \item 可以显示富文本（HTML）、超链接，也可用作图片显示控件。
+            \item 常与其他控件（如 QLineEdit、QSpinBox 等）配合，用于描述或提示输入内容。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QLabel，设置内容和样式，作为界面静态信息展示。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QLabel 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/qt_label_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=16,lastline=30]{cpp}{code/qt_label_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QLineEdit}
+    \begin{ytublock}{QLineEdit 详解}
+        \begin{itemize}
+            \item \textbf{QLineEdit} 是 Qt 中用于单行文本输入的控件，常用于表单、搜索框、命令输入等场景。
+            \item 支持设置占位符文本（placeholder）、最大长度、只读、密码模式等属性。
+            \item 可通过 \texttt{setText()}、\texttt{text()} 设置和获取内容。
+            \item 支持输入校验（Validator）、自动补全（Completer）、输入掩码（InputMask）等高级功能。
+            \item 常用信号：\texttt{textChanged}（文本变化）、\texttt{returnPressed}（回车确认）、\texttt{editingFinished}（编辑完成）。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QLineEdit，设置属性并连接槽函数，实现数据输入与交互。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QLineEdit 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_lineedit_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/qt_lineedit_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QTextEdit}
+    \begin{ytublock}{QTextEdit 详解}
+        \begin{itemize}
+            \item \textbf{QTextEdit} 是 Qt 中用于多行富文本编辑和显示的控件，支持纯文本和富文本（HTML）。
+            \item 可用于实现文本编辑器、日志窗口、富文本输入、代码编辑等场景。
+            \item 支持设置字体、颜色、对齐、段落格式、插入图片和超链接等丰富功能。
+            \item 通过 \texttt{setPlainText()}、\texttt{setHtml()} 设置内容，\texttt{toPlainText()}、\texttt{toHtml()} 获取内容。
+            \item 支持撤销/重做、查找替换、只读模式、自动换行、拖拽、剪切板操作等。
+            \item 常用信号：\texttt{textChanged}（内容变化）、\texttt{cursorPositionChanged}（光标变化）。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QTextEdit，设置属性并连接槽函数，实现多行文本输入与显示。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QTextEdit 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/qt_textedit_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=36]{cpp}{code/qt_textedit_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QScrollArea}
+    \begin{ytublock}{QScrollArea 详解}
+        \begin{itemize}
+            \item \textbf{QScrollArea} 是 Qt 中用于实现可滚动区域的控件，适用于内容超出可视范围时的显示需求。
+            \item 支持自动显示和隐藏水平、垂直滚动条，能够根据内容和窗口大小智能调整。
+            \item 可通过设置属性自定义滚动条的样式、位置、行为等，提升界面美观性和交互体验。
+            \item 常用场景：图片浏览器、表单、长文本、复杂控件集合等需要滚动显示的界面。
+            \item 使用方法：将需要滚动的控件（如 QWidget、QLabel 等）作为 QScrollArea 的子控件，通过 \texttt{setWidget()} 设置。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QScrollArea 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=21]{cpp}{code/qt_scrollarea_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=22,lastline=40]{cpp}{code/qt_scrollarea_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QSplitter}
+    \begin{ytublock}{QSplitter 详解}
+        \begin{itemize}
+            \item \textbf{QSplitter} 是 Qt 中用于实现可拖动分割线的控件，常用于分割窗口或容器。
+            \item QSplitter 支持水平和垂直两种分割方式，可通过设置属性自定义分割线的位置、大小、行为等。
+            \item 支持设置分割线的样式、位置、大小等属性。
+            \item 常用场景：窗口分割、布局调整、界面分隔等。
+            \item 使用方法：将需要分割的控件（如 QWidget、QFrame 等）作为 QSplitter 的子控件，通过 \texttt{addWidget()} 添加。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QSplitter 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/qt_splitter_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=16,lastline=31]{cpp}{code/qt_splitter_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QListWidget}
+    \begin{ytublock}{QListWidget 详解}
+        \begin{itemize}
+            \item \textbf{QListWidget} 是 Qt 提供的用于显示和管理条目列表的控件，适合用于简单的列表选择、条目管理等场景。
+            \item 支持单选、多选、拖拽排序、条目编辑、图标显示等功能。
+            \item 可通过 \texttt{addItem()}、\texttt{addItems()}、\texttt{insertItem()} 等方法动态添加条目。
+            \item 支持条目自定义（如设置图标、字体、颜色等），也可通过 \texttt{QListWidgetItem} 进行高级定制。
+            \item 常用信号：\texttt{itemClicked}（条目点击）、\texttt{itemDoubleClicked}（双击）、\texttt{currentItemChanged}（当前项变化）等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QListWidget，添加条目并连接槽函数，实现列表数据的交互管理。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QListWidget 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/qt_listwidget_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=16,lastline=30]{cpp}{code/qt_listwidget_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QTreeWidget}
+    \begin{ytublock}{QTreeWidget 详解}
+        \begin{itemize}
+            \item \textbf{QTreeWidget} 是 Qt 提供的树形结构控件，适合用于分层数据的展示与编辑，如文件夹结构、组织架构等。
+            \item 支持多级节点、节点展开/收起、节点复选框、图标、富文本等功能。
+            \item 可通过 \texttt{addTopLevelItem()}、\texttt{addChild()} 等方法动态添加节点。
+            \item 支持拖拽排序、节点编辑、节点选择（单选/多选）、右键菜单等高级交互。
+            \item 常用信号：\texttt{itemClicked}（节点点击）、\texttt{itemChanged}（节点内容变化）、\texttt{itemExpanded}（节点展开）等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QTreeWidget，设置列数、表头，添加节点并连接槽函数，实现树形数据的交互管理。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QTreeWidget 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_treewidget_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=34]{cpp}{code/qt_treewidget_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QTabWidget}
+    \begin{ytublock}{QTabWidget 详解}
+        \begin{itemize}
+            \item \textbf{QTabWidget} 是 Qt 中用于实现选项卡式界面的控件，适合将多个页面或功能模块整合在同一窗口中，便于用户切换和管理。
+            \item 支持动态添加、删除选项卡，每个选项卡可承载任意 QWidget 子控件，如表单、文本、图表等。
+            \item 可自定义选项卡的标签文本、图标、提示信息，支持设置选项卡的位置（上、下、左、右）、可关闭性等属性。
+            \item 适用场景：多文档界面、设置面板、属性编辑器等需要分组展示内容的应用。
+            \item 常用方法：\texttt{addTab()}、\texttt{removeTab()}、\texttt{setTabPosition()}、\texttt{setTabsClosable()} 等。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QTabWidget 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=20]{cpp}{code/qt_tabwidget_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=21,lastline=41]{cpp}{code/qt_tabwidget_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QStackedWidget}
+    \begin{ytublock}{QStackedWidget 详解}
+        \begin{itemize}
+            \item \textbf{QStackedWidget} 是 Qt 中用于实现堆叠式界面的控件，适合将多个子窗口堆叠显示，常用于多步骤向导、标签页等场景。
+            \item 支持动态添加、删除子窗口，每个子窗口可承载任意 QWidget 子控件，如表单、文本、图表等。
+            \item 可自定义子窗口的样式、位置、大小等属性。
+            \item 适用场景：多步骤向导、标签页、属性编辑器等需要分组展示内容的应用。
+            \item 常用方法：\texttt{addWidget()}、\texttt{removeWidget()}、\texttt{setCurrentIndex()} 等。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QStackedWidget 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_stackedwidget_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=39]{cpp}{code/qt_stackedwidget_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QToolBar}
+    \begin{ytublock}{QToolBar 详解}
+        \begin{itemize}
+            \item \textbf{QToolBar} 是 Qt 中用于实现工具栏的控件，通常用于主窗口（QMainWindow）中，便于用户快速访问常用操作。
+            \item 工具栏可以包含按钮、下拉菜单、分隔符、控件（如下拉框、输入框等），支持图标和文本的灵活组合。
+            \item 支持动态添加、移除 QAction，可以通过 \texttt{addAction()}、\texttt{addWidget()}、\texttt{addSeparator()} 等方法管理工具栏内容。
+            \item 工具栏可设置停靠位置（上、下、左、右），支持浮动、隐藏、拖拽等交互特性。
+            \item 可通过 \texttt{setMovable()} 控制工具栏是否可移动，通过 \texttt{setFloatable()} 控制是否可浮动。
+            \item 适用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QMainWindow 中创建 QToolBar，添加常用操作按钮，并与槽函数连接，实现快速操作。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QToolBar 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/qt_toolbar_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=33]{cpp}{code/qt_toolbar_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QStatusBar}
+    \begin{ytublock}{QStatusBar 详解}
+        \begin{itemize}
+            \item \textbf{QStatusBar} 是 Qt 中用于实现状态栏的控件，通常用于主窗口（QMainWindow）中，用于显示应用状态、提示信息等。
+            \item 状态栏可以包含文本、图标、进度条等控件，支持动态更新内容和自定义样式。
+            \item QStatusBar 通常固定在主窗口底部（不可浮动），支持临时消息（\texttt{showMessage()}）、永久控件（\texttt{addPermanentWidget()}）等功能。
+            \item 常用方法：\texttt{showMessage()}、\texttt{clearMessage()}、\texttt{addWidget()}、\texttt{addPermanentWidget()} 等。
+            \item 典型用法：在 QMainWindow 中创建 QStatusBar，显示操作提示、进度信息、状态指示等。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QStatusBar 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_statusbar_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=35]{cpp}{code/qt_statusbar_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QMenu}
+    \begin{ytublock}{QMenu 详解}
+        \begin{itemize}
+            \item \textbf{QMenu} 是 Qt 中用于实现下拉菜单的控件，通常用于主窗口（QMainWindow）中，显示菜单项。
+            \item QMenu 可包含多个 QAction，支持图标与文本灵活组合，也可嵌套子菜单（QMenu）。
+            \item 支持通过 \texttt{addAction()}、\texttt{addMenu()}、\texttt{addSeparator()} 等方法动态管理菜单内容。
+            \item 菜单项可与槽函数连接，实现响应式操作。
+            \item QMenu 可独立弹出（如右键菜单），也可作为菜单栏（QMenuBar）子菜单使用。
+            \item 常见场景：主菜单、右键上下文菜单、功能分组菜单等。
+            \item 典型用法：在 QMainWindow 中创建 QMenuBar，添加 QMenu，再添加 QAction，并与槽函数连接。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{QMenuBar}
+    \begin{ytublock}{QMenuBar 详解}
+        \begin{itemize}
+            \item \textbf{QMenuBar} 是 Qt 中用于实现菜单栏的控件，通常用于主窗口（QMainWindow）中，显示菜单项。
+            \item QMenuBar 可包含多个 QMenu，支持图标与文本灵活组合，也可嵌套子菜单（QMenu）。
+            \item 支持通过 \texttt{addMenu()}、\texttt{addSeparator()} 等方法动态管理菜单栏内容。
+            \item 菜单栏可设置停靠位置（上、下、左、右），支持浮动、隐藏、拖拽等交互特性。
+            \item 可通过 \texttt{setMovable()} 控制菜单栏是否可移动，通过 \texttt{setFloatable()} 控制是否可浮动。
+            \item 适用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QMainWindow 中创建 QMenuBar，添加 QMenu，再添加 QAction，并与槽函数连接。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QMenu / QMenuBar 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_menu_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/qt_menu_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QToolButton}
+    \begin{ytublock}{QToolButton 详解}
+        \begin{itemize}
+            \item \textbf{QToolButton} 是 Qt 提供的专用工具按钮控件，常用于主窗口（QMainWindow）或工具栏（QToolBar）中，作为功能快捷入口。
+            \item 支持同时显示图标和文本，可通过 \texttt{setIcon()}、\texttt{setText()} 灵活设置。
+            \item 可通过 \texttt{setToolButtonStyle()} 控制图标与文本的排列方式（如仅图标、仅文本、图标在上/左等）。
+            \item 支持 \texttt{setAutoRaise()}，实现扁平风格和悬浮高亮效果，提升界面美观性。
+            \item 通过 \texttt{setPopupMode()} 可设置弹出菜单模式（如即时弹出、延迟弹出、仅菜单）。
+            \item 可用 \texttt{setDefaultAction()} 绑定 QAction，实现与菜单栏、工具栏一致的行为。
+            \item 支持 \texttt{setCheckable()}，可设置为可切换（开关）状态，适合工具属性切换。
+            \item 常见应用：工具栏按钮、带下拉菜单的操作按钮、属性切换按钮等。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QToolButton 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_toolbutton_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=39]{cpp}{code/qt_toolbutton_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QRadioButton}
+    \begin{ytublock}{QRadioButton 详解}
+        \begin{itemize}
+            \item \textbf{QRadioButton} 是 Qt 中用于实现单选按钮的控件，通常用于主窗口（QMainWindow）中，用于显示单选按钮。
+            \item 支持设置文本、图标，或图标与文本组合，灵活满足不同界面需求。
+            \item 可通过 \texttt{setChecked()} 设置为选中状态，通过 \texttt{isChecked()} 获取选中状态。
+            \item 支持信号槽机制，常用于触发操作、提交表单、切换状态等场景。
+            \item 应用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QRadioButton，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QRadioButton 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_radiobutton_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/qt_radiobutton_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QCheckBox}
+    \begin{ytublock}{QCheckBox 详解}
+        \begin{itemize}
+            \item \textbf{QCheckBox} 是 Qt 中用于实现复选框的控件，通常用于主窗口（QMainWindow）中，用于显示复选框。
+            \item 支持设置文本、图标，或图标与文本组合，灵活满足不同界面需求。
+            \item 可通过 \texttt{setChecked()} 设置为选中状态，通过 \texttt{isChecked()} 获取选中状态。
+            \item 支持信号槽机制，常用于触发操作、提交表单、切换状态等场景。
+            \item 应用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QCheckBox，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QCheckBox 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_checkbox_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=38]{cpp}{code/qt_checkbox_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QComboBox}
+    \begin{ytublock}{QComboBox 详解}
+        \begin{itemize}
+            \item \textbf{QComboBox} 是 Qt 中用于实现下拉列表的控件，通常用于主窗口（QMainWindow）中，用于显示下拉列表。
+            \item 支持设置文本、图标，或图标与文本组合，灵活满足不同界面需求。
+            \item 可通过 \texttt{addItem()} 添加选项，通过 \texttt{currentText()} 获取当前选项。
+            \item 支持信号槽机制，常用于触发操作、提交表单、切换状态等场景。
+            \item 应用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QComboBox，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QComboBox 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/qt_combobox_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=16,lastline=30]{cpp}{code/qt_combobox_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QSpinBox}
+    \begin{ytublock}{QSpinBox 详解}
+        \begin{itemize}
+            \item \textbf{QSpinBox} 是 Qt 中用于实现计数器的控件，通常用于主窗口（QMainWindow）中，用于显示计数器。
+            \item 支持设置文本、图标，或图标与文本组合，灵活满足不同界面需求。
+            \item 可通过 \texttt{setRange()} 设置范围，通过 \texttt{setSingleStep()} 设置步长。
+            \item 支持信号槽机制，常用于触发操作、提交表单、切换状态等场景。
+            \item 应用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QSpinBox，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QSpinBox 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=15]{cpp}{code/qt_spinbox_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=16,lastline=31]{cpp}{code/qt_spinbox_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QDoubleSpinBox}
+    \begin{ytublock}{QDoubleSpinBox 详解}
+        \begin{itemize}
+            \item \textbf{QDoubleSpinBox} 是 Qt 中用于实现双精度浮点数计数器的控件，通常用于主窗口（QMainWindow）中，用于显示双精度浮点数计数器。
+            \item 支持设置文本、图标，或图标与文本组合，灵活满足不同界面需求。
+            \item 可通过 \texttt{setRange()} 设置范围，通过 \texttt{setSingleStep()} 设置步长，通过 \texttt{setDecimals()} 设置小数位数。
+            \item 支持信号槽机制，常用于触发操作、提交表单、切换状态等场景。
+            \item 应用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QDoubleSpinBox，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QDoubleSpinBox 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/qt_doublespinbox_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=34]{cpp}{code/qt_doublespinbox_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QDateTimeEdit}
+    \begin{ytublock}{QDateTimeEdit 详解}
+        \begin{itemize}
+            \item \textbf{QDateTimeEdit} 是 Qt 中用于实现日期和时间编辑器的控件，通常用于主窗口（QMainWindow）中，用于显示日期和时间编辑器。
+            \item \textbf{QDateEdit} 是 Qt 中用于实现日期编辑器的控件，通常用于主窗口（QMainWindow）中，用于显示日期编辑器。
+            \item \textbf{QTimeEdit} 是 Qt 中用于实现时间编辑器的控件，通常用于主窗口（QMainWindow）中，用于显示时间编辑器。
+            \item 支持设置日期和时间，或日期和时间组合，灵活满足不同界面需求。
+            \item 支持信号槽机制，常用于触发操作、提交表单、切换状态等场景。
+            \item 应用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QDateTimeEdit，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QDateTimeEdit 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=15,lastline=28]{cpp}{code/qt_datetimeedit_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=29,lastline=45]{cpp}{code/qt_datetimeedit_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QCalendarWidget}
+    \begin{ytublock}{QCalendarWidget 详解}
+        \begin{itemize}
+            \item \textbf{QCalendarWidget} 是 Qt 中用于实现日历的控件，通常用于主窗口（QMainWindow）中，用于显示日历。
+            \item 支持设置日期，灵活满足不同界面需求。
+            \item 支持信号槽机制，常用于触发操作、提交表单、切换状态等场景。
+            \item 应用场景：主窗口常用操作入口、编辑器快捷操作、图形界面工具集等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QCalendarWidget，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QCalendarWidget 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=18]{cpp}{code/qt_calendarwidget_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=19,lastline=36]{cpp}{code/qt_calendarwidget_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QSlider}
+    \begin{ytublock}{QSlider 详解}
+        \begin{itemize}
+            \item \textbf{QSlider} 是 Qt 中用于实现滑动条的控件，常用于让用户在一定范围内选择数值。
+            \item 支持水平（Horizontal）和垂直（Vertical）两种方向。
+            \item 可设置最小值、最大值、步长、初始值等属性。
+            \item 支持信号槽机制，常用信号有 \texttt{valueChanged(int)}，可用于实时响应用户操作。
+            \item 应用场景：音量调节、进度控制、参数调整等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QSlider，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QSlider 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_slider_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=36]{cpp}{code/qt_slider_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QScrollBar}
+    \begin{ytublock}{QScrollBar 详解}
+        \begin{itemize}
+            \item \textbf{QScrollBar} 是 Qt 中用于实现滚动条的控件，常用于让用户在一定范围内选择数值。
+            \item 支持水平（Horizontal）和垂直（Vertical）两种方向。
+            \item 可设置最小值、最大值、步长、初始值等属性。
+            \item 支持信号槽机制，常用信号有 \texttt{valueChanged(int)}，可用于实时响应用户操作。
+            \item 应用场景：音量调节、进度控制、参数调整等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QScrollBar，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QScrollBar 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=17]{cpp}{code/qt_scrollbar_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=18,lastline=31]{cpp}{code/qt_scrollbar_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QProgressBar}
+    \begin{ytublock}{QProgressBar 详解}
+        \begin{itemize}
+            \item \textbf{QProgressBar} 是 Qt 中用于实现进度条的控件，常用于显示任务进度。
+            \item 支持水平（Horizontal）和垂直（Vertical）两种方向。
+            \item 可设置最小值、最大值、步长、初始值等属性。
+            \item 支持信号槽机制，常用信号有 \texttt{valueChanged(int)}，可用于实时响应用户操作。
+            \item 应用场景：任务进度、文件下载、数据传输等。
+            \item 典型用法：在 QWidget 或 QMainWindow 中创建 QProgressBar，设置属性并连接槽函数，实现交互逻辑。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QProgressBar 使用示例}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=14,lastline=28]{cpp}{code/qt_progressbar_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=29,lastline=43]{cpp}{code/qt_progressbar_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Qt Designer}
+    \begin{ytublock}{Qt Designer 详解}
+        \begin{itemize}
+            \item \textbf{Qt Designer} 是 Qt 官方提供的可视化界面设计工具，专用于快速开发和设计 Qt 应用程序的 GUI 界面。
+            \item 支持拖拽式控件布局，可直观添加、排列和配置各种 Qt 控件（如按钮、标签、输入框等）。
+            \item 内置多种布局管理器（如 QHBoxLayout、QVBoxLayout、QGridLayout），便于实现响应式和自适应界面。
+            \item 可通过属性编辑器设置控件属性，支持信号与槽的可视化连接，简化界面交互逻辑的搭建。
+            \item 支持样式表（QSS）编辑，可实时预览控件美化效果，提升界面美观性。
+            \item 生成的 .ui 文件可直接在 Qt Creator 或 C++/Python 项目中加载，支持与代码逻辑分离，便于团队协作和后期维护。
+            \item 适用于原型设计、界面快速迭代、跨平台 GUI 开发等多种场景，是 Qt 开发的重要辅助工具。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{QSS}
+    \begin{ytublock}{QSS 详解}
+        \begin{itemize}
+            \item \textbf{QSS} 是 Qt 中用于实现样式表的控件，常用于美化界面。
+            \item 支持设置样式表，灵活满足不同界面需求。
+            \item 支持信号槽机制，常用于触发操作、提交表单、切换状态等场景。
+            \item 应用场景：界面美化、主题切换、样式定制等。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{QSS 使用示例 （一）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=1,lastline=19]{cpp}{code/qt_qss_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=20,lastline=39]{cpp}{code/qt_qss_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{QSS 使用示例（二）}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=40,lastline=58]{cpp}{code/qt_qss_example.cpp}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \inputminted[firstline=59,lastline=78]{cpp}{code/qt_qss_example.cpp}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\section{总结}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{总结}
+    \begin{ytublock}{本章要点回顾}
+        \begin{itemize}
+            \item \textbf{Qt框架概述}：Qt是一个跨平台C++开发框架，提供GUI、网络、多媒体等模块，支持桌面、移动和嵌入式平台。
+            \item \textbf{核心模块与结构}：包括QtCore、QtGui、QtWidgets等模块；应用程序基于QObject和元对象系统构建。
+            \item \textbf{元对象系统}：通过Q\_OBJECT宏、moc编译器和QMetaObject实现运行时类型信息、信号槽和属性系统。
+            \item \textbf{信号槽机制}：Qt的核心通信方式，支持对象间松耦合，支持多对多连接和跨线程通信，优于传统事件处理。
+            \item \textbf{事件系统}：包括鼠标、键盘等事件；通过事件循环、过滤器和处理器实现灵活响应。
+            \item \textbf{容器与工具类}：Qt提供高效容器（如QList、QMap）和工具（如QString、QByteArray、QFile、QTimer、QThread），支持隐式共享和线程安全。
+            \item \textbf{Qt Widgets编程}：涵盖基本控件（如QWidget、QDialog、QMainWindow）和高级组件（如QPushButton、QLabel、QSlider、QProgressBar），用于构建桌面GUI。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+
+\begin{frame}{建议}
+    \begin{ytublock}{学习建议}
+        \begin{itemize}
+            \item 多动手实践信号槽和事件机制，尝试自定义信号与槽，深入理解Qt的动态特性和对象间通信原理。
+            \item 结合本章示例代码，动手实现常见Widgets的创建、属性设置和信号响应，掌握控件的基本用法。
+            \item 练习不同的布局管理器（如QHBoxLayout、QVBoxLayout、QGridLayout等），尝试实现复杂界面布局，提升界面设计能力。
+            \item 阅读Qt官方文档和API手册，查阅控件的更多属性和方法，善用文档解决实际开发中的问题。
+            \item 尝试将多个控件组合，开发小型实用工具或Demo项目，巩固所学知识。
+            \item 主动探索高级主题，如多线程编程、网络通信、自定义控件绘制、样式表（QSS）美化等，拓展Qt开发视野。
+            \item 参与Qt开源社区或查阅优秀开源项目，学习他人代码风格和工程组织方式，提升综合开发能力。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\end{document}

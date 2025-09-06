@@ -1,0 +1,38 @@
+digraph ChainOfResponsibilityPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#f3e5f5"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#f3e5f5";
+
+    subgraph cluster_handler {
+        label="处理者链";
+        bgcolor="#e1f5fe";
+        color="#01579b";
+
+        Handler [label="抽象处理者\nHandler", fillcolor="#f3e5f5", color="#7b1fa2"];
+
+        ConcreteHandler1 [label="具体处理者1\nConcreteHandler1", fillcolor="#e3f2fd", color="#1976d2"];
+        ConcreteHandler2 [label="具体处理者2\nConcreteHandler2", fillcolor="#e3f2fd", color="#1976d2"];
+        ConcreteHandler3 [label="具体处理者3\nConcreteHandler3", fillcolor="#e3f2fd", color="#1976d2"];
+
+        Handler -> ConcreteHandler1 [label="继承", color="#7b1fa2", style="dashed"];
+        Handler -> ConcreteHandler2 [label="继承", color="#7b1fa2", style="dashed"];
+        Handler -> ConcreteHandler3 [label="继承", color="#7b1fa2", style="dashed"];
+    }
+
+    Client [label="客户端\nClient", fillcolor="#fff3e0", color="#f57c00", shape=box];
+
+    ConcreteHandler1 -> ConcreteHandler2 [label="successor", color="#ff5722", style="bold"];
+    ConcreteHandler2 -> ConcreteHandler3 [label="successor", color="#ff5722", style="bold"];
+
+    Client -> ConcreteHandler1 [label="handleRequest()", color="#424242"];
+
+    labelloc="t";
+    label="责任链模式结构图";
+}
+
+
+
+

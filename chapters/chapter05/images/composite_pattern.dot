@@ -1,0 +1,21 @@
+digraph CompositePattern {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e8f5e8"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+
+    Component [label="🎨 组件接口\nComponent", fillcolor="#81c784", color="#388e3c"];
+    Leaf [label="🍃 叶子节点\nLeaf", fillcolor="#66bb6a", color="#2e7d32"];
+    Composite [label="🌿 组合节点\nComposite", fillcolor="#4caf50", color="#388e3c"];
+    Client [label="👤 客户端\nClient", fillcolor="#ffb74d", color="#f57c00"];
+
+    Leaf -> Component [style="dashed"];
+    Composite -> Component [style="dashed"];
+    Composite -> Component [style="bold", dir=both];
+    Client -> Component [style="bold"];
+
+    labelloc="t";
+    label="组合模式结构图";
+}
+

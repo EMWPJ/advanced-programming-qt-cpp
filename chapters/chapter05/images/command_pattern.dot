@@ -1,0 +1,27 @@
+digraph CommandPattern {
+    graph [fontname="Microsoft YaHei", fontsize=10, bgcolor="#e0f2f1"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=BT;
+    bgcolor="#e0f2f1";
+
+    Command [label="命令接口\nCommand", fillcolor="#b3e5fc", color="#0d47a1"];
+    ConcreteCommand [label="具体命令\nConcreteCommand", fillcolor="#81d4fa", color="#01579b"];
+
+    Invoker [label="调用者\nInvoker", fillcolor="#b2dfdb", color="#00695c"];
+
+    Receiver [label="接收者\nReceiver", fillcolor="#c8e6c9", color="#2e7d32"];
+
+    ConcreteCommand -> Command [label="实现", color="#0d47a1", style="dashed"];
+
+    ConcreteCommand -> Receiver [label="🎯 引用接收者", color="#f57c00", style="bold"];
+    Invoker -> Command [label="📋 调用命令", color="#e65100", style="bold"];
+
+    labelloc="t";
+    label="命令模式结构图";
+}
+
+
+
+
