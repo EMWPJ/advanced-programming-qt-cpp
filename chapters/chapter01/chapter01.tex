@@ -16,6 +16,18 @@
     \titlepage
 \end{frame}
 
+\begin{frame}{高等程序设计}
+    \begin{ytublock}{课程简介}
+        \begin{itemize}
+            \item 本课程系统介绍C++语言基础与Qt应用开发，涵盖从环境搭建到高级编程范式与项目实践。
+            \item 通过理论讲解与大量代码示例，帮助学生掌握现代C++编程思想和跨平台GUI开发能力。
+            \item 课程内容包括：C++语法、面向对象、模板与泛型、Qt框架、信号与槽、设计模式等。
+            \item 强调实践操作，配套完整的工程模板和实验指导，助力学生独立开发实际应用。
+            \item 适合有一定编程基础、希望深入学习C++和Qt开发的相关专业学生。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
 % 目录页
 \begin{frame}{目录}
     \begin{multicols}{2}
@@ -23,21 +35,185 @@
     \end{multicols}
 \end{frame}
 
-\section{软件开发概述}
+\section{编程概念入门}
 
-\begin{frame}{软件开发概述}
-    \begin{ytublock}{软件开发概述}
+\begin{frame}{什么是编程？}
+    \begin{ytublock}{编程的本质}
+        编程就像是给计算机下达指令，让它按照我们的想法去工作和解决问题。
+    \end{ytublock}
+
+    \begin{ytublock}{为什么要学习编程？}
         \begin{itemize}
-            \item \textbf{软件开发}：软件开发是指使用编程语言和开发工具，按照一定的流程和规范，开发出满足用户需求的软件产品的过程。
-            \item \textbf{软件开发流程}：软件开发流程是指软件开发过程中的一系列步骤和活动，包括\textbf{需求分析、设计、编码、测试、部署和维护}等。
-            \item \textbf{软件开发工具}：软件开发工具是指软件开发过程中使用的工具，包括\textbf{编译器、调试器、集成开发环境（IDE）}等。
-            \item \textbf{软件开发语言}：软件开发语言是指软件开发过程中使用的语言，包括\textbf{C、C++、Java、Python}等。
-            \item \textbf{软件开发框架}：软件开发框架是指软件开发过程中使用的框架，包括\textbf{Qt、MFC、DotNet、Spring、Vue}等。
+            \item \textbf{解决问题}：编程可以帮助我们自动化处理重复性工作，提高效率
+            \item \textbf{创造价值}：通过编程创造新的工具、应用和服务
+            \item \textbf{思维训练}：编程培养逻辑思维、问题分解和系统化思考能力
+            \item \textbf{就业机会}：编程技能在现代社会越来越重要，就业前景广阔
         \end{itemize}
     \end{ytublock}
 \end{frame}
 
-\section{开发环境概述}
+\begin{frame}{编程语言的层次}
+    \begin{ytublock}{机器语言（第一代语言）}
+        \begin{itemize}
+            \item 计算机能直接理解的二进制代码（0和1）
+            \item 例如：10110000 01100001
+            \item 优点：执行速度最快
+            \item 缺点：编写困难，难以理解和维护
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{汇编语言（第二代语言）}
+        \begin{itemize}
+            \item 使用助记符表示机器指令
+            \item 例如：MOV AX, 61H
+            \item 优点：接近机器语言，执行效率高
+            \item 缺点：仍然复杂，依赖特定硬件
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{高级编程语言}
+    \begin{ytublock}{高级语言的特点}
+        \begin{itemize}
+            \item 使用接近自然语言的语法
+            \item 例如：C++, Java, Python等
+            \item 优点：易学易用，可读性强，可移植性好
+            \item 缺点：需要编译或解释，执行效率相对较低
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{编译型vs解释型}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \begin{ytublock}{编译型语言}
+                    \begin{itemize}
+                        \item C++, Java, C\#
+                        \item 先编译后执行
+                        \item 执行速度快
+                    \end{itemize}
+                \end{ytublock}
+            \end{column}
+            \hspace{0.02\textwidth}
+            \begin{column}{0.48\textwidth}
+                \begin{ytublock}{解释型语言}
+                    \begin{itemize}
+                        \item Python, JavaScript
+                        \item 边解释边执行
+                        \item 开发速度快
+                    \end{itemize}
+                \end{ytublock}
+            \end{column}
+        \end{columns}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{编程思维的培养}
+    \begin{ytublock}{计算思维的核心要素}
+        \begin{itemize}
+            \item \textbf{分解问题}：将复杂问题分解为简单的小问题
+            \item \textbf{模式识别}：发现问题中的规律和重复模式
+            \item \textbf{抽象思维}：提取问题的本质，忽略不重要的细节
+            \item \textbf{算法思维}：设计解决问题的步骤和方法
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{编程思维的实际应用}
+        \begin{itemize}
+            \item 日常生活中的问题解决
+            \item 工作流程的优化
+            \item 系统化思考能力的提升
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{程序是什么？}
+    \begin{ytublock}{程序的本质}
+        程序是一系列指令的有序集合，告诉计算机应该做什么、怎么做。
+    \end{ytublock}
+
+    \begin{ytublock}{程序的生命周期}
+        \begin{enumerate}
+            \item \textbf{编写源代码}：使用编程语言编写程序
+            \item \textbf{编译}：将源代码转换为机器能理解的形式
+            \item \textbf{测试}：验证程序是否按预期工作
+            \item \textbf{部署}：将程序发布给最终用户使用
+            \item \textbf{维护}：根据用户反馈和需求变化进行更新
+        \end{enumerate}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{程序是如何工作的？}
+    \begin{ytublock}{程序执行的过程}
+        \begin{itemize}
+            \item \textbf{源代码编写}：程序员使用高级编程语言（如C++）编写源代码
+            \item \textbf{编译}：编译器将源代码翻译为机器语言
+            \item \textbf{链接}：链接器将多个目标文件和库文件合并
+            \item \textbf{加载}：操作系统将程序加载到内存中
+            \item \textbf{执行}：CPU逐条执行指令，实现程序功能
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{关键概念}
+        \begin{itemize}
+            \item \textbf{编译器}：将高级语言转换为机器语言的工具
+            \item \textbf{链接器}：将多个目标文件合并为可执行文件的工具
+            \item \textbf{可执行文件}：计算机可以直接运行的程序
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{程序的基本组成}
+    \begin{ytublock}{程序的三要素：IPO（Input、Process、Output）模型}
+        \begin{enumerate}
+            \item \textbf{输入（Input）}：获取外部数据
+                \begin{itemize}
+                    \begin{multicols}{2}
+                        \item 鼠标、键盘、触摸屏输入
+                        \item 文件读取
+                        \item 网络数据
+                        \item 传感器数据
+                    \end{multicols}
+                \end{itemize}
+            \item \textbf{处理（Process）}：对数据进行操作
+                \begin{itemize}
+                    \begin{multicols}{2}
+                        \item 数学计算
+                        \item 逻辑判断
+                        \item 数据转换
+                        \item 信息处理
+                    \end{multicols}
+                \end{itemize}
+            \item \textbf{输出（Output）}：展示处理结果
+                \begin{itemize}
+                    \begin{multicols}{2}
+                        \item 屏幕显示
+                        \item 文件保存
+                        \item 打印输出
+                        \item 网络发送
+                    \end{multicols}
+                \end{itemize}
+        \end{enumerate}
+    \end{ytublock}
+\end{frame}
+
+\section{软件开发概述}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{软件开发概述}
+    \begin{ytublock}{软件开发概述}
+        \begin{itemize}
+            \item \textbf{软件开发}：使用编程语言和开发工具，按照一定的流程和规范，开发出满足用户需求的软件产品的过程。
+            \item \textbf{软件开发流程}：软件开发过程中的一系列步骤和活动，包括\textbf{需求分析、设计、编码、测试、部署和维护}等。
+            \item \textbf{软件开发工具}：软件开发过程中使用的工具，包括\textbf{编译器、调试器、集成开发环境（IDE）}等。
+            \item \textbf{软件开发语言}：软件开发过程中使用的语言，包括\textbf{C、C++、Java、Python}等。
+            \item \textbf{软件开发框架}：软件开发过程中使用的框架，包括\textbf{Qt、MFC、DotNet、Spring、Vue}等。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
 
 \begin{frame}{开发环境简介}
     \begin{ytublock}{定义}
@@ -84,6 +260,11 @@
 \end{frame}
 
 \section{Qt开发环境安装}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
 
 \begin{frame}{什么是Qt？}
     \begin{ytublock}{Qt简介}
@@ -246,6 +427,11 @@
 \end{frame}
 
 \section{Qt Creator IDE}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
 
 \begin{frame}{什么是Qt Creator？}
     \begin{ytublock}{Qt Creator简介}
@@ -372,7 +558,84 @@
     \end{columns}
 \end{frame}
 
-\section{编译器配置}
+\begin{frame}{什么是IDE？}
+    \begin{ytublock}{IDE的定义}
+        集成开发环境（Integrated Development Environment，IDE）是一种软件应用程序，为程序员提供全面的开发工具，包括代码编辑器、编译器、调试器、项目管理等功能的统一界面。
+    \end{ytublock}
+
+    \begin{ytublock}{IDE vs 文本编辑器}
+        \begin{itemize}
+            \item \textbf{IDE}：功能全面，适合大型项目开发
+            \item \textbf{文本编辑器}：轻量级，适合简单脚本编写
+            \item \textbf{IDE优势}：代码补全、语法检查、集成调试
+            \item \textbf{编辑器优势}：启动快速、占用资源少
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{主流IDE介绍}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Qt Creator}
+                \begin{itemize}
+                    \item \textbf{专为Qt设计}：与Qt框架完美集成
+                    \item \textbf{免费开源}：无需付费许可证
+                    \item \textbf{跨平台}：Windows、macOS、Linux
+                    \item \textbf{可视化设计}：内置Qt Designer
+                    \item \textbf{适合初学者}：界面友好，易上手
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \hspace{0.02\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Visual Studio}
+                \begin{itemize}
+                    \item \textbf{微软官方}：Windows平台最强大IDE
+                    \item \textbf{功能丰富}：企业级开发工具
+                    \item \textbf{社区版免费}：个人和小团队使用
+                    \item \textbf{调试强大}：业界最佳调试体验
+                    \item \textbf{扩展丰富}：大量插件和扩展
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+
+    \begin{ytublock}{VS Code}
+        \begin{itemize}
+            \item \textbf{轻量级}：启动快速，占用资源少
+            \item \textbf{免费开源}：微软开发，完全免费
+            \item \textbf{扩展生态}：丰富的插件市场
+            \item \textbf{跨平台}：支持所有主流操作系统
+            \item \textbf{现代化}：界面美观，用户体验佳
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{IDE选择建议}
+    \begin{ytublock}{初学者推荐}
+        \begin{itemize}
+            \item \textbf{首选Qt Creator}：专为Qt开发设计，学习成本低
+            \item \textbf{界面友好}：可视化设计工具，直观易懂
+            \item \textbf{文档完善}：官方文档和教程丰富
+            \item \textbf{社区支持}：Qt社区活跃，问题容易解决
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{进阶用户选择}
+        \begin{itemize}
+            \item \textbf{Visual Studio}：大型项目，企业级开发
+            \item \textbf{VS Code}：轻量级开发，多语言支持
+            \item \textbf{Cursor}：AI辅助开发，提高效率
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\section{编译器和调试配置}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
 
 \begin{frame}{什么是编译器？}
     \begin{ytublock}{编译器的作用}
@@ -384,6 +647,100 @@
             \item \textbf{本地编译器}：生成当前平台可执行代码，如GCC、MSVC
             \item \textbf{交叉编译器}：生成其他平台可执行代码，如Android NDK
             \item \textbf{即时编译器(JIT)}：运行时动态编译，如Java JVM、.NET CLR
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{GNU编译器套件（GCC）简介}
+    \begin{ytublock}{什么是GCC？}
+        GNU编译器套件（GNU Compiler Collection，简称GCC）是由GNU项目开发的自由、开源的编译器集合。最初仅支持C语言，现已支持C++、Objective-C、Fortran、Ada、Go、D等多种编程语言。GCC是Linux、Unix等类Unix系统的默认编译器，也是开源软件开发的核心工具之一。
+    \end{ytublock}
+
+    \begin{ytublock}{GCC的主要特点}
+        \begin{itemize}
+            \item \textbf{跨平台}：支持多种操作系统（Linux、Windows、macOS等）和多种硬件架构（x86、ARM、RISC-V等）。
+            \item \textbf{多语言支持}：不仅支持C/C++，还支持Fortran、Ada、Go等多种语言。
+            \item \textbf{优化能力强}：内置多种优化选项，可生成高效的目标代码。
+            \item \textbf{开源免费}：遵循GPL协议，源代码开放，社区活跃。
+            \item \textbf{工具链完善}：包含编译器（gcc/g++）、汇编器（as）、链接器（ld）、调试信息生成等工具。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{GCC编译指令}
+    \begin{ytublock}{GCC常用命令}
+        \begin{itemize}
+            \item \texttt{gcc}：C语言编译器
+            \item \texttt{g++}：C++语言编译器
+            \item \texttt{gfortran}：Fortran编译器
+            \item \texttt{as}：汇编器
+            \item \texttt{ld}：链接器
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{GCC编译流程示例}
+        \begin{itemize}
+            \item \texttt{gcc hello.c -o hello} \hspace{1em} // 编译C程序
+            \item \texttt{g++ main.cpp -o main} \hspace{1em} // 编译C++程序
+            \item \texttt{gcc -E hello.c -o hello.i} \hspace{1em} // 仅预处理
+            \item \texttt{gcc -S hello.c -o hello.s} \hspace{1em} // 生成汇编代码
+            \item \texttt{gcc -c hello.c -o hello.o} \hspace{1em} // 生成目标文件
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{MinGW简介}
+    \begin{ytublock}{什么是MinGW？}
+        MinGW（Minimalist GNU for Windows）是一个在Windows平台上使用的轻量级GNU开发环境。它为Windows系统提供了GCC（GNU Compiler Collection）编译器及相关工具，使开发者能够在Windows下编译和构建C、C++等语言的本地应用程序。
+    \end{ytublock}
+    \begin{ytublock}{MinGW的主要特点}
+        \begin{itemize}
+            \item \textbf{原生编译}：生成可在Windows上直接运行的本地可执行文件（.exe），无需额外的运行时环境。
+            \item \textbf{开源免费}：遵循GPL协议，完全免费，适合个人和商业用途。
+            \item \textbf{兼容性好}：支持标准C/C++，可与大多数开源库和工具链配合使用。
+            \item \textbf{体积小巧}：安装包体积较小，安装和配置简单。
+            \item \textbf{包含常用工具}：集成GCC、G++、GDB、Make等开发工具。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{MSVC简介}
+    \begin{ytublock}{什么是MSVC？}
+        MSVC（Microsoft Visual C++）是微软公司开发的C/C++编译器和集成开发环境（IDE）的一部分，广泛应用于Windows平台的本地应用程序开发。MSVC不仅提供了强大的编译、调试和优化功能，还集成了丰富的开发工具和库，支持现代C++标准。
+    \end{ytublock}
+    \begin{ytublock}{MSVC的主要特点}
+        \begin{itemize}
+            \item \textbf{深度集成Windows}：与Windows操作系统和API高度兼容，适合开发各类Windows桌面、服务和驱动程序。
+            \item \textbf{强大的IDE支持}：配合Visual Studio，拥有智能补全、代码重构、图形化调试、性能分析等高级功能。
+            \item \textbf{标准兼容性好}：持续跟进C++标准，支持C++11/14/17/20等现代特性。
+            \item \textbf{优化能力强}：内置多种优化选项，生成高效的本地代码，适合对性能有较高要求的项目。
+            \item \textbf{丰富的库支持}：集成Microsoft STL、MFC、ATL等丰富的开发库，便于快速开发大型应用。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{MSVC编译指令}
+    \begin{ytublock}{常用MSVC命令行工具}
+        \begin{itemize}
+            \begin{columns}
+                \begin{column}{0.48\textwidth}
+                    \item \texttt{cl.exe}：C/C++编译器
+                    \item \texttt{link.exe}：链接器
+                \end{column}
+                \begin{column}{0.48\textwidth}
+                    \item \texttt{nmake.exe}：微软的make工具
+                    \item \texttt{devenv.exe}：Visual Studio IDE启动器
+                \end{column}
+            \end{columns}
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{MSVC编译示例}
+        \begin{itemize}
+            \item \texttt{cl main.cpp} \hspace{1em} // 编译C++源文件，生成可执行文件 \texttt{main.exe}
+            \item \texttt{cl /LD mylib.cpp} \hspace{1em} // 编译为动态链接库（DLL），生成\texttt{mylib.dll}
+            \item \texttt{cl /c foo.cpp bar.cpp} \hspace{1em} // 仅编译为目标文件（.obj），不进行链接
+            \item \texttt{link foo.obj bar.obj /OUT:app.exe} \hspace{1em} // 手动链接多个目标文件，生成可执行文件
+            \item \texttt{cl /I include\_path main.cpp} \hspace{1em} // 指定头文件搜索路径
         \end{itemize}
     \end{ytublock}
 \end{frame}
@@ -534,7 +891,56 @@
     \end{ytublock}
 \end{frame}
 
-\section{调试工具配置}
+\begin{frame}{CMake简介}
+    \begin{ytublock}{CMake是什么？}
+        CMake是一个跨平台的自动化构建系统（build system）工具，主要用于管理C/C++项目的编译过程。它通过编写\texttt{CMakeLists.txt}文件，描述项目的源文件、依赖、编译选项等，自动生成适合不同平台的本地构建文件（如Makefile、Visual Studio工程等）。
+    \end{ytublock}
+
+    \begin{ytublock}{CMake的主要特点}
+        \begin{itemize}
+            \item \textbf{跨平台}：支持Windows、Linux、macOS等主流操作系统。
+            \item \textbf{灵活性强}：可配置多种编译器和构建工具，适用于各种规模的项目。
+            \item \textbf{模块丰富}：内置大量查找库和工具的模块，便于集成第三方库（如Qt、Boost等）。
+            \item \textbf{自动化管理依赖}：通过\texttt{find\_package}等机制自动查找和链接依赖库。
+            \item \textbf{易于集成IDE}：可为Visual Studio、Qt Creator、CLion等IDE生成工程文件。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{CMake基本工作流程}
+    \begin{ytublock}{CMake构建流程}
+        \begin{enumerate}
+            \item \textbf{编写CMakeLists.txt}：在项目根目录下创建\texttt{CMakeLists.txt}，描述项目结构、依赖和编译规则。
+            \item \textbf{配置（Configure）}：运行\texttt{cmake}命令，生成本地构建系统文件（如Makefile、.sln等）。
+            \item \textbf{构建（Build）}：使用生成的构建文件（如\texttt{make}、\texttt{ninja}或Visual Studio）进行编译和链接，得到可执行文件或库文件。
+        \end{enumerate}
+    \end{ytublock}
+
+    \begin{ytublock}{常用CMake命令}
+        \begin{itemize}
+            \item \texttt{cmake -S . -B build} \hspace{1em} \# 配置项目，生成build目录
+            \item \texttt{cmake --build build} \hspace{1em} \# 编译项目
+            \item \texttt{cmake --install build} \hspace{1em} \# 安装（可选）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{CMakeLists.txt基本结构}
+    \begin{ytublock}{CMakeLists.txt常见内容}
+        \begin{itemize}
+            \item \texttt{cmake\_minimum\_required(VERSION 3.16)} \hspace{1em} \# 指定CMake最低版本
+            \item \texttt{project(MyProject)} \hspace{1em} \# 项目名称
+            \item \texttt{set(CMAKE\_CXX\_STANDARD 17)} \hspace{1em} \# 指定C++标准
+            \item \texttt{find\_package(Qt6 COMPONENTS Widgets REQUIRED)} \hspace{1em} \# 查找Qt库
+            \item \texttt{add\_executable(MyApp main.cpp)} \hspace{1em} \# 添加可执行文件
+            \item \texttt{target\_link\_libraries(MyApp Qt6::Widgets)} \hspace{1em} \# 链接Qt库
+        \end{itemize}
+    \end{ytublock}
+    \vspace{0.5em}
+    \begin{ytualertblock}{建议}
+        推荐将CMakeLists.txt文件和源代码、头文件、资源文件分目录管理，便于项目维护和扩展。
+    \end{ytualertblock}
+\end{frame}
 
 \begin{frame}{调试工具介绍}
     \begin{ytublock}{集成调试器}
@@ -561,7 +967,7 @@
     \end{ytublock}
 \end{frame}
 
-\begin{frame}[fragile]{调试配置示例}
+\begin{frame}[fragile]{Qt调试示例}
         \begin{columns}
             \begin{column}{0.48\textwidth}
                 \inputminted[firstline=1,lastline=15]{cpp}{code/main.cpp}
@@ -573,6 +979,11 @@
 \end{frame}
 
 \section{版本控制集成}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
 
 \begin{frame}{什么是Git？}
     \begin{ytublock}{版本控制的意义}
@@ -666,7 +1077,12 @@
     \end{columns}
 \end{frame}
 
-\section{项目模板和示例}
+\section{项目实践}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
+\end{frame}
 
 \begin{frame}{常见Qt项目模板}
     \begin{ytublock}{应用程序模板}
@@ -706,81 +1122,37 @@
     \end{ytublock}
 \end{frame}
 
-\section{集成开发环境（IDE）介绍}
-
-\begin{frame}{什么是IDE？}
-    \begin{ytublock}{IDE的定义}
-        集成开发环境（Integrated Development Environment，IDE）是一种软件应用程序，为程序员提供全面的开发工具，包括代码编辑器、编译器、调试器、项目管理等功能的统一界面。
-    \end{ytublock}
-
-    \begin{ytublock}{IDE vs 文本编辑器}
-        \begin{itemize}
-            \item \textbf{IDE}：功能全面，适合大型项目开发
-            \item \textbf{文本编辑器}：轻量级，适合简单脚本编写
-            \item \textbf{IDE优势}：代码补全、语法检查、集成调试
-            \item \textbf{编辑器优势}：启动快速、占用资源少
-        \end{itemize}
-    \end{ytublock}
-\end{frame}
-
-\begin{frame}{主流IDE介绍}
+\begin{frame}{环境验证步骤}
     \begin{columns}
-        \begin{column}{0.48\textwidth}
-            \begin{ytublock}{Qt Creator}
-                \begin{itemize}
-                    \item \textbf{专为Qt设计}：与Qt框架完美集成
-                    \item \textbf{免费开源}：无需付费许可证
-                    \item \textbf{跨平台}：Windows、macOS、Linux
-                    \item \textbf{可视化设计}：内置Qt Designer
-                    \item \textbf{适合初学者}：界面友好，易上手
-                \end{itemize}
-            \end{ytublock}
+        \begin{column}{0.58\textwidth}
+            \begin{enumerate}
+                \item 编译FirstApp程序
+                \item 运行程序验证
+                \item 测试调试功能
+                \item 验证版本控制
+                \item Qt Creator 和 VS Code 的配置
+            \end{enumerate}
         \end{column}
         \hspace{0.02\textwidth}
-        \begin{column}{0.48\textwidth}
-            \begin{ytublock}{Visual Studio}
+        \begin{column}{0.38\textwidth}
+            \begin{ytublock}{常见问题解决}
                 \begin{itemize}
-                    \item \textbf{微软官方}：Windows平台最强大IDE
-                    \item \textbf{功能丰富}：企业级开发工具
-                    \item \textbf{社区版免费}：个人和小团队使用
-                    \item \textbf{调试强大}：业界最佳调试体验
-                    \item \textbf{扩展丰富}：大量插件和扩展
+                    \item 编译器路径配置
+                    \item Qt库路径设置
+                    \item 环境变量配置
+                    \item 权限问题处理
                 \end{itemize}
             \end{ytublock}
         \end{column}
     \end{columns}
-
-    \begin{ytublock}{VS Code}
-        \begin{itemize}
-            \item \textbf{轻量级}：启动快速，占用资源少
-            \item \textbf{免费开源}：微软开发，完全免费
-            \item \textbf{扩展生态}：丰富的插件市场
-            \item \textbf{跨平台}：支持所有主流操作系统
-            \item \textbf{现代化}：界面美观，用户体验佳
-        \end{itemize}
-    \end{ytublock}
 \end{frame}
 
-\begin{frame}{IDE选择建议}
-    \begin{ytublock}{初学者推荐}
-        \begin{itemize}
-            \item \textbf{首选Qt Creator}：专为Qt开发设计，学习成本低
-            \item \textbf{界面友好}：可视化设计工具，直观易懂
-            \item \textbf{文档完善}：官方文档和教程丰富
-            \item \textbf{社区支持}：Qt社区活跃，问题容易解决
-        \end{itemize}
-    \end{ytublock}
-
-    \begin{ytublock}{进阶用户选择}
-        \begin{itemize}
-            \item \textbf{Visual Studio}：大型项目，企业级开发
-            \item \textbf{VS Code}：轻量级开发，多语言支持
-            \item \textbf{Cursor}：AI辅助开发，提高效率
-        \end{itemize}
-    \end{ytublock}
+\section{其他IDE配置}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection]
+    \end{multicols}
 \end{frame}
-
-\section{Qt在Visual Studio中的配置}
 
 \begin{frame}{Visual Studio简介}
     \begin{ytublock}{Visual Studio概述}
@@ -883,8 +1255,6 @@
         \end{itemize}
     \end{ytublock}
 \end{frame}
-
-\section{Qt在VS Code中的配置}
 
 \begin{frame}{VS Code简介}
     \begin{ytublock}{VS Code概述}
@@ -1000,83 +1370,6 @@
     \end{ytublock}
 \end{frame}
 
-\begin{frame}{VS Code中Qt调试配置与技巧}
-    \begin{ytublock}{调试配置说明}
-        \begin{itemize}
-            \item \textbf{launch.json}：在.vscode目录下配置调试器参数，如可执行文件路径、调试类型、工作目录等。
-            \item \textbf{断点管理}：可在代码行号处点击设置/取消断点，支持条件断点和日志断点。
-            \item \textbf{变量查看}：调试时可实时查看局部变量、全局变量、表达式值，支持监视窗口。
-            \item \textbf{调用栈分析}：调试过程中可查看当前函数调用关系，快速定位问题源头。
-            \item \textbf{调试技巧}：利用"热重载"、多窗口调试、调试控制台等功能提升调试效率。
-        \end{itemize}
-    \end{ytublock}
-\end{frame}
-
-\begin{frame}{IDE选择总结}
-    \begin{columns}
-        \begin{column}{0.48\textwidth}
-            \begin{ytublock}{Qt Creator（推荐初学者）}
-                \begin{itemize}
-                    \item \textbf{优势}：专为Qt设计，学习成本低，免费
-                    \item \textbf{适用}：Qt初学者，中小型项目
-                    \item \textbf{特点}：集成Qt Designer，可视化设计
-                \end{itemize}
-            \end{ytublock}
-            \begin{ytublock}{Visual Studio（推荐专业开发）}
-                \begin{itemize}
-                    \item \textbf{优势}：功能强大，调试体验佳，企业级
-                    \item \textbf{适用}：大型项目，团队开发，Windows平台
-                    \item \textbf{特点}：集成Qt VS Tools，性能分析工具
-                \end{itemize}
-            \end{ytublock}
-        \end{column}
-        \hspace{0.02\textwidth}
-        \begin{column}{0.48\textwidth}
-            \begin{ytublock}{VS Code（推荐轻量级开发）}
-                \begin{itemize}
-                    \item \textbf{优势}：轻量级，启动快速，扩展丰富
-                    \item \textbf{适用}：小型项目，多语言开发，跨平台
-                    \item \textbf{特点}：现代化界面，CMake集成，Git支持
-                \end{itemize}
-            \end{ytublock}
-            \begin{ytublock}{选择建议}
-                \begin{itemize}
-                    \item \textbf{初学者}：从Qt Creator开始，熟悉后再尝试其他
-                    \item \textbf{专业开发}：根据项目需求选择合适的IDE
-                    \item \textbf{团队协作}：统一IDE，便于代码规范和协作
-                \end{itemize}
-            \end{ytublock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-\section{环境验证}
-
-\begin{frame}{环境验证步骤}
-    \begin{columns}
-        \begin{column}{0.58\textwidth}
-            \begin{enumerate}
-                \item 编译FirstApp程序
-                \item 运行程序验证
-                \item 测试调试功能
-                \item 验证版本控制
-                \item Qt Creator 和 VS Code 的配置
-            \end{enumerate}
-        \end{column}
-        \hspace{0.02\textwidth}
-        \begin{column}{0.38\textwidth}
-            \begin{ytublock}{常见问题解决}
-                \begin{itemize}
-                    \item 编译器路径配置
-                    \item Qt库路径设置
-                    \item 环境变量配置
-                    \item 权限问题处理
-                \end{itemize}
-            \end{ytublock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
 \begin{frame}{总结}
     \begin{columns}
         \begin{column}{0.48\textwidth}
@@ -1087,6 +1380,7 @@
                     \item 学会配置编译器和调试工具
                     \item 熟悉版本控制集成
                     \item 能够创建和运行Qt项目
+                    \item 了解版本兼容性和学习路径
                 \end{itemize}
             \end{ytublock}
         \end{column}
@@ -1098,6 +1392,9 @@
                     \item 安装VS Code
                     \item 配置Qt Creator和VS Code
                     \item 完成FirstApp程序的编译和运行
+                    \item 熟悉Qt开发环境
+                    \item 自学CMake
+                    \item 自学Git
                 \end{itemize}
             \end{ytublock}
         \end{column}
