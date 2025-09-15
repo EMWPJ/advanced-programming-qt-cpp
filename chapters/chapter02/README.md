@@ -2,7 +2,7 @@
 
 ## 📖 章节概述
 
-本章系统介绍C++编程语言的基础知识和高级特性，从C、C++与Qt的关系开始，逐步深入到C语言基础、C++基本语法和面向对象编程。通过本章的学习，学生将掌握现代C++编程的核心技能，并理解编程语言的演进过程。
+本章系统介绍C++编程语言的基础知识和高级特性，从C、C++与Qt的关系开始，逐步深入到C语言基础、C++基本语法和面向对象编程，最后通过一个综合的线性方程组求解系统项目来巩固所学知识。通过本章的学习，学生将掌握现代C++编程的核心技能，理解编程语言的演进过程，并培养实际项目开发能力。
 
 ## 🎯 学习目标
 
@@ -11,6 +11,7 @@
 3. **熟练C++基本语法**：掌握现代C++的语言特性
 4. **精通面向对象编程**：深入理解OOP的核心概念和应用
 5. **掌握内存管理**：智能指针、RAII、异常安全
+6. **实践项目开发**：通过线性方程组求解系统综合运用所学知识
 
 ## 📚 主要内容
 
@@ -45,34 +46,61 @@
 - **多态**: 虚函数、纯虚函数、抽象类、运行时多态
 - **智能指针**: unique_ptr、shared_ptr、weak_ptr、RAII原则
 
+### 5. 本章总结与课后任务
+- **知识点梳理**: C、C++与Qt关系、编程范式演进、内存管理、数据结构、语言特性
+- **学习路径**: 理论与实践结合、Qt开发准备、进阶方向指引
+- **综合项目**: 线性方程组求解系统设计与实现
+
 ## 💻 代码示例
 
 ### C语言示例
-- `c_basic_syntax.c`: C语言基础语法
-- `c_control_structures.c`: 控制结构演示
-- `c_function_example.c`: 函数定义和调用
-- `c_pointer_example.c`: 指针使用示例
+- `c_basic_syntax.c`: C语言基础语法演示
+- `c_control_structures.c`: 条件语句和循环结构
+- `c_function_simple.c`: 简单函数定义和调用
+- `c_function_example.c`: 函数参数传递方式详解
+- `c_pointer_example.c`: 指针与变量、数组的关系
+- `c_pointer_memory_example.c`: 动态内存管理和堆栈内存
 - `c_struct_example.c`: 结构体定义和使用
 
-### C++基础示例
-- `cpp_basic_syntax.cpp`: C++基础语法
-- `cpp_basic_types.cpp`: 基本数据类型
+### C++基础语法示例
+- `cpp_basic_syntax.cpp`: C++基础语法特性
+- `cpp_basic_types.cpp`: 基本数据类型和类型系统
+- `cpp_basic_types_demo.cpp`: 数据类型演示
+- `cpp_variables_constants.cpp`: 变量和常量声明
+- `cpp_variables_constants_clean.cpp`: 变量常量最佳实践
+- `cpp_control_structures.cpp`: 控制结构和流程控制
+- `cpp_operators.cpp`: 运算符重载基础
 - `cpp_string_example.cpp`: 字符串处理
-- `cpp_array_example.cpp`: 数组操作
-- `cpp_vector_example.cpp`: STL向量容器
+- `cpp_reference_example.cpp`: 引用类型使用
 
-### 面向对象示例
-- `cpp_class_example.cpp`: 类定义和使用
-- `cpp_inherit_example.cpp`: 继承机制
-- `cpp_polymorphism_example.cpp`: 多态实现
+### C++函数与Lambda表达式
+- `cpp_function_basic.cpp`: 函数基础特性
+- `cpp_function_overload.cpp`: 函数重载机制
+- `cpp_lambda_example.cpp`: Lambda表达式应用
+
+### C++数组与容器
+- `cpp_array_example.cpp`: 原生数组操作
+- `cpp_stdarray_example.cpp`: std::array容器
+- `cpp_vector_example.cpp`: std::vector动态数组
+- `cpp_range_for.cpp`: 范围for循环
+
+### 面向对象编程示例
+- `cpp_class_example.cpp`: 类和对象基础
+- `cpp_inherit_example.cpp`: 单继承机制
+- `cpp_inherit_rule.cpp`: 继承规则详解
 - `cpp_multi_inherit_example.cpp`: 多重继承
+- `cpp_polymorphism_example.cpp`: 多态实现
 
 ### 高级特性示例
-- `cpp_function_overload.cpp`: 函数重载
-- `cpp_template_example.cpp`: 模板编程
-- `cpp_lambda_example.cpp`: Lambda表达式
-- `cpp_smart_pointer.cpp`: 智能指针
+- `cpp_auto.cpp`: auto类型推导
+- `cpp_auto_type_deduction.cpp`: 类型推导机制
+- `cpp_const_correctness.cpp`: const正确性
 - `cpp_move_semantics.cpp`: 移动语义
+- `cpp_pointer_example.cpp`: 指针高级用法
+- `cpp_smart_pointer.cpp`: 智能指针基础
+- `cpp_smart_pointer_clean.cpp`: 智能指针最佳实践
+- `cpp_smart_pointers_demo.cpp`: 智能指针演示
+- `cpp_qt_example.cpp`: Qt基础示例
 
 ## 🚀 运行示例
 
@@ -165,6 +193,48 @@ g++ -std=c++17 example.cpp -o example
 3. 异常处理机制
 4. 现代C++特性
 
+## 🎓 课后任务
+
+### 综合项目：线性方程组求解系统
+
+设计并实现一个完整的线性方程组求解系统，综合运用本章所学的C++编程知识：
+
+#### 项目要求
+1. **数据结构设计**:
+   - 使用容器类存储矩阵和向量数据
+   - 设计矩阵类，支持基本矩阵运算
+
+2. **算法实现**:
+   - 使用面向对象多态实现不同的求解算法
+   - 高斯消元法（Gaussian Elimination）
+   - LU分解法（LU Decomposition）
+   - 雅可比迭代法（Jacobi Iteration）
+   - SOR迭代法（Successive Over-Relaxation）
+
+3. **现代C++特性应用**:
+   - 使用Lambda表达式实现自定义的矩阵运算和向量操作
+   - 使用智能指针管理动态分配的矩阵对象
+   - 使用auto类型推导简化代码
+
+4. **错误处理与鲁棒性**:
+   - 包含输入验证和异常处理机制
+   - 奇异矩阵检测
+   - 迭代法收敛性判断
+   - 内存安全保证
+
+#### 技术要点
+- **面向对象设计**: 抽象基类设计、继承层次、运行时多态
+- **模板编程**: 泛型矩阵类、类型安全
+- **内存管理**: RAII原则、智能指针、异常安全
+- **算法实现**: 数值计算、迭代收敛、精度控制
+- **代码组织**: 模块化设计、接口抽象、错误处理
+
+#### 学习目标
+- 综合运用C++面向对象编程特性
+- 理解数值算法的实现原理
+- 掌握现代C++编程规范
+- 培养大型程序的设计和实现能力
+
 ## 🎓 练习建议
 
 ### 基础练习
@@ -181,6 +251,7 @@ g++ -std=c++17 example.cpp -o example
 1. **模板编程**: 实现泛型算法和容器
 2. **内存管理**: 使用智能指针管理资源
 3. **STL应用**: 熟练使用各种STL组件
+4. **数值计算**: 实现基本的数学算法
 
 ## 🔍 常见问题
 

@@ -490,6 +490,63 @@
     \end{columns}
 \end{frame}
 
+\begin{frame}{指针常见错误}
+    \begin{ytublock}{未初始化指针}
+        \begin{itemize}
+            \item \textbf{问题描述}：指针变量声明后未赋初值，其值为随机地址（垃圾值）
+            \item \textbf{风险}：访问未初始化指针可能导致程序崩溃、数据损坏或安全漏洞
+            \item \textbf{示例}：\texttt{int* ptr;} 后直接使用 \texttt{*ptr = 10;} 是危险操作
+            \item \textbf{解决方案}：声明指针时立即初始化为 \texttt{NULL} 或具体地址
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{访问已释放内存}
+        \begin{itemize}
+            \item \textbf{问题描述}：指针指向的内存已经被释放，但程序仍然尝试访问该内存
+            \item \textbf{风险}：可能导致程序崩溃、数据损坏或安全漏洞
+            \item \textbf{示例}：\texttt{int* ptr = malloc(sizeof(int)); free(ptr); *ptr = 20;} 是危险操作
+            \item \textbf{解决方案}：释放内存后立即将指针置为 \texttt{NULL}，并在访问前检查指针是否为 \texttt{NULL}
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{指针常见错误}
+    \begin{ytublock}{指针越界}
+        \begin{itemize}
+            \item \textbf{问题描述}：指针访问了超出其合法范围的内存区域
+            \item \textbf{风险}：可能导致程序崩溃、数据损坏或安全漏洞
+            \item \textbf{示例}：\texttt{int arr[5]; int* p = arr; p[5] = 10;} 访问了数组外的内存
+            \item \textbf{解决方案}：确保指针操作在合法范围内，检查数组边界
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{内存泄漏}
+        \begin{itemize}
+            \item \textbf{问题描述}：动态分配的内存没有被正确释放，导致内存被持续占用
+            \item \textbf{风险}：可能导致程序内存不足，性能下降或崩溃
+            \item \textbf{示例}：\texttt{int* ptr = malloc(sizeof(int));} 没有对应的 \texttt{free(ptr);}
+            \item \textbf{解决方案}：确保每个 \texttt{malloc()} 都有对应的 \texttt{free()}，使用工具检测内存泄漏
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{指针常见错误}
+    \begin{ytublock}{野指针}
+        \begin{itemize}
+            \item \textbf{问题描述}：指针指向已释放或无效的内存地址
+            \item \textbf{风险}：可能导致程序崩溃、数据损坏或安全漏洞
+            \item \textbf{示例}：\texttt{int* ptr = malloc(sizeof(int)); free(ptr); *ptr = 20;} 是危险操作
+            \item \textbf{解决方案}：释放内存后立即将指针置为 \texttt{NULL}，并在访问前检查指针是否为 \texttt{NULL}
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{悬空指针}
+        \begin{itemize}
+            \item \textbf{问题描述}：指针指向的对象已经被销毁，但指针仍然保留原地址
+            \item \textbf{风险}：访问悬空指针可能导致未定义行为、程序崩溃
+            \item \textbf{示例}：函数返回局部变量的地址，或在对象销毁后继续使用指向它的指针
+            \item \textbf{解决方案}：避免返回局部变量地址，在对象生命周期结束后将指针置为 \texttt{NULL}
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
 \begin{frame}{C语言动态内存管理}
     \begin{ytublock}{内存分区与动态分配}
         \begin{itemize}
@@ -501,20 +558,41 @@
     \end{ytublock}
 \end{frame}
 
-\begin{frame}{指针常见错误与良好习惯}
-    \begin{ytublock}{常见错误}
+\begin{frame}{堆与栈内存}
+    \begin{ytublock}{栈内存（Stack）}
         \begin{itemize}
-            \item 未初始化指针，访问已释放内存，指针越界等都可能导致程序崩溃或不可预期行为。
-            \item 内存泄漏：动态分配的内存未及时释放会造成内存泄漏，长期运行会耗尽系统资源。
-            \item 野指针：指针指向的内存已被释放或未初始化，访问野指针会导致不可预期的错误。
-            \item 悬空指针：释放内存后未将指针置为\texttt{NULL}，指针仍然指向原地址，极易出错。
-            \item 内存越界：访问数组或内存块时超出分配范围，可能破坏数据或引发崩溃。
+            \item \textbf{什么是栈}：就像一个"临时储物架"，存放局部变量和函数调用信息
+            \item \textbf{特点}：空间较小但速度快，系统自动管理，无需程序员操心
+            \item \textbf{管理方式}：随函数调用自动分配，函数结束自动回收
+            \item \textbf{适用场景}：适合存放临时、大小固定的数据，不需要跨函数共享
         \end{itemize}
     \end{ytublock}
-    \begin{ytublock}{良好习惯}
+    \begin{ytublock}{堆内存（Heap）}
         \begin{itemize}
-            \item 动态分配内存后及时检查返回值是否为\texttt{NULL}，用完后立即\texttt{free()}并将指针赋为\texttt{NULL}。
-            \item 初始化指针为\texttt{NULL}，避免野指针。
+            \item \textbf{什么是堆}：就像一个"大仓库"，程序运行时可以按需申请内存空间
+            \item \textbf{特点}：空间很大很灵活，适合存放需要长期使用或者大小不确定的数据
+            \item \textbf{管理方式}：需要程序员自己申请和释放，C语言用\texttt{malloc()}等，C++用\texttt{new}/\texttt{delete}
+            \item \textbf{注意事项}：用完必须手动释放，否则会造成\textbf{内存泄漏}（就像借了东西不还）
+            \item \textbf{优缺点}：分配速度较慢，但容量大，适合动态需求
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{堆与栈内存的硬件视角}
+    \begin{ytublock}{栈内存的硬件实现}
+        \begin{itemize}
+            \item \textbf{专用寄存器}：CPU有专门的"栈指针"寄存器来记录栈顶位置
+            \item \textbf{硬件指令}：CPU提供专门的PUSH/POP指令来操作栈内存
+            \item \textbf{内存位置}：栈通常位于内存的高地址区域，向下增长
+            \item \textbf{速度快的原因}：栈访问有规律，容易命中CPU缓存，所以很快
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{堆内存的硬件机制}
+        \begin{itemize}
+            \item \textbf{动态申请}：需要向操作系统申请内存块，就像"租用"内存
+            \item \textbf{地址映射}：通过内存管理单元将虚拟地址映射到物理地址
+            \item \textbf{碎片问题}：频繁申请释放会产生"内存碎片"，需要特殊管理
+            \item \textbf{速度慢的原因}：堆访问比较随机，不容易命中缓存，所以较慢
         \end{itemize}
     \end{ytublock}
 \end{frame}
@@ -956,10 +1034,20 @@
     \begin{ytublock}{Lambda表达式语法}
         \begin{itemize}
             \item \texttt{[capture](parameters) -> return\_type \{ body \}}
-            \item capture：捕获外部变量
-            \item parameters：参数
-            \item return\_type：返回类型
-            \item body：函数体
+            \begin{columns}
+                \begin{column}{0.5\textwidth}
+                    \begin{itemize}
+                        \item capture：捕获外部变量
+                        \item parameters：参数
+                    \end{itemize}
+                \end{column}
+                \begin{column}{0.5\textwidth}
+                    \begin{itemize}
+                        \item return\_type：返回类型
+                        \item body：函数体
+                    \end{itemize}
+                \end{column}
+            \end{columns}
         \end{itemize}
     \end{ytublock}
 
@@ -1038,7 +1126,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{C++引用示例}
-    \inputminted[firstline=1,lastline=15]{cpp}{code/cpp_reference_example.cpp}
+    \inputminted[firstline=1,lastline=18]{cpp}{code/cpp_reference_example.cpp}
 \end{frame}
 
 \section{C++面向对象编程}
@@ -1090,15 +1178,39 @@
         \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{C++继承}
-    \begin{columns}
-        \begin{column}{0.48\textwidth}
+\begin{frame}{C++类的定义}
+    \begin{ytublock}{C++类的定义语法}
         \begin{itemize}
-            \item 基类：父类，被继承的类，基类中定义的属性和方法可以被派生类继承
-            \item 派生类：子类，继承父类的类，在基类的基础上扩展新的属性和方法
-            \item 继承：派生类继承基类的属性和方法，派生类可以重写基类的方法
+            \item 使用 \texttt{class} 关键字定义类，类体以大括号包围，末尾有分号
+            \item 类中可以包含\textbf{成员变量}（属性）和\textbf{成员函数}（方法）
+            \item 成员变量：类中定义的变量，用于存储对象的状态
+            \item 成员函数：类中定义的函数，用于操作对象的状态
+            \item 访问权限由 \texttt{public}、\texttt{protected}、\texttt{private} 控制
+            \item 公有成员：可以被类内部和外部访问
+            \item 受保护成员：可以被类内部和派生类访问
+            \item 私有成员：只能被类内部访问
         \end{itemize}
-        \end{column}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{C++对象的创建与使用}
+    \begin{ytublock}{C++对象的创建与使用}
+        \begin{itemize}
+            \item \textbf{栈上创建对象}：直接声明类的实例，如 \texttt{ClassName obj;}，对象生命周期随作用域结束自动销毁。
+            \item \textbf{堆上创建对象}：使用 \texttt{new} 关键字动态分配，如 \texttt{ClassName* p = new ClassName;}，需手动用 \texttt{delete p;} 释放内存。
+            \item \textbf{成员访问}：用 \texttt{.} 运算符访问对象成员（如 \texttt{obj.func()}），用 \texttt{->} 运算符访问指针对象成员（如 \texttt{p->func()}）。
+            \item \textbf{this指针}：在类的成员函数内部，\texttt{this} 指向当前对象的指针，可用 \texttt{this->成员} 访问。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}[fragile]{C++继承}
+    \begin{itemize}
+        \item 基类：父类，被继承的类，基类中定义的属性和方法可以被派生类继承
+        \item 派生类：子类，继承父类的类，在基类的基础上扩展新的属性和方法
+        \item 继承：派生类继承基类的属性和方法，派生类可以重写基类的方法
+    \end{itemize}
+    \begin{columns}
         \begin{column}{0.48\textwidth}
             \inputminted[firstline=1,lastline=16]{cpp}{code/cpp_inherit_example.cpp}
         \end{column}
@@ -1223,11 +1335,23 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{总结}
-    \begin{itemize}
-        \item 本章介绍了C的基本语法、C++的基本语法、Lambda表达式、数组、指针和引用、面向对象编程、智能指针等概念，通过示例代码，我们了解了这些概念的用法和实现方式
-        \item 在实际开发中，我们可以根据需要选择合适的数据结构和算法，提高代码的效率和可读性
-        \item C++的语法还有很多，比如模板、异常处理、多线程、网络编程、数据库编程、图形编程等，这些内容可以参考其他书籍或者网络资源
-    \end{itemize}
+\begin{frame}{本章总结}
+    \begin{ytublock}{C、C++}
+        \begin{itemize}
+            \item \textbf{C语言基础}：掌握了高效的底层编程基础，包括基本语法、控制结构、函数、指针、动态内存管理等核心概念
+            \item \textbf{C++语言特性}：理解了C++对C的面向对象扩展，掌握了类、对象、继承、多态等现代C++特性。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{课后任务}
+        \item 设计一个线性方程组求解系统，支持多种求解方法：
+        \begin{itemize}
+            \item 使用容器类存储矩阵和向量数据
+            \item 使用面向对象多态实现不同的求解算法（高斯消元法、LU分解法、雅可比迭代法、SOR迭代法）
+            \item 使用Lambda表达式实现自定义的矩阵运算和向量操作
+            \item 使用智能指针管理动态分配的矩阵对象
+            \item 包含输入验证和异常处理机制（如奇异矩阵检测、收敛性判断）
+        \end{itemize}
+    \end{ytublock}
 \end{frame}
+
 \end{document}
