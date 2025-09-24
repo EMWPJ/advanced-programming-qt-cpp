@@ -1,0 +1,613 @@
+\documentclass[UTF8,aspectratio=169]{beamer}
+
+\include{../../../setup.tex}
+
+% 文档信息
+\title{课后作业}
+\subtitle{线性方程组求解器}
+\author{王培杰}
+\institute{长江大学地球物理与石油资源学院}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}{课后任务}
+    \begin{ytublock}{线性方程组求解系统}
+        \item 设计一个线性方程组求解系统，支持多种求解方法：
+        \begin{itemize}
+            \item 使用容器类存储矩阵和向量数据
+            \item 使用面向对象多态实现不同的求解算法（高斯消元法、LU分解法、雅可比迭代法、SOR迭代法）
+            \item 使用Lambda表达式实现自定义的矩阵运算和向量操作
+            \item 使用智能指针管理动态分配的矩阵对象
+            \item 包含输入验证和异常处理机制（如奇异矩阵检测、收敛性判断）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{线性方程组求解问题简介}
+    \begin{ytublock}{问题描述}
+        \item 线性方程组求解旨在寻找满足$Ax=b$的未知向量$x$，其中$A$为$n\times n$系数矩阵，$b$为常数向量。
+        \item 该问题广泛应用于科学计算、工程仿真、数据分析等领域，是数值计算的基础问题之一。
+    \end{ytublock}
+    \begin{ytublock}{常用求解方法}
+        \begin{itemize}
+            \item \textbf{高斯消元法}：直接法，适用于小型稠密矩阵，数值稳定性高。
+            \item \textbf{LU分解法}：将$A$分解为上下三角矩阵，便于多次求解不同右端项。
+            \item \textbf{雅可比迭代法}：适合大型稀疏矩阵，易于并行实现。
+            \item \textbf{SOR迭代法}：在雅可比基础上加速收敛，适用于对角占优矩阵。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{$Ax=b$——线性方程组简介}
+        \begin{itemize}
+            \item $A$：$n\times n$的系数矩阵，包含所有方程中未知数的系数。每一行对应一个方程，每一列对应一个未知数。例如：
+            \[
+                A = \begin{bmatrix}
+                    a_{11} & a_{12} & \cdots & a_{1n} \\
+                    a_{21} & a_{22} & \cdots & a_{2n} \\
+                    \vdots & \vdots & \ddots & \vdots \\
+                    a_{n1} & a_{n2} & \cdots & a_{nn}
+                \end{bmatrix}
+            \]
+            \begin{columns}
+                \begin{column}{0.48\textwidth}
+                    \item $x$：$n$维未知向量，表示待求解的变量。形式为：
+                    \[
+                        x = \begin{bmatrix}
+                            x_1 \\ x_2 \\ \vdots \\ x_n
+                        \end{bmatrix}
+                    \]
+                \end{column}
+                \begin{column}{0.48\textwidth}
+                    \item $b$：$n$维常数向量，表示每个方程右端的常数项。形式为：
+                    \[
+                        b = \begin{bmatrix}
+                            b_1 \\ b_2 \\ \vdots \\ b_n
+                        \end{bmatrix}
+                    \]
+                \end{column}
+            \end{columns}
+        \end{itemize}
+\end{frame}
+
+\begin{frame}{高斯消元法}
+    高斯消元法的基本思想是：通过消元操作，将线性方程组$Ax=b$转化为上三角矩阵，然后通过回代求解。高斯消元法的步骤如下：
+    \begin{itemize}
+        \item \textbf{选主元（可选）}：在每一步消元前，选取当前列绝对值最大的元素作为主元，通过行交换将其移至对角线位置，提高数值稳定性。
+        \item \textbf{消元操作}：从第1行开始，依次对每一行，将该行以下的各行对应列的系数消为0。具体做法如下：\\
+        对于第$k$步($k=1,2,\ldots,n-1$)，对第$k$行以下的每一行$i$，用如下公式更新：
+        \[
+            a_{ij} = a_{ij} - \frac{a_{ik}}{a_{kk}} a_{kj}, \quad (j=k,k+1,\ldots,n); b_i = b_i - \frac{a_{ik}}{a_{kk}} b_k
+        \]
+        其中$a_{ik}/a_{kk}$为消元因子。
+        \item \textbf{回代求解}：当矩阵变为上三角后，从最后一行开始，依次向上代入已知的未知数，递推求解出所有未知数的值。回代公式为：
+        \[
+            x_i = \frac{1}{a_{ii}} \left( b_i - \sum_{j=i+1}^{n} a_{ij} x_j \right), \quad (i=n,n-1,\ldots,1)
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{LU分解法}
+    LU分解法是一种高效求解线性方程组$Ax=b$的方法，其核心思想是将系数矩阵$A$分解为下三角矩阵$L$和上三角矩阵$U$的乘积，即$A=LU$，从而将原问题转化为两个更易求解的三角方程组。具体步骤如下：
+    \begin{itemize}
+        \item \textbf{LU分解}：将$n\times n$矩阵$A$分解为下三角矩阵$L$（对角线元素为1）和上三角矩阵$U$，满足$A=LU$。常用的分解方法有Doolittle法（$L$主对角线为1）和Crout法（$U$主对角线为1）。分解过程通常通过消元操作实现，类似高斯消元，但将消元因子存入$L$矩阵。
+        \item \textbf{前向替换}：将$Ax=b$转化为$LUx=b$，令$Ux=y$，先解$Ly=b$。由于$L$为下三角矩阵，$Ly=b$可通过前向替换递推求解：
+        \[
+            y_i = b_i - \sum_{j=1}^{i-1} l_{ij}y_j, \quad (i=1,2,\ldots,n)
+        \]
+        \item \textbf{后向替换}：已知$y$后，解$Ux=y$。$U$为上三角矩阵，可通过后向替换递推求解$x$：
+        \[
+            x_i = \frac{1}{u_{ii}}\left(y_i - \sum_{j=i+1}^{n} u_{ij}x_j\right), \quad (i=n,n-1,\ldots,1)
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{LU分解法：Doolittle法详解}
+        \item \textbf{目标}：找到$L$和$U$，使$A=LU$，其中
+        \[
+            L = \begin{bmatrix}
+                1      & 0      & \cdots & 0 \\
+                l_{21} & 1      & \cdots & 0 \\
+                \vdots & \vdots & \ddots & \vdots \\
+                l_{n1} & l_{n2} & \cdots & 1
+            \end{bmatrix},\quad
+            U = \begin{bmatrix}
+                u_{11} & u_{12} & \cdots & u_{1n} \\
+                0      & u_{22} & \cdots & u_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                0      & 0      & \cdots & u_{nn}
+            \end{bmatrix}
+        \]
+        \item \textbf{计算公式}：对$k=1,2,\ldots,n$，依次计算$U$和$L$的元素：
+        \begin{itemize}
+            \item 计算$U$的第$k$行：
+            \[
+                u_{kj} = a_{kj} - \sum_{s=1}^{k-1} l_{ks}u_{sj},\quad j=k,k+1,\ldots,n
+            \]
+            \item 计算$L$的第$k$列（主对角线$L_{kk}=1$）：
+            \[
+                l_{ik} = \frac{1}{u_{kk}}\left(a_{ik} - \sum_{s=1}^{k-1} l_{is}u_{sk}\right),\quad i=k+1,k+2,\ldots,n
+            \]
+        \end{itemize}
+        \item \textbf{分解流程}：逐行逐列递推，先算$U$的第$k$行，再算$L$的第$k$列，直到全部元素求出。
+\end{frame}
+
+\begin{frame}{雅可比迭代法}
+    雅可比迭代法是一种常用的迭代求解线性方程组$Ax=b$的方法。其基本思想是利用矩阵的分解，将每个未知数的计算与其它未知数的当前近似值分离开来，从而逐步逼近精确解。具体过程如下：
+
+    \begin{itemize}
+        \item \textbf{矩阵分解}：将系数矩阵$A$分解为对角矩阵$D$和非对角部分$R$，即$A=D+R$，其中$D$为$A$的主对角线元素构成的对角矩阵，$R=A-D$为其余元素组成的矩阵。
+        \item \textbf{迭代公式推导}：原方程$Ax=b$可写为$Dx = b - Rx$，从而得到迭代格式：
+        \[
+            x^{(k+1)} = D^{-1}(b - R x^{(k)})
+        \]
+        具体到每个分量，有
+        \[
+            x_i^{(k+1)} = \frac{1}{a_{ii}}\left(b_i - \sum_{j=1,\,j\neq i}^{n} a_{ij} x_j^{(k)}\right),\quad i=1,2,\ldots,n
+        \]
+        即每次迭代时，第$i$个分量的新值由其余分量的上一次迭代值计算得到。
+        \item \textbf{初始值选择}：给定初始向量$x^{(0)}$，通常可取零向量或任意猜测值。
+        \item \textbf{收敛判据}：迭代过程中，若$\|x^{(k+1)}-x^{(k)}\|$小于预设精度$\varepsilon$，则认为收敛。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{SOR迭代法}
+    SOR（Successive Over-Relaxation，超松弛迭代）法是在高斯-赛德尔迭代法基础上引入松弛因子$\omega$的一种加速收敛的迭代方法，常用于求解大型稀疏线性方程组$Ax=b$。
+
+    \begin{itemize}
+        \item \textbf{基本思想}：通过引入松弛因子$\omega$，调整每次迭代的步长，从而加快收敛速度。$\omega=1$时，SOR法退化为高斯-赛德尔法；$\omega>1$为超松弛，$\omega<1$为欠松弛。
+        \item \textbf{矩阵分解}：将$A$分解为$A=D+L+U$，其中$D$为对角矩阵，$L$为严格下三角部分，$U$为严格上三角部分。
+        \item \textbf{迭代公式推导}：原方程$Ax=b$可写为
+        \[
+            (D+L)x^{(k+1)} = b - Ux^{(k)}
+        \]
+        SOR法的迭代格式为
+        \[
+            x^{(k+1)} = (1-\omega)x^{(k)} + \omega(D+L)^{-1}(b - Ux^{(k)})
+        \]
+        具体到每个分量，第$i$个分量的迭代公式为
+        \[
+            x_i^{(k+1)} = (1-\omega)x_i^{(k)} + \frac{\omega}{a_{ii}}\left(b_i - \sum_{j=1}^{i-1} a_{ij}x_j^{(k+1)} - \sum_{j=i+1}^{n} a_{ij}x_j^{(k)}\right)
+        \]
+        其中$\omega$为松弛因子，$0<\omega<2$。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{线性方程组求解系统设计}
+    \begin{ytublock}{系统架构}
+        \begin{itemize}
+            \item \textbf{矩阵与向量类}：基于\texttt{std::vector}实现高效存储与运算，支持Lambda表达式优化常用操作。
+            \item \textbf{求解器基类（SolverBase）}：定义统一的虚接口，便于扩展多种算法，体现面向对象多态。
+            \item \textbf{具体求解器实现}：
+            \begin{itemize}
+                \item \textbf{GaussianSolver}：高斯消元法，支持部分选主元与行交换优化。
+                \item \textbf{LUSolver}：Doolittle LU分解，前向/后向替代高效实现。
+                \item \textbf{JacobiSolver}：雅可比迭代，内置收敛性检查。
+                \item \textbf{SORSolver}：SOR加速迭代，支持超松弛参数自定义。
+            \end{itemize}
+            \item \textbf{系统管理类（LinearSystem）}：封装求解流程，负责输入验证、奇异性检测、精度分析与异常处理。
+            \item \textbf{智能指针与RAII}：采用\texttt{std::unique\_ptr}管理动态对象，保证内存安全与异常安全。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{开发步骤}
+    \begin{itemize}
+        \item \textbf{1. 设计系统架构}：确定矩阵与向量类、求解器基类和具体求解器实现。
+        \item \textbf{2. 实现矩阵与向量类}：基于\texttt{std::vector}实现高效存储与运算，支持Lambda表达式优化常用操作。
+        \item \textbf{3. 实现求解器基类}：定义统一的虚接口，便于扩展多种算法，体现面向对象多态。
+        \item \textbf{4. 实现具体求解器}：实现高斯消元法、LU分解法、雅可比迭代法、SOR迭代法。
+        \item \textbf{5. 实现系统管理类}：封装求解流程，负责输入验证、奇异性检测、精度分析与异常处理。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Vector类}
+    \begin{ytublock}{向量类设计}
+        \item 基于\texttt{std::vector}实现的一维数值向量类
+        \item 支持Lambda表达式优化常用运算
+        \item 提供完整的向量代数操作接口
+    \end{ytublock}
+
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{核心特性}
+            \begin{itemize}
+                \item \textbf{存储结构}：\texttt{std::vector<double>}连续存储
+                \item \textbf{构造函数}：默认、数据、移动构造
+                \item \textbf{元素访问}：带边界检查的\texttt{at()}方法
+                \item \textbf{标量运算}：\texttt{multiply()}方法
+                \item \textbf{范数计算}：\texttt{norm()}方法（2-范数）
+                \item \textbf{输出}：格式化的控制台打印
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{Lambda优化}
+            \begin{itemize}
+                \item 标量乘法：\texttt{std::transform}
+                \item 范数计算：\texttt{std::accumulate}
+                \item 打印输出：\texttt{std::for\_each}
+                \item 性能提升：编译时内联优化
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{知识点：构造函数}
+    \begin{ytublock}{构造函数}
+        \item 构造函数是类的一种特殊成员函数，用于在创建对象时初始化对象。
+        \item 构造函数可以有参数，也可以没有参数。
+        \item 构造函数可以有返回值，也可以没有返回值。
+        \item 构造函数可以有多个，也可以没有多个。
+        \item \textbf{默认构造函数}：没有参数的构造函数，用于创建对象时自动调用。
+        \item \textbf{拷贝构造函数}：用于创建对象时复制另一个对象的值。
+        \item \textbf{移动构造函数}：用于创建对象时移动另一个对象的值。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：C++异常}
+    \begin{ytublock}{C++异常处理机制}
+        \item C++异常处理用于在程序运行时捕获和处理错误，提升程序健壮性。
+        \item \textbf{throw}：抛出异常对象，可为内置类型或自定义类型。
+        \item \textbf{try-catch}：\texttt{try}块包裹可能出错的代码，\texttt{catch}块捕获并处理异常。
+        \item \textbf{noexcept}：用于声明函数不会抛出异常，便于编译器优化。
+        \item 支持异常的层级捕获与重新抛出，便于精细化错误处理。
+        \item 建议自定义异常类型继承自\texttt{std::exception}，便于统一管理。
+    \end{ytublock}
+    \begin{ytublock}
+        \item std::out_of_range：用于表示索引超出范围的异常。
+        \item std::invalid_argument：用于表示无效的参数的异常。
+        \item std::runtime_error：用于表示运行时异常。
+        \item std::logic_error：用于表示逻辑异常。
+        \item std::exception：用于表示所有异常的基类。
+        \item std::exception\_ptr：用于表示异常的指针。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：std::transform + Lambda表达式优化}
+    \begin{ytublock}{std::transform详解}
+        \item \texttt{std::transform} 是C++标准库中的泛型算法，用于将一个或多个输入区间的元素通过指定的操作变换后，输出到目标区间。
+        \item 常见用法为对容器（如\texttt{std::vector}）中的每个元素应用某个函数或Lambda表达式，实现批量数据处理。
+        \item 语法示例：\texttt{std::transform(first, last, d\_first, unary\_op);}，其中\texttt{unary\_op}可以是函数指针、函数对象或Lambda表达式。
+        \item 也支持二元操作：\texttt{std::transform(first1, last1, first2, d\_first, binary\_op);}，可用于两个容器的元素逐一运算。
+        \item 结合Lambda表达式，可实现如标量乘法、元素映射、批量转换等高效操作。例如：\texttt{std::transform(v.begin(), v.end(), v2.begin(), [](double x){ return x * 2; });}
+        \item \texttt{std::transform} 通常比手写循环更简洁且易于编译器优化，推荐在需要元素级变换时优先使用。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：std::move}
+    \begin{ytublock}{std::move详解}
+        \item \texttt{std::move} 是C++标准库中的一个函数，用于将一个对象转换为右值引用，从而可以被移动构造或赋值。
+        \item 常见用法为将一个对象转换为右值引用，从而可以被移动构造或赋值。
+        \item 语法示例：\texttt{std::move(x);}，其中\texttt{x}是一个对象。
+        \item 也支持二元操作：\texttt{std::move(x, y);}，可用于两个对象的移动构造或赋值。
+    \end{ytublock}
+    \begin{ytublock}{右值引用}
+        \item 右值引用是C++11引入的一种新的引用类型，用于表示临时对象或右值。
+        \item 常见用法为将一个对象转换为右值引用，从而可以被移动构造或赋值。
+        \item 语法示例：\texttt{int&& x = 1;}，其中\texttt{x}是一个右值引用。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：&&}
+    \begin{ytublock}{&&}
+        \item &&是C++11引入的一种新的引用类型，用于表示右值引用。
+        \item 常见用法为将一个对象转换为右值引用，从而可以被移动构造或赋值。
+        \item 语法示例：\texttt{int&& x = 1;}，其中\texttt{x}是一个右值引用。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：std::accumulate}
+    \begin{ytublock}{std::accumulate}
+        \item \texttt{std::accumulate} 是C++标准库中的泛型算法，用于对区间内元素进行累加、累乘或自定义聚合操作。
+        \item 常见用法包括：求和、求积、字符串拼接、结构体成员累加等。
+        \item 基本语法：\texttt{std::accumulate(first, last, init);}，其中\texttt{first}和\texttt{last}为迭代器，\texttt{init}为初始值。
+        \item 支持自定义二元操作：\texttt{std::accumulate(first, last, init, binary\_op);}，可实现如乘积、最大值、字符串拼接等多种聚合。
+        \item 结合Lambda表达式可灵活实现复杂聚合逻辑。例如：\texttt{std::accumulate(v.begin(), v.end(), 0.0, [](double a, double b)\{ return a + b * b; \});}
+        \item 相比手写循环，\texttt{std::accumulate} 代码更简洁、可读性更高，易于编译器优化。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：std::for\_each + Lambda表达式}
+    \begin{ytublock}{std::for\_each优化用法}
+        \item \texttt{std::for\_each} 是C++标准库中的泛型算法，用于对区间内每个元素执行指定操作，常用于遍历和批量处理。
+        \item 推荐结合Lambda表达式使用，可实现就地处理、捕获外部变量、简化代码。例如：\texttt{std::for\_each(v.begin(), v.end(), [](int \&x)\{ x *= 2; \});}
+        \item 语法：\texttt{std::for\_each(first, last, func);}，其中\texttt{func}可为函数指针、函数对象或Lambda表达式。
+        \item 支持对任意容器（如\texttt{std::vector}、\texttt{std::list}等）进行高效遍历和操作，代码更简洁、可读性更高。
+        \item 与传统for循环相比，\texttt{std::for\_each}更易于并行化和编译器优化，适合大规模数据处理场景。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Matrix类}
+    \begin{ytublock}{矩阵类设计}
+        \item 基于\texttt{std::vector<std::vector<double>>}实现的二维数值矩阵类
+        \item 支持Lambda表达式优化矩阵运算
+        \item 提供完整的矩阵代数操作接口
+    \end{ytublock}
+
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{核心特性}
+            \begin{itemize}
+                \item \textbf{存储结构}：二维向量，行优先存储
+                \item \textbf{构造函数}：默认、数据、移动构造
+                \item \textbf{元素访问}：带边界检查的\texttt{at()}方法
+                \item \textbf{矩阵运算}：\texttt{multiply()}矩阵-向量乘法
+                \item \textbf{奇异性检测}：基于行列式的精确判断
+                \item \textbf{输出}：格式化的控制台打印
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{Lambda优化}
+            \begin{itemize}
+                \item 矩阵-向量乘：\texttt{std::inner\_product}
+                \item 打印输出：嵌套\texttt{std::for\_each}
+                \item 行列式计算：递归算法优化
+                \item 对角元素检查：简化的奇异性判断
+                \item 性能提升：编译时内联和常量传播
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{知识点：std::inner\_product}
+    \begin{ytublock}{std::inner\_product优化用法}
+        \item \texttt{std::inner\_product} 是C++标准库中的泛型算法，常用于高效计算两个区间（如向量）元素的内积，广泛应用于矩阵运算、信号处理等领域。
+        \item 基本用法：\texttt{std::inner\_product(first1, last1, first2, init);}，其中\texttt{first1}和\texttt{last1}为第一个区间的迭代器，\texttt{first2}为第二个区间的起始迭代器，\texttt{init}为初始值。
+        \item 支持自定义二元操作和累加操作：\texttt{std::inner\_product(first1, last1, first2, init, binary\_op1, binary\_op2);}，可实现如加权和、逻辑运算等复杂聚合。
+        \item 推荐结合Lambda表达式灵活定制内积逻辑。例如：\texttt{std::inner\_product(a.begin(), a.end(), b.begin(), 0.0, std::plus<>(), [](double x, double y)\{ return x*y; \});}
+        \item 相比手写循环，\texttt{std::inner\_product} 代码更简洁、可读性更高，易于编译器优化和并行化。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{SolverBase求解器基类}
+    \begin{ytublock}{抽象基类设计}
+        \item 采用面向对象多态设计，实现算法抽象
+        \item 定义统一的求解接口，便于扩展新算法
+        \item 使用智能指针管理内存，异常安全
+    \end{ytublock}
+
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{设计模式}
+            \begin{itemize}
+                \item \textbf{策略模式}：不同算法的封装和替换
+                \item \textbf{工厂模式}：动态创建具体求解器实例
+                \item \textbf{模板方法}：定义求解流程的骨架
+                \item \textbf{RAII模式}：智能指针自动资源管理
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{核心接口}
+            \begin{itemize}
+                \item \textbf{纯虚函数}：\texttt{solve()}统一求解接口
+                \item \textbf{智能指针}：\texttt{std::unique\_ptr<Vector>}返回值
+                \item \textbf{异常处理}：返回nullptr表示求解失败
+                \item \textbf{const正确性}：不修改输入参数
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{GaussianSolver高斯消元法}
+    \begin{ytublock}{具体实现}
+        \item 继承SolverBase基类，实现高斯消元算法
+        \item 支持部分选主元策略，提高数值稳定性
+        \item 使用Lambda表达式优化行交换操作
+    \end{ytublock}
+
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{算法流程}
+            \begin{itemize}
+                \item \textbf{前向消元}：逐列消元，将矩阵化为上三角
+                \item \textbf{部分选主元}：选择绝对值最大的主元
+                \item \textbf{行交换}：使用\texttt{std::swap\_ranges}优化
+                \item \textbf{回代求解}：从最后一列向上递推求解
+                \item \textbf{奇异性检测}：检查主元是否接近零
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{Lambda优化}
+            \begin{itemize}
+                \item 行交换：\texttt{std::swap\_ranges}替代循环
+                \item 边界检查：编译时类型安全
+                \item 内存布局：连续存储保证缓存友好
+                \item 异常处理：返回nullptr表示失败
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{知识点：std::unique_ptr + std::make_unique}
+    \begin{ytublock}{std::unique_ptr}
+        \item \texttt{std::unique\_ptr} 是C++标准库中的一个智能指针，用于管理动态分配的内存。
+        \item 常见用法为将一个对象转换为右值引用，从而可以被移动构造或赋值。
+        \item 语法示例：\texttt{std::unique\_ptr<int> x = std::make\_unique<int>(1);}，其中\texttt{x}是一个智能指针。
+    \end{ytublock}
+    \begin{ytublock}{std::make_unique}
+        \item \texttt{std::make\_unique} 是C++标准库中的一个函数，用于创建一个智能指针。
+        \item 常见用法为创建一个智能指针。
+        \item 语法示例：\texttt{std::unique\_ptr<int> x = std::make\_unique<int>(1);}，其中\texttt{x}是一个智能指针。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：std::swap\_ranges}
+    \begin{ytublock}{std::swap 简介}
+        \item \texttt{std::swap} 是C++标准库中用于高效交换两个对象内容的函数，简化代码并提升性能。
+        \item 常见场景：变量交换、容器元素交换等，适用于所有支持交换操作的类型。
+        \item 示例：\texttt{std::swap(a, b);} 可直接交换 \texttt{a} 和 \texttt{b} 的值。
+        \item 注意：参与交换的对象需支持交换操作，否则结果未定义。
+    \end{ytublock}
+    \begin{ytublock}{std::swap\_ranges 优化与应用}
+        \item \texttt{std::swap\_ranges} 可高效地一次性交换两个区间的全部元素，避免手动循环，提升代码可读性与执行效率。
+        \item 典型应用：矩阵行交换、批量数据重排等，适用于如 \texttt{std::vector}、原生数组等支持随机访问迭代器的容器。
+        \item 示例：\texttt{std::swap\_ranges(row1.begin(), row1.end(), row2.begin());} 可高效交换两行数据。
+        \item 注意：两个区间长度必须一致且不能重叠，否则行为未定义。
+        \item 优化建议：结合Lambda表达式与类型安全检查，可进一步提升代码健壮性和灵活性。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{LUSolver LU分解法}
+    \begin{ytublock}{具体实现}
+        \item 继承SolverBase基类，实现Doolittle LU分解算法
+        \item 支持多次求解不同右端项，提高效率
+        \item 使用Lambda表达式优化前向/后向替代
+    \end{ytublock}
+
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{算法流程}
+            \begin{itemize}
+                \item \textbf{LU分解}：将A分解为L（下三角）和U（上三角）
+                \item \textbf{Doolittle方法}：L的对角线元素为1
+                \item \textbf{前向替代}：解Ly = b得到中间向量y
+                \item \textbf{后向替代}：解Ux = y得到最终解x
+                \item \textbf{效率优势}：适合多次求解相同系数矩阵
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{Lambda优化}
+            \begin{itemize}
+                \item 矩阵分解：\texttt{std::accumulate}优化求和
+                \item 前向替代：Lambda表达式简化循环
+                \item 后向替代：Lambda表达式优化计算
+                \item 内存效率：避免重复矩阵拷贝
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{JacobiSolver雅可比迭代法}
+    \begin{ytublock}{具体实现}
+        \item 继承SolverBase基类，实现雅可比迭代算法
+        \item 支持自定义收敛容差和最大迭代次数
+        \item 使用Lambda表达式优化收敛性检查
+    \end{ytublock}
+
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{算法流程}
+            \begin{itemize}
+                \item \textbf{矩阵分解}：$A = D + R$（D为对角矩阵）
+                \item \textbf{迭代公式}：$x^{(k+1)} = D^{-1}(b - R x^{(k)})$
+                \item \textbf{分量计算}：每个分量独立计算
+                \item \textbf{收敛检查}：检查前后两次迭代的差值
+                \item \textbf{适用条件}：严格对角占优矩阵
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{Lambda优化}
+            \begin{itemize}
+                \item 收敛检查：\texttt{std::accumulate}优化误差计算
+                \item 迭代过程：Lambda表达式简化循环
+                \item 边界检查：编译时类型安全
+                \item 内存效率：避免临时变量创建
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{SORSolver SOR迭代法}
+    \begin{ytublock}{具体实现}
+        \item 继承SolverBase基类，实现SOR加速迭代算法
+        \item 支持自定义松弛因子、收敛容差和最大迭代次数
+        \item 使用Lambda表达式优化收敛性检查和迭代过程
+    \end{ytublock}
+
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{算法流程}
+            \begin{itemize}
+                \item \textbf{矩阵分解}：$A = D + L + U$（D对角，L严格下三角，U严格上三角）
+                \item \textbf{SOR公式}：$x^{(k+1)} = (1-\omega)x^{(k)} + \omega(D+L)^{-1}(b - U x^{(k)})$
+                \item \textbf{松弛因子}：$\omega$控制收敛速度（$0 < \omega < 2$）
+                \item \textbf{收敛加速}：比雅可比方法收敛更快
+                \item \textbf{适用条件}：对角占优矩阵
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{Lambda优化}
+            \begin{itemize}
+                \item 收敛检查：\texttt{std::accumulate}优化误差计算
+                \item 迭代计算：Lambda表达式简化求和
+                \item 超松弛：Lambda表达式优化参数应用
+                \item 内存效率：避免临时向量创建
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LinearSystem系统管理类}
+    \begin{ytublock}{门面模式设计}
+        \item 封装复杂的求解系统，提供统一接口
+        \item 门面模式隐藏子系统的复杂性
+        \item 提供完整的求解流程和验证功能
+    \end{ytublock}
+
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{核心功能}
+            \begin{itemize}
+                \item \textbf{系统封装}：封装矩阵A和向量b
+                \item \textbf{统一求解}：提供统一的solve接口
+                \item \textbf{解管理}：存储精确解和数值解
+                \item \textbf{精度验证}：残差计算和误差分析
+                \item \textbf{准确性验证}：解的准确性检查
+                \item \textbf{报告生成}：完整的精度分析报告
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{Lambda优化}
+            \begin{itemize}
+                \item 残差计算：\texttt{std::transform}优化
+                \item 误差计算：\texttt{std::transform}优化
+                \item 数值验证：Lambda表达式简化计算
+                \item 报告生成：Lambda表达式格式化输出
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{主程序main.cpp}
+    \begin{ytublock}{系统集成与演示}
+        \item 完整的系统集成和算法测试演示
+        \item 展示所有组件的协同工作
+        \item 验证系统的正确性和性能
+    \end{ytublock}
+
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{程序流程}
+            \begin{itemize}
+                \item \textbf{编码设置}：UTF-8中文显示支持
+                \item \textbf{测试矩阵}：创建5×5对角占优系统
+                \item \textbf{求解器创建}：实例化四种求解器
+                \item \textbf{算法测试}：逐个测试求解器
+                \item \textbf{精度验证}：残差计算和误差分析
+                \item \textbf{报告生成}：完整的精度分析报告
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{测试策略}
+            \begin{itemize}
+                \item 5×5对角占优矩阵测试
+                \item 四种算法全面验证
+                \item 数值精度对比分析
+                \item 收敛性检查验证
+                \item 中文界面友好展示
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\end{document}

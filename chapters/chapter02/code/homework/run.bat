@@ -1,0 +1,7 @@
+@echo off
+chcp 65001 >nul 2>&1
+echo 设置UTF-8编码...
+echo 运行线性方程组求解器...
+echo.
+build\Release\linear_system_solver.exe
+pause
