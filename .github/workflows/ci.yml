@@ -7,11 +7,20 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build-windows:
+  build:
     runs-on: windows-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        chapter: [chapter01, chapter02, chapter03, chapter04, chapter05, chapter06]
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up MSVC
+      uses: microsoft/setup-msbuild@v1.1
 
     - name: Set up CMake
       uses: lukka/get-cmake@latest
@@ -19,23 +28,59 @@ jobs:
     - name: Set up Ninja
       uses: lukka/get-ninja@latest
 
-    - name: Configure and build Chapter 1
-      run: |
-        cd chapters/chapter01/code
-        mkdir build
-        cd build
-        cmake .. -G Ninja
-        ninja
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.9'
+        arch: 'win64_msvc2019_64'
+        cache: true
 
-    - name: Configure and build Chapter 2 examples
+    - name: Create build directory
       run: |
-        cd chapters/chapter02/code
-        Get-ChildItem -Directory | ForEach-Object {
-          if (Test-Path "$($_.FullName)/CMakeLists.txt") {
-            mkdir "$($_.FullName)/build" -Force
-            cd "$($_.FullName)/build"
+        mkdir build -Force
+        echo "Build directory created"
+
+    - name: Build chapter ${{ matrix.chapter }}
+      run: |
+        $chapterPath = "chapters/${{ matrix.chapter }}/code"
+        Write-Host "Building chapter: ${{ matrix.chapter }}"
+        Write-Host "Chapter path: $chapterPath"
+
+        if (Test-Path $chapterPath) {
+          Write-Host "Chapter directory exists, checking for CMakeLists.txt"
+          if (Test-Path "$chapterPath/CMakeLists.txt") {
+            Write-Host "Found CMakeLists.txt, starting build process"
+            cd $chapterPath
+
+            # Create build directory if it doesn't exist
+            if (!(Test-Path "build")) {
+              mkdir build
+              Write-Host "Created build directory"
+            }
+
+            cd build
+            Write-Host "Configuring with CMake..."
             cmake .. -G Ninja
+
+            Write-Host "Building with Ninja..."
             ninja
+
+            Write-Host "Build completed successfully for chapter ${{ matrix.chapter }}"
             cd ../../..
+          } else {
+            Write-Host "No CMakeLists.txt found in $chapterPath, skipping chapter ${{ matrix.chapter }}"
           }
+        } else {
+          Write-Host "Chapter directory $chapterPath not found, skipping"
         }
+      shell: powershell
+
+    - name: Upload build logs
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-logs-${{ matrix.chapter }}
+        path: |
+          **/build/CMakeCache.txt
+          **/build/*.log
+          **/build/*.txt
