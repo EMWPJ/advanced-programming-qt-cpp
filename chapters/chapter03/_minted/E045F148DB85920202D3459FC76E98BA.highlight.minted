@@ -1,0 +1,44 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QApplication\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QDialog\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QPushButton\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QVBoxLayout\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QLabel\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QDebug\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}iostream\PYGZgt{}}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{MyDialog}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QDialog}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Q\PYGZus{}OBJECT}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{MyDialog}\PYG{p}{(}\PYG{n}{QWidget}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{parent}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{nullptr}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{QDialog}\PYG{p}{(}\PYG{n}{parent}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{setWindowTitle}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QDialog 示例}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{300}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{150}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QVBoxLayout}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{layout}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QVBoxLayout}\PYG{p}{(}\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QLabel}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{label}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QLabel}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{这是一个自定义 QDialog 对话框}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{label}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QPushButton}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{okBtn}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{确定}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QPushButton}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{cancelBtn}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{取消}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{okBtn}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{cancelBtn}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{okBtn}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QPushButton}\PYG{o}{:}\PYG{o}{:}\PYG{n}{clicked}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QDialog}\PYG{o}{:}\PYG{o}{:}\PYG{n}{accept}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{cancelBtn}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QPushButton}\PYG{o}{:}\PYG{o}{:}\PYG{n}{clicked}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QDialog}\PYG{o}{:}\PYG{o}{:}\PYG{n}{reject}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{argv}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{QApplication}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{(}\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{argv}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{MyDialog}\PYG{+w}{ }\PYG{n}{dlg}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{ret}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{dlg}\PYG{p}{.}\PYG{n}{exec}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// 模态对话框}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{ret}\PYG{+w}{ }\PYG{o}{=}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QDialog}\PYG{o}{:}\PYG{o}{:}\PYG{n}{Accepted}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{用户点击了确定}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{用户点击了取消}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cin}\PYG{p}{.}\PYG{n}{get}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}qt\PYGZus{}dialog\PYGZus{}example.moc\PYGZdq{}}
+\end{MintedVerbatim}

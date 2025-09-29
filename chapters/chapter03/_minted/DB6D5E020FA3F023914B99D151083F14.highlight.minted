@@ -1,0 +1,44 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QApplication\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QWidget\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QPushButton\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QLabel\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QHBoxLayout\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QIcon\PYGZgt{}}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{PushButtonDemo}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QWidget}
+\PYG{p}{\PYGZob{}}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{PushButtonDemo}\PYG{p}{(}\PYG{n}{QWidget}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{parent}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{nullptr}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{QWidget}\PYG{p}{(}\PYG{n}{parent}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{setWindowTitle}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QPushButton 示例}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{480}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{180}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QLabel}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{label}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QLabel}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{请选择按钮操作}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{label}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setAlignment}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{AlignCenter}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QPushButton}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{btnNormal}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{普通按钮}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QPushButton}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{btnIcon}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{n}{QIcon}\PYG{o}{:}\PYG{o}{:}\PYG{n}{fromTheme}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{document\PYGZhy{}open}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{带图标按钮}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QPushButton}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{btnCheck}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{可切换按钮}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{btnCheck}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setCheckable}\PYG{p}{(}\PYG{n+nb}{true}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{btnNormal}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QPushButton}\PYG{o}{:}\PYG{o}{:}\PYG{n}{clicked}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}
+\PYG{+w}{            }\PYG{p}{[}\PYG{o}{=}\PYG{p}{]}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{label}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setText}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{点击了普通按钮}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{btnIcon}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QPushButton}\PYG{o}{:}\PYG{o}{:}\PYG{n}{clicked}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}
+\PYG{+w}{            }\PYG{p}{[}\PYG{o}{=}\PYG{p}{]}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{label}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setText}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{点击了带图标按钮}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{btnCheck}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QPushButton}\PYG{o}{:}\PYG{o}{:}\PYG{n}{toggled}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{[}\PYG{o}{=}\PYG{p}{]}\PYG{p}{(}\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{checked}\PYG{p}{)}\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{label}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setText}\PYG{p}{(}\PYG{n}{checked}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{切换按钮：已按下}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{切换按钮：未按下}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QHBoxLayout}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{layout}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QHBoxLayout}\PYG{p}{(}\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{btnNormal}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{btnIcon}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{btnCheck}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{label}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{setLayout}\PYG{p}{(}\PYG{n}{layout}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{argv}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{QApplication}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{(}\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{argv}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{PushButtonDemo}\PYG{+w}{ }\PYG{n}{w}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{w}\PYG{p}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{.}\PYG{n}{exec}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

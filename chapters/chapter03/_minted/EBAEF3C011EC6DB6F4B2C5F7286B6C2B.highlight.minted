@@ -1,0 +1,53 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QWidget\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QEvent\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QDebug\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QApplication\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QTimer\PYGZgt{}}
+
+\PYG{c+c1}{// 事件循环演示控件}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{EventLoopWidget}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QWidget}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Q\PYGZus{}OBJECT}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{EventLoopWidget}\PYG{p}{(}\PYG{n}{QWidget}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{parent}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{nullptr}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{QWidget}\PYG{p}{(}\PYG{n}{parent}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{m\PYGZus{}counter}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{c+c1}{// 启动定时器，每秒触发一次}
+\PYG{+w}{        }\PYG{n}{QTimer}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{timer}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QTimer}\PYG{p}{(}\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{timer}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QTimer}\PYG{o}{:}\PYG{o}{:}\PYG{n}{timeout}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{EventLoopWidget}\PYG{o}{:}\PYG{o}{:}\PYG{n}{onTimeout}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{timer}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{start}\PYG{p}{(}\PYG{l+m+mi}{1000}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{protected}\PYG{o}{:}
+\PYG{+w}{    }\PYG{c+c1}{// 重写事件处理函数，演示事件循环分发}
+\PYG{+w}{    }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{event}\PYG{p}{(}\PYG{n}{QEvent}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{event}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{override}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{event}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{type}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{=}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QEvent}\PYG{o}{:}\PYG{o}{:}\PYG{n}{Timer}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{收到定时器事件，计数:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}counter}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{QWidget}\PYG{o}{:}\PYG{o}{:}\PYG{n}{event}\PYG{p}{(}\PYG{n}{event}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{private}\PYG{+w}{ }\PYG{n}{slots}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{onTimeout}\PYG{p}{(}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{m\PYGZus{}counter}\PYG{o}{+}\PYG{o}{+}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{定时器超时，发送自定义事件，计数:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}counter}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 这里可以发送自定义事件或做其他操作}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{private}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{m\PYGZus{}counter}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{argv}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{QApplication}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{(}\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{argv}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{EventLoopWidget}\PYG{+w}{ }\PYG{n}{w}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{w}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{400}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{w}\PYG{p}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{.}\PYG{n}{exec}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}qt\PYGZus{}event\PYGZus{}loop\PYGZus{}example.moc\PYGZdq{}}
+\end{MintedVerbatim}

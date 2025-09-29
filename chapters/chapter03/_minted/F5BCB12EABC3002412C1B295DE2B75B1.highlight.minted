@@ -1,0 +1,61 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QObject\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QDebug\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}iostream\PYGZgt{}}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{Receiver}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QObject}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Q\PYGZus{}OBJECT}
+\PYG{k}{public}\PYG{+w}{ }\PYG{n}{slots}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{onButtonClicked}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ReceiverA: 按钮被点击（onButtonClicked）}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{onStatusChanged}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{QString}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{msg}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ReceiverA: 状态变更:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{msg}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{Sender}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QObject}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Q\PYGZus{}OBJECT}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{doSomething}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{emit}\PYG{+w}{ }\PYG{n}{statusChanged}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Sender: 状态已更新}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{n+nl}{signals}\PYG{p}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{statusChanged}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{QString}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{msg}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Receiver}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{receiver1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{Receiver}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{Receiver}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{receiver2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{Receiver}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{Sender}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{sender1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{Sender}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{Sender}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{sender2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{Sender}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 多对一：多个信号连接同一个槽}
+\PYG{+w}{    }\PYG{n}{QObject}\PYG{o}{:}\PYG{o}{:}\PYG{n}{connect}\PYG{p}{(}\PYG{n}{sender1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Sender}\PYG{o}{:}\PYG{o}{:}\PYG{n}{statusChanged}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{receiver1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Receiver}\PYG{o}{:}\PYG{o}{:}\PYG{n}{onStatusChanged}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QObject}\PYG{o}{:}\PYG{o}{:}\PYG{n}{connect}\PYG{p}{(}\PYG{n}{sender2}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Sender}\PYG{o}{:}\PYG{o}{:}\PYG{n}{statusChanged}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{receiver1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Receiver}\PYG{o}{:}\PYG{o}{:}\PYG{n}{onStatusChanged}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{sender1}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{doSomething}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{sender2}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{doSomething}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 断开连接}
+\PYG{+w}{    }\PYG{n}{QObject}\PYG{o}{:}\PYG{o}{:}\PYG{n}{disconnect}\PYG{p}{(}\PYG{n}{sender1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Sender}\PYG{o}{:}\PYG{o}{:}\PYG{n}{statusChanged}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{receiver1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Receiver}\PYG{o}{:}\PYG{o}{:}\PYG{n}{onStatusChanged}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QObject}\PYG{o}{:}\PYG{o}{:}\PYG{n}{disconnect}\PYG{p}{(}\PYG{n}{sender2}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Sender}\PYG{o}{:}\PYG{o}{:}\PYG{n}{statusChanged}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{receiver1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Receiver}\PYG{o}{:}\PYG{o}{:}\PYG{n}{onStatusChanged}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{sender1}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{doSomething}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{sender2}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{doSomething}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 一对多：一个信号连接多个槽}
+\PYG{+w}{    }\PYG{n}{QObject}\PYG{o}{:}\PYG{o}{:}\PYG{n}{connect}\PYG{p}{(}\PYG{n}{sender1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Sender}\PYG{o}{:}\PYG{o}{:}\PYG{n}{statusChanged}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{receiver1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Receiver}\PYG{o}{:}\PYG{o}{:}\PYG{n}{onStatusChanged}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QObject}\PYG{o}{:}\PYG{o}{:}\PYG{n}{connect}\PYG{p}{(}\PYG{n}{sender1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Sender}\PYG{o}{:}\PYG{o}{:}\PYG{n}{statusChanged}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{receiver2}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Receiver}\PYG{o}{:}\PYG{o}{:}\PYG{n}{onStatusChanged}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{sender1}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{doSomething}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 断开全部}
+\PYG{+w}{    }\PYG{n}{QObject}\PYG{o}{:}\PYG{o}{:}\PYG{n}{disconnect}\PYG{p}{(}\PYG{n}{sender1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{Sender}\PYG{o}{:}\PYG{o}{:}\PYG{n}{statusChanged}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{nullptr}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{nullptr}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{sender1}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{doSomething}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 释放对象时，会自动断开信号和槽的连接}
+\PYG{+w}{    }\PYG{k}{delete}\PYG{+w}{ }\PYG{n}{receiver1}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{delete}\PYG{+w}{ }\PYG{n}{receiver2}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{delete}\PYG{+w}{ }\PYG{n}{sender1}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{delete}\PYG{+w}{ }\PYG{n}{sender2}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cin}\PYG{p}{.}\PYG{n}{get}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}qt\PYGZus{}connect\PYGZus{}advanced\PYGZus{}example.moc\PYGZdq{}}
+\end{MintedVerbatim}

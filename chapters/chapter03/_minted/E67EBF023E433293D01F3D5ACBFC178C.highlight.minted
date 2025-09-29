@@ -1,0 +1,78 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QApplication\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QMainWindow\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QMenuBar\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QMenu\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QAction\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QStatusBar\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QToolBar\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QLabel\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QDebug\PYGZgt{}}
+
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{MyMainWindow}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QMainWindow}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Q\PYGZus{}OBJECT}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{MyMainWindow}\PYG{p}{(}\PYG{n}{QWidget}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{parent}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{nullptr}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{QMainWindow}\PYG{p}{(}\PYG{n}{parent}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{setWindowTitle}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QMainWindow 示例}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{400}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 创建菜单栏}
+\PYG{+w}{        }\PYG{n}{QMenuBar}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{menuBar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QMenuBar}\PYG{p}{(}\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{setMenuBar}\PYG{p}{(}\PYG{n}{menuBar}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 文件菜单}
+\PYG{+w}{        }\PYG{n}{QMenu}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{fileMenu}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{menuBar}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addMenu}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{文件}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QAction}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{openAction}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{fileMenu}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addAction}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{打开}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QAction}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{exitAction}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{fileMenu}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addAction}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{退出}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 编辑菜单}
+\PYG{+w}{        }\PYG{n}{QMenu}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{editMenu}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{menuBar}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addMenu}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{编辑}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QAction}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{copyAction}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{editMenu}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addAction}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{复制}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QAction}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{pasteAction}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{editMenu}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addAction}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{粘贴}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 工具栏}
+\PYG{+w}{        }\PYG{n}{QToolBar}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{toolBar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{addToolBar}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{主工具栏}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{toolBar}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addAction}\PYG{p}{(}\PYG{n}{openAction}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{toolBar}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addAction}\PYG{p}{(}\PYG{n}{copyAction}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 状态栏}
+\PYG{+w}{        }\PYG{n}{QStatusBar}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{statusBar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QStatusBar}\PYG{p}{(}\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{setStatusBar}\PYG{p}{(}\PYG{n}{statusBar}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{statusBar}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{showMessage}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{欢迎使用 QMainWindow 示例}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 中央窗口区域}
+\PYG{+w}{        }\PYG{n}{QLabel}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{label}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QLabel}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{这是中央窗口区域}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{label}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setAlignment}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{AlignCenter}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{setCentralWidget}\PYG{p}{(}\PYG{n}{label}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 信号槽连接}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{openAction}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QAction}\PYG{o}{:}\PYG{o}{:}\PYG{n}{triggered}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{[}\PYG{o}{=}\PYG{p}{]}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{statusBar}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{showMessage}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{点击了打开}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{打开文件}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{exitAction}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QAction}\PYG{o}{:}\PYG{o}{:}\PYG{n}{triggered}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{[}\PYG{o}{=}\PYG{p}{]}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{close}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{copyAction}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QAction}\PYG{o}{:}\PYG{o}{:}\PYG{n}{triggered}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{[}\PYG{o}{=}\PYG{p}{]}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{statusBar}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{showMessage}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{点击了复制}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{复制}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{pasteAction}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QAction}\PYG{o}{:}\PYG{o}{:}\PYG{n}{triggered}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{[}\PYG{o}{=}\PYG{p}{]}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{statusBar}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{showMessage}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{点击了粘贴}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{粘贴}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{argv}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{QApplication}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{(}\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{argv}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{MyMainWindow}\PYG{+w}{ }\PYG{n}{w}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{w}\PYG{p}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{.}\PYG{n}{exec}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}qt\PYGZus{}mainwindow\PYGZus{}example.moc\PYGZdq{}}
+\end{MintedVerbatim}

@@ -1,0 +1,46 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QApplication\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QWidget\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QTextEdit\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QLabel\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QVBoxLayout\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QPushButton\PYGZgt{}}
+
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{TextEditDemo}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QWidget}
+\PYG{p}{\PYGZob{}}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{TextEditDemo}\PYG{p}{(}\PYG{n}{QWidget}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{parent}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{nullptr}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{QWidget}\PYG{p}{(}\PYG{n}{parent}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{setWindowTitle}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QTextEdit 示例}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{400}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{220}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{auto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{label}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QLabel}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{请输入多行文本}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{label}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setAlignment}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{AlignCenter}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{auto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{textEdit}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QTextEdit}\PYG{p}{(}\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{textEdit}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setPlaceholderText}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{支持多行文本和富文本（HTML）...}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{auto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{plainBtn}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{显示纯文本}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{auto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{htmlBtn}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{显示富文本}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{plainBtn}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QPushButton}\PYG{o}{:}\PYG{o}{:}\PYG{n}{clicked}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{[}\PYG{o}{=}\PYG{p}{]}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{label}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setText}\PYG{p}{(}\PYG{n}{textEdit}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{toPlainText}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{htmlBtn}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QPushButton}\PYG{o}{:}\PYG{o}{:}\PYG{n}{clicked}\PYG{p}{,}
+\PYG{+w}{        }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{[}\PYG{o}{=}\PYG{p}{]}\PYG{p}{(}\PYG{p}{)}\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{label}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setText}\PYG{p}{(}\PYG{n}{textEdit}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{toHtml}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{auto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{btnLayout}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QHBoxLayout}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{btnLayout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{plainBtn}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{btnLayout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{htmlBtn}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{auto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{mainLayout}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QVBoxLayout}\PYG{p}{(}\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{mainLayout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{textEdit}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{mainLayout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addLayout}\PYG{p}{(}\PYG{n}{btnLayout}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{mainLayout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{label}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{setLayout}\PYG{p}{(}\PYG{n}{mainLayout}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{argv}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{QApplication}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{(}\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{argv}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{TextEditDemo}\PYG{+w}{ }\PYG{n}{w}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{w}\PYG{p}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{.}\PYG{n}{exec}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

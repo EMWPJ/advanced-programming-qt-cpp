@@ -1,0 +1,43 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QApplication\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QTabWidget\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QWidget\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QLabel\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QVBoxLayout\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QTextEdit\PYGZgt{}}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{argv}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{QApplication}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{(}\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{argv}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 创建主窗口部件}
+\PYG{+w}{    }\PYG{n}{QWidget}\PYG{+w}{ }\PYG{n}{window}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{window}\PYG{p}{.}\PYG{n}{setWindowTitle}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QTabWidget 示例}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{window}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{420}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{260}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 创建 QTabWidget}
+\PYG{+w}{    }\PYG{n}{QTabWidget}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tabWidget}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QTabWidget}\PYG{p}{(}\PYG{o}{\PYGZam{}}\PYG{n}{window}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 第一个选项卡：简单标签}
+\PYG{+w}{    }\PYG{n}{QWidget}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tab1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QWidget}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QVBoxLayout}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tab1Layout}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QVBoxLayout}\PYG{p}{(}\PYG{n}{tab1}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QLabel}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{label1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QLabel}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{这是第一个选项卡内容。}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{tab1Layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{label1}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{tab1Layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addStretch}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 第二个选项卡：文本编辑器}
+\PYG{+w}{    }\PYG{n}{QWidget}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tab2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QWidget}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QVBoxLayout}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{tab2Layout}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QVBoxLayout}\PYG{p}{(}\PYG{n}{tab2}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QTextEdit}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{textEdit}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QTextEdit}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{textEdit}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setPlainText}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{可以在这里输入多行文本。}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{tab2Layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{textEdit}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 添加选项卡到 QTabWidget}
+\PYG{+w}{    }\PYG{n}{tabWidget}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addTab}\PYG{p}{(}\PYG{n}{tab1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{选项卡一}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{tabWidget}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addTab}\PYG{p}{(}\PYG{n}{tab2}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{选项卡二}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 设置选项卡可关闭}
+\PYG{+w}{    }\PYG{n}{tabWidget}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setTabsClosable}\PYG{p}{(}\PYG{n+nb}{true}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QObject}\PYG{o}{:}\PYG{o}{:}\PYG{n}{connect}\PYG{p}{(}\PYG{n}{tabWidget}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QTabWidget}\PYG{o}{:}\PYG{o}{:}\PYG{n}{tabCloseRequested}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{tabWidget}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QTabWidget}\PYG{o}{:}\PYG{o}{:}\PYG{n}{removeTab}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 设置选项卡位置（可选：顶部、底部、左侧、右侧）}
+\PYG{+w}{    }\PYG{n}{tabWidget}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setTabPosition}\PYG{p}{(}\PYG{n}{QTabWidget}\PYG{o}{:}\PYG{o}{:}\PYG{n}{North}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 主布局}
+\PYG{+w}{    }\PYG{n}{QVBoxLayout}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{mainLayout}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QVBoxLayout}\PYG{p}{(}\PYG{o}{\PYGZam{}}\PYG{n}{window}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{mainLayout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{tabWidget}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{window}\PYG{p}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{.}\PYG{n}{exec}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

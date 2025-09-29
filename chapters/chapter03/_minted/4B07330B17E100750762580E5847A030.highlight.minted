@@ -1,0 +1,64 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QWidget\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QApplication\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QPushButton\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QLabel\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QDebug\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QVBoxLayout\PYGZgt{}}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{SignalSlotExample}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QWidget}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Q\PYGZus{}OBJECT}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{SignalSlotExample}\PYG{p}{(}\PYG{n}{QWidget}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{parent}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{nullptr}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{QWidget}\PYG{p}{(}\PYG{n}{parent}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{setWindowTitle}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Signal Slot Example}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{300}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{150}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{setupConnections}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{m\PYGZus{}button}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Test}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{m\PYGZus{}label}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QLabel}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Status}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QVBoxLayout}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{layout}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QVBoxLayout}\PYG{p}{(}\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{m\PYGZus{}label}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{m\PYGZus{}button}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{setLayout}\PYG{p}{(}\PYG{n}{layout}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 方法1：新语法（推荐）}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{m\PYGZus{}button}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QPushButton}\PYG{o}{:}\PYG{o}{:}\PYG{n}{clicked}\PYG{p}{,}
+\PYG{+w}{                }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{SignalSlotExample}\PYG{o}{:}\PYG{o}{:}\PYG{n}{onButtonClicked}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 方法2：Lambda表达式}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{m\PYGZus{}button}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QPushButton}\PYG{o}{:}\PYG{o}{:}\PYG{n}{clicked}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{[}\PYG{k}{this}\PYG{p}{]}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{            }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Button clicked via lambda}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 方法3：旧语法（不推荐）}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{n}{m\PYGZus{}button}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{SIGNAL}\PYG{p}{(}\PYG{n}{clicked}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,}
+\PYG{+w}{                }\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{SLOT}\PYG{p}{(}\PYG{n}{onButtonClicked}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{        }\PYG{c+c1}{// 方法4：带参数的连接}
+\PYG{+w}{        }\PYG{n}{connect}\PYG{p}{(}\PYG{k}{this}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{SignalSlotExample}\PYG{o}{:}\PYG{o}{:}\PYG{n}{statusChanged}\PYG{p}{,}
+\PYG{+w}{                }\PYG{n}{m\PYGZus{}label}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{QLabel}\PYG{o}{:}\PYG{o}{:}\PYG{n}{setText}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{n+nl}{signals}\PYG{p}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{statusChanged}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{QString}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{status}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{k}{private}\PYG{+w}{ }\PYG{n}{slots}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{onButtonClicked}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Button clicked}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{emit}\PYG{+w}{ }\PYG{n}{statusChanged}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Button was clicked!}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{k}{private}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{QPushButton}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{m\PYGZus{}button}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QLabel}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{m\PYGZus{}label}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{argv}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{QApplication}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{(}\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{argv}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{SignalSlotExample}\PYG{+w}{ }\PYG{n}{w}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{w}\PYG{p}{.}\PYG{n}{setupConnections}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{w}\PYG{p}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{.}\PYG{n}{exec}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZdq{}qt\PYGZus{}connect\PYGZus{}example.moc\PYGZdq{}}
+\end{MintedVerbatim}

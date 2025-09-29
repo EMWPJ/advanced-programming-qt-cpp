@@ -1,0 +1,110 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QString\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QStringList\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QByteArray\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QDebug\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}iostream\PYGZgt{}}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{stringExample}\PYG{p}{(}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{c+c1}{// 1. 创建和初始化QString}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{世界}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str3}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QString}\PYG{o}{:}\PYG{o}{:}\PYG{n}{fromUtf8}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Qt字符串示例}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 2. 拼接字符串}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str4}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QString}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{\PYGZpc{}1, \PYGZpc{}2!}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{.}\PYG{n}{arg}\PYG{p}{(}\PYG{n}{str1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{str2}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// 推荐使用arg格式化}
+\PYG{+w}{    }\PYG{n}{str4}\PYG{p}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ 欢迎使用Qt.}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{拼接后的字符串:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str4}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 3. 格式化字符串}
+
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{year}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{2024}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{pi}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{3.14159}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str5}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{今年是\PYGZpc{}1, 圆周率约为\PYGZpc{}2}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{.}\PYG{n}{arg}\PYG{p}{(}\PYG{n}{year}\PYG{p}{)}\PYG{p}{.}\PYG{n}{arg}\PYG{p}{(}\PYG{n}{pi}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s+sc}{\PYGZsq{}}\PYG{l+s+sc}{f}\PYG{l+s+sc}{\PYGZsq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{格式化字符串:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str5}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 4. 查找和替换}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{pos}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{str4}\PYG{p}{.}\PYG{n}{indexOf}\PYG{p}{(}\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Qt}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{pos}\PYG{+w}{ }\PYG{o}{!}\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{\PYGZhy{}1}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s+sa}{R}\PYG{l+s}{\PYGZdq{}}\PYG{l+s+dl}{(}\PYG{l+s}{\PYGZdq{}Qt\PYGZdq{}在str4中的位置:}\PYG{l+s+dl}{)}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{pos}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str6}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{str4}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{str6}\PYG{p}{.}\PYG{n}{replace}\PYG{p}{(}\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Qt}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{C++}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{替换后的字符串:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str6}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 5. 分割和连接}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{fruits}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Apple,Banana,Orange}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QStringList}\PYG{+w}{ }\PYG{n}{fruitList}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{fruits}\PYG{p}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+sc}{\PYGZsq{}}\PYG{l+s+sc}{,}\PYG{l+s+sc}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{分割后的QStringList:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{fruitList}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{joined}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{fruitList}\PYG{p}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ | }\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{用 | 连接后的字符串:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{joined}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 6. 大小写转换}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{大写:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str1}\PYG{p}{.}\PYG{n}{toUpper}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{小写:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str2}\PYG{p}{.}\PYG{n}{toLower}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 7. 去除空白}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str7}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{   Qt is fun!   }\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{去除前后空白:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str7}\PYG{p}{.}\PYG{n}{trimmed}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 8. 转换为标准C++字符串}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{string}\PYG{+w}{ }\PYG{n}{stdStr}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{str1}\PYG{p}{.}\PYG{n}{toStdString}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{转换为std::string:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{QString}\PYG{o}{:}\PYG{o}{:}\PYG{n}{fromStdString}\PYG{p}{(}\PYG{n}{stdStr}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 9. 转换为数字}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{numStr}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{12345}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{num}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{numStr}\PYG{p}{.}\PYG{n}{toInt}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QString转int:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{num}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 10. 判断是否为空}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{emptyStr}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{emptyStr是否为空:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{emptyStr}\PYG{p}{.}\PYG{n}{isEmpty}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 11. 字符串长度}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{str4的长度:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str4}\PYG{p}{.}\PYG{n}{length}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{str4的大小:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str4}\PYG{p}{.}\PYG{n}{size}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 12. 字符串截取}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str8}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello, Qt World!}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mid截取:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str8}\PYG{p}{.}\PYG{n}{mid}\PYG{p}{(}\PYG{l+m+mi}{7}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// 从索引7开始，取2个字符}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{left截取:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str8}\PYG{p}{.}\PYG{n}{left}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{     }\PYG{c+c1}{// 左边5个字符}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{right截取:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str8}\PYG{p}{.}\PYG{n}{right}\PYG{p}{(}\PYG{l+m+mi}{6}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{   }\PYG{c+c1}{// 右边6个字符}
+\PYG{+w}{    }\PYG{c+c1}{// 13. 判断字符串内容}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{str8是否包含\PYGZsq{}Qt\PYGZsq{}:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str8}\PYG{p}{.}\PYG{n}{contains}\PYG{p}{(}\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Qt}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{str8是否以\PYGZsq{}Hello\PYGZsq{}开头:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str8}\PYG{p}{.}\PYG{n}{startsWith}\PYG{p}{(}\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{str8是否以\PYGZsq{}World!\PYGZsq{}结尾:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str8}\PYG{p}{.}\PYG{n}{endsWith}\PYG{p}{(}\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{World!}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 14. 字符串比较}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{cmp1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{abc}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{cmp2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Abc}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{区分大小写比较:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{cmp1}\PYG{+w}{ }\PYG{o}{=}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{cmp2}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{不区分大小写比较:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{cmp1}\PYG{p}{.}\PYG{n}{compare}\PYG{p}{(}\PYG{n}{cmp2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{CaseInsensitive}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{=}\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 15. 字符串插入和移除}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str9}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{I Qt!}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{str9}\PYG{p}{.}\PYG{n}{insert}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{love }\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{插入后的字符串:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str9}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{str9}\PYG{p}{.}\PYG{n}{remove}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{5}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// 从索引2移除5个字符}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{移除后的字符串:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{str9}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 16. 重复字符串}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{repeated}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Ha}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{.}\PYG{n}{repeated}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{重复字符串:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{repeated}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 17. 转换为数字失败的处理}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{invalidNum}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{abc}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{ok}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{invalid}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{invalidNum}\PYG{p}{.}\PYG{n}{toInt}\PYG{p}{(}\PYG{o}{\PYGZam{}}\PYG{n}{ok}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{转换非法数字字符串, ok:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{ok}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{, value:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{invalid}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 18. 字符串与QByteArray互转}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{unicodeStr}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{你好, Qt!}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QByteArray}\PYG{+w}{ }\PYG{n}{ba}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{unicodeStr}\PYG{p}{.}\PYG{n}{toUtf8}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{转为QByteArray:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{ba}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{fromBa}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QString}\PYG{o}{:}\PYG{o}{:}\PYG{n}{fromUtf8}\PYG{p}{(}\PYG{n}{ba}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QByteArray转回QString:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{fromBa}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 19. 字符串格式化（静态方法）}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{formatted}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{\PYGZpc{}1 + \PYGZpc{}2 = \PYGZpc{}3}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{.}\PYG{n}{arg}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{.}\PYG{n}{arg}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{.}\PYG{n}{arg}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{o}{+}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{静态格式化:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{formatted}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 20. 遍历字符串中的字符}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{str10}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{QStringLiteral}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Qt}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{QChar}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{ch}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{str10}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{qDebug}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{字符:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{ch}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{stringExample}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cin}\PYG{p}{.}\PYG{n}{get}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

@@ -150,6 +150,12 @@ std::unique_ptr<std::vector<double>> Matrix::multiply(const std::vector<double>&
         auto vec_begin = vec.begin();
         (*result)[i] = std::inner_product(row_begin, row_end, vec_begin, 0.0);
     }
+
+    // for (size_t i = 0; i < m_rows; ++i) {
+    //     for (size_t j = 0; j < m_cols; ++j) {
+    //         (*result)[i] += m_data[i][j] * vec[j];
+    //     }
+    // }
     return result;
 }
 

@@ -1,0 +1,107 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QApplication\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QWidget\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QPainter\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QPen\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QBrush\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QLinearGradient\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QRadialGradient\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QConicalGradient\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QPixmap\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QFont\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QPainterPath\PYGZgt{}}
+
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{PaintWidget}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QWidget}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{k}{protected}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{paintEvent}\PYG{p}{(}\PYG{n}{QPaintEvent}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{event}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{override}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{QPainter}\PYG{+w}{ }\PYG{n+nf}{painter}\PYG{p}{(}\PYG{k}{this}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 1. 设置抗锯齿和高质量渲染}
+\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setRenderHint}\PYG{p}{(}\PYG{n}{QPainter}\PYG{o}{:}\PYG{o}{:}\PYG{n}{Antialiasing}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{)}\PYG{p}{;}
+\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setRenderHint}\PYG{p}{(}\PYG{n}{QPainter}\PYG{o}{:}\PYG{o}{:}\PYG{n}{TextAntialiasing}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{)}\PYG{p}{;}
+\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setRenderHint}\PYG{p}{(}\PYG{n}{QPainter}\PYG{o}{:}\PYG{o}{:}\PYG{n}{SmoothPixmapTransform}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{true}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 2. 绘制不同颜色和线宽的直线}
+\PYG{+w}{        }\PYG{n}{QPen}\PYG{+w}{ }\PYG{n+nf}{pen1}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{red}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{SolidLine}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{RoundCap}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{RoundJoin}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{pen1}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawLine}\PYG{p}{(}\PYG{l+m+mi}{20}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{20}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{180}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{20}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 3. 绘制带虚线的矩形}
+\PYG{+w}{        }\PYG{n}{QPen}\PYG{+w}{ }\PYG{n+nf}{pen2}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{blue}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{DashLine}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{pen2}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawRect}\PYG{p}{(}\PYG{l+m+mi}{20}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{80}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 4. 绘制填充线性渐变的椭圆}
+\PYG{+w}{        }\PYG{n}{QLinearGradient}\PYG{+w}{ }\PYG{n+nf}{linearGrad}\PYG{p}{(}\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{120}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{140}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{180}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{linearGrad}\PYG{p}{.}\PYG{n}{setColorAt}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{yellow}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{linearGrad}\PYG{p}{.}\PYG{n}{setColorAt}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{green}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{NoPen}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setBrush}\PYG{p}{(}\PYG{n}{QBrush}\PYG{p}{(}\PYG{n}{linearGrad}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawEllipse}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{80}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 5. 绘制填充径向渐变的圆（带阴影效果）}
+\PYG{+w}{        }\PYG{n}{QRadialGradient}\PYG{+w}{ }\PYG{n+nf}{radialGrad}\PYG{p}{(}\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{160}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{30}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{160}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{radialGrad}\PYG{p}{.}\PYG{n}{setColorAt}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{white}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{radialGrad}\PYG{p}{.}\PYG{n}{setColorAt}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{darkGray}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setBrush}\PYG{p}{(}\PYG{n}{QBrush}\PYG{p}{(}\PYG{n}{radialGrad}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawEllipse}\PYG{p}{(}\PYG{l+m+mi}{40}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{140}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 6. 绘制锥形渐变的扇形}
+\PYG{+w}{        }\PYG{n}{QConicalGradient}\PYG{+w}{ }\PYG{n+nf}{conicalGrad}\PYG{p}{(}\PYG{l+m+mi}{180}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{180}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{conicalGrad}\PYG{p}{.}\PYG{n}{setColorAt}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{red}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{conicalGrad}\PYG{p}{.}\PYG{n}{setColorAt}\PYG{p}{(}\PYG{l+m+mf}{0.5}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{yellow}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{conicalGrad}\PYG{p}{.}\PYG{n}{setColorAt}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{red}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setBrush}\PYG{p}{(}\PYG{n}{QBrush}\PYG{p}{(}\PYG{n}{conicalGrad}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{QPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{darkRed}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QRectF}\PYG{+w}{ }\PYG{n+nf}{arcRect}\PYG{p}{(}\PYG{l+m+mi}{160}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{160}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawPie}\PYG{p}{(}\PYG{n}{arcRect}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{30}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mi}{16}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{120}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mi}{16}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 7. 绘制多边形}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{QPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{darkMagenta}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setBrush}\PYG{p}{(}\PYG{n}{QBrush}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cyan}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{Dense4Pattern}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QPoint}\PYG{+w}{ }\PYG{n}{points}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{n}{QPoint}\PYG{p}{(}\PYG{l+m+mi}{120}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{120}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{QPoint}\PYG{p}{(}\PYG{l+m+mi}{180}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{120}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{QPoint}\PYG{p}{(}\PYG{l+m+mi}{170}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{180}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{QPoint}\PYG{p}{(}\PYG{l+m+mi}{130}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{180}\PYG{p}{)}\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawPolygon}\PYG{p}{(}\PYG{n}{points}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{4}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 8. 绘制贝塞尔曲线}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{QPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{darkBlue}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{DashDotLine}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{QPainterPath}\PYG{+w}{ }\PYG{n}{path}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{path}\PYG{p}{.}\PYG{n}{moveTo}\PYG{p}{(}\PYG{l+m+mi}{20}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{120}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{path}\PYG{p}{.}\PYG{n}{cubicTo}\PYG{p}{(}\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{80}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{100}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{160}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{180}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{100}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawPath}\PYG{p}{(}\PYG{n}{path}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 9. 绘制带背景色的文本}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{black}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setFont}\PYG{p}{(}\PYG{n}{QFont}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{微软雅黑}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{14}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{QFont}\PYG{o}{:}\PYG{o}{:}\PYG{n}{Bold}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setBrush}\PYG{p}{(}\PYG{n}{QBrush}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{lightGray}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawRect}\PYG{p}{(}\PYG{l+m+mi}{20}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{200}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{160}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{30}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawText}\PYG{p}{(}\PYG{l+m+mi}{25}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{222}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QPainter功能演示}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 10. 绘制图片（假设有一张图片在同目录下）}
+\PYG{+w}{        }\PYG{n}{QPixmap}\PYG{+w}{ }\PYG{n}{pix}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{qt\PYGZus{}logo.png}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{n}{pix}\PYG{p}{.}\PYG{n}{isNull}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+\PYG{+w}{            }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawPixmap}\PYG{p}{(}\PYG{l+m+mi}{120}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{10}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pix}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 11. 保存和恢复状态}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{save}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{translate}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{100}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{rotate}\PYG{p}{(}\PYG{l+m+mi}{30}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{QPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{darkGreen}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setBrush}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{NoBrush}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawRect}\PYG{p}{(}\PYG{l+m+mi}{\PYGZhy{}20}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{\PYGZhy{}20}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{restore}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 12. 剪切区域}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setClipRect}\PYG{p}{(}\PYG{l+m+mi}{150}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{150}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setBrush}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{red}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{NoPen}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawEllipse}\PYG{p}{(}\PYG{l+m+mi}{140}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{140}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 13. 绘制透明图形}
+\PYG{+w}{        }\PYG{n}{QColor}\PYG{+w}{ }\PYG{n+nf}{semiTransBlue}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{255}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{100}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setBrush}\PYG{p}{(}\PYG{n}{QBrush}\PYG{p}{(}\PYG{n}{semiTransBlue}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{NoPen}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawRect}\PYG{p}{(}\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{c+c1}{// 14. 绘制点和椭圆弧}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{QPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{darkCyan}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawPoint}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{setPen}\PYG{p}{(}\PYG{n}{QPen}\PYG{p}{(}\PYG{n}{Qt}\PYG{o}{:}\PYG{o}{:}\PYG{n}{darkYellow}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{painter}\PYG{p}{.}\PYG{n}{drawArc}\PYG{p}{(}\PYG{l+m+mi}{30}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{180}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{60}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{40}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{30}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mi}{16}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{120}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mi}{16}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{argv}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{QApplication}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{(}\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{argv}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{PaintWidget}\PYG{+w}{ }\PYG{n}{widget}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{widget}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{240}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{260}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{widget}\PYG{p}{.}\PYG{n}{setWindowTitle}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QPainter用法详解示例}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{widget}\PYG{p}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{.}\PYG{n}{exec}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

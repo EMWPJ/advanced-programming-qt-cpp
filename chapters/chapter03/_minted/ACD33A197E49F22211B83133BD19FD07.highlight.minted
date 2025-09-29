@@ -1,0 +1,80 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QApplication\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QWidget\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QPushButton\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QVBoxLayout\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QLabel\PYGZgt{}}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{argv}\PYG{p}{[}\PYG{p}{]}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{QApplication}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{(}\PYG{n}{argc}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{argv}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{QWidget}\PYG{+w}{ }\PYG{n}{window}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{window}\PYG{p}{.}\PYG{n}{setWindowTitle}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{QSS 样式表示例}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 创建控件}
+\PYG{+w}{    }\PYG{n}{QLabel}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{label}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QLabel}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{欢迎使用 QSS 美化界面}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QPushButton}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{btn1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{普通按钮}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{QPushButton}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{btn2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QPushButton}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{高亮按钮}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{btn2}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setObjectName}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{btn2}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// 优化：提前设置 objectName}
+\PYG{+w}{    }\PYG{c+c1}{// 设置布局}
+\PYG{+w}{    }\PYG{n}{QVBoxLayout}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{layout}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{QVBoxLayout}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{label}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{btn1}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{addWidget}\PYG{p}{(}\PYG{n}{btn2}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setSpacing}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// 优化：增加控件间距}
+\PYG{+w}{    }\PYG{n}{layout}\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{n}{setContentsMargins}\PYG{p}{(}\PYG{l+m+mi}{24}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{24}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{24}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{24}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// 优化：设置窗口边距}
+\PYG{+w}{    }\PYG{n}{window}\PYG{p}{.}\PYG{n}{setLayout}\PYG{p}{(}\PYG{n}{layout}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// 优化：QSS 样式结构更清晰，注释更明确}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{qss}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+sa}{R}\PYG{l+s}{\PYGZdq{}}\PYG{l+s+dl}{(}
+\PYG{l+s}{        /* 窗口背景 */}
+\PYG{l+s}{        QWidget \PYGZob{}}
+\PYG{l+s}{            background\PYGZhy{}color: \PYGZsh{}f0f0f0;}
+\PYG{l+s}{        \PYGZcb{}}
+\PYG{l+s}{        /* 标签样式 */}
+\PYG{l+s}{        QLabel \PYGZob{}}
+\PYG{l+s}{            color: \PYGZsh{}2d8cf0;}
+\PYG{l+s}{            font\PYGZhy{}size: 20px;}
+\PYG{l+s}{            font\PYGZhy{}weight: bold;}
+\PYG{l+s}{            padding: 8px;}
+\PYG{l+s}{        \PYGZcb{}}
+\PYG{l+s}{        /* 普通按钮样式 */}
+\PYG{l+s}{        QPushButton \PYGZob{}}
+\PYG{l+s}{            background\PYGZhy{}color: \PYGZsh{}ffffff;}
+\PYG{l+s}{            border: 2px solid \PYGZsh{}2d8cf0;}
+\PYG{l+s}{            border\PYGZhy{}radius: 8px;}
+\PYG{l+s}{            color: \PYGZsh{}2d8cf0;}
+\PYG{l+s}{            font\PYGZhy{}size: 16px;}
+\PYG{l+s}{            padding: 6px 18px;}
+\PYG{l+s}{            min\PYGZhy{}width: 100px;}
+\PYG{l+s}{            min\PYGZhy{}height: 32px;}
+\PYG{l+s}{            transition: all 0.2s;}
+\PYG{l+s}{        \PYGZcb{}}
+\PYG{l+s}{        QPushButton:hover \PYGZob{}}
+\PYG{l+s}{            background\PYGZhy{}color: \PYGZsh{}2d8cf0;}
+\PYG{l+s}{            color: \PYGZsh{}ffffff;}
+\PYG{l+s}{        \PYGZcb{}}
+\PYG{l+s}{        QPushButton:pressed \PYGZob{}}
+\PYG{l+s}{            background\PYGZhy{}color: \PYGZsh{}1565c0;}
+\PYG{l+s}{            color: \PYGZsh{}ffffff;}
+\PYG{l+s}{        \PYGZcb{}}
+\PYG{l+s}{        /* 高亮按钮样式 */}
+\PYG{l+s}{        QPushButton\PYGZsh{}btn2 \PYGZob{}}
+\PYG{l+s}{            background\PYGZhy{}color: \PYGZsh{}ff9800;}
+\PYG{l+s}{            color: \PYGZsh{}fff;}
+\PYG{l+s}{            border: 2px solid \PYGZsh{}ff9800;}
+\PYG{l+s}{        \PYGZcb{}}
+\PYG{l+s}{        QPushButton\PYGZsh{}btn2:hover \PYGZob{}}
+\PYG{l+s}{            background\PYGZhy{}color: \PYGZsh{}ffa726;}
+\PYG{l+s}{            border\PYGZhy{}color: \PYGZsh{}ffa726;}
+\PYG{l+s}{        \PYGZcb{}}
+\PYG{l+s}{        QPushButton\PYGZsh{}btn2:pressed \PYGZob{}}
+\PYG{l+s}{            background\PYGZhy{}color: \PYGZsh{}ef6c00;}
+\PYG{l+s}{            border\PYGZhy{}color: \PYGZsh{}ef6c00;}
+\PYG{l+s}{        \PYGZcb{}}
+\PYG{l+s}{    }\PYG{l+s+dl}{)}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{window}\PYG{p}{.}\PYG{n}{setStyleSheet}\PYG{p}{(}\PYG{n}{qss}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{window}\PYG{p}{.}\PYG{n}{resize}\PYG{p}{(}\PYG{l+m+mi}{360}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{220}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// 优化：更合适的窗口大小}
+\PYG{+w}{    }\PYG{n}{window}\PYG{p}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{app}\PYG{p}{.}\PYG{n}{exec}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

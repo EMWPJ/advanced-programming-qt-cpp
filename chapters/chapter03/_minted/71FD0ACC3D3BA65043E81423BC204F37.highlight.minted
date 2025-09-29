@@ -1,0 +1,36 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QObject\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}QString\PYGZgt{}}
+
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{MyClass}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{QObject}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{Q\PYGZus{}OBJECT}\PYG{+w}{  }\PYG{c+c1}{// 启用元对象系统}
+
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k}{explicit}\PYG{+w}{ }\PYG{n}{MyClass}\PYG{p}{(}\PYG{n}{QObject}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{parent}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{nullptr}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 属性声明}
+\PYG{+w}{    }\PYG{n}{Q\PYGZus{}PROPERTY}\PYG{p}{(}\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{name}\PYG{+w}{ }\PYG{n}{READ}\PYG{+w}{ }\PYG{n}{name}\PYG{+w}{ }\PYG{n}{WRITE}\PYG{+w}{ }\PYG{n}{setName}\PYG{+w}{ }\PYG{n}{NOTIFY}\PYG{+w}{ }\PYG{n}{nameChanged}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{Q\PYGZus{}PROPERTY}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{age}\PYG{+w}{ }\PYG{n}{READ}\PYG{+w}{ }\PYG{n}{age}\PYG{+w}{ }\PYG{n}{WRITE}\PYG{+w}{ }\PYG{n}{setAge}\PYG{+w}{ }\PYG{n}{NOTIFY}\PYG{+w}{ }\PYG{n}{ageChanged}\PYG{p}{)}
+
+\PYG{+w}{    }\PYG{c+c1}{// 属性访问方法}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{name}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{m\PYGZus{}name}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{setName}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{QString}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{name}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{age}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{const}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{m\PYGZus{}age}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{setAge}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{age}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{n+nl}{signals}\PYG{p}{:}
+\PYG{+w}{    }\PYG{c+c1}{// 信号声明}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{nameChanged}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{QString}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{name}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{ageChanged}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{age}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{k}{private}\PYG{+w}{ }\PYG{n}{slots}\PYG{o}{:}
+\PYG{+w}{    }\PYG{c+c1}{// 槽函数声明}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{onNameChanged}\PYG{p}{(}\PYG{k}{const}\PYG{+w}{ }\PYG{n}{QString}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{name}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{k}{private}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{QString}\PYG{+w}{ }\PYG{n}{m\PYGZus{}name}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{m\PYGZus{}age}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+\end{MintedVerbatim}

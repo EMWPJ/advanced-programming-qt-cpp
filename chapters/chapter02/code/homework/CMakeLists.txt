@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+﻿cmake_minimum_required(VERSION 3.16)
 project(LinearSystemSolver)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -19,6 +19,7 @@ add_executable(linear_system_solver
     jacobi_solver.cpp
     sor_solver.cpp
     linear_system.cpp
+    gaussian_solver.h jacobi_solver.h linear_system.h lu_solver.h matrix.h solver_base.h sor_solver.h vector.h
 )
 
 # 包含头文件目录

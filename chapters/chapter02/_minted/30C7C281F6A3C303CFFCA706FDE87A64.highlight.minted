@@ -1,0 +1,83 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}iostream\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}windows.h\PYGZgt{}}
+
+\PYG{c+c1}{// 基类，包含public、protected、private成员}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{Base}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{publicVar}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{publicFunc}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Base publicFunc}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{endl}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{k}{protected}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{protectedVar}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{protectedFunc}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Base protectedFunc}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{endl}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{k}{private}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{privateVar}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{privateFunc}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Base privateFunc}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{endl}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{c+c1}{// 公有继承}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{PublicDerived}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{public}\PYG{+w}{ }\PYG{n}{Base}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{test}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{publicVar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{         }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{n}{protectedVar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{+w}{      }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{c+c1}{// privateVar = 3;     // 无法访问}
+\PYG{+w}{        }\PYG{n}{publicFunc}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{          }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{n}{protectedFunc}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{       }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{c+c1}{// privateFunc();      // 无法访问}
+\PYG{+w}{        }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{PublicDerived test}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{c+c1}{// 保护继承}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{ProtectedDerived}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{protected}\PYG{+w}{ }\PYG{n}{Base}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{test}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{publicVar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{         }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{n}{protectedVar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{+w}{      }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{c+c1}{// privateVar = 3;     // 无法访问}
+\PYG{+w}{        }\PYG{n}{publicFunc}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{          }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{n}{protectedFunc}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{       }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{c+c1}{// privateFunc();      // 无法访问}
+\PYG{+w}{        }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ProtectedDerived test}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{c+c1}{// 私有继承}
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{PrivateDerived}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{k}{private}\PYG{+w}{ }\PYG{n}{Base}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{    }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{test}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{publicVar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{         }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{n}{protectedVar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{+w}{      }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{c+c1}{// privateVar = 3;     // 无法访问}
+\PYG{+w}{        }\PYG{n}{publicFunc}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{          }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{n}{protectedFunc}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{       }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{        }\PYG{c+c1}{// privateFunc();      // 无法访问}
+\PYG{+w}{        }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{PrivateDerived test}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{SetConsoleOutputCP}\PYG{p}{(}\PYG{l+m+mi}{65001}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{PublicDerived}\PYG{+w}{ }\PYG{n}{pub}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{pub}\PYG{p}{.}\PYG{n}{publicVar}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{10}\PYG{p}{;}\PYG{+w}{        }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{    }\PYG{n}{pub}\PYG{p}{.}\PYG{n}{publicFunc}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}\PYG{+w}{          }\PYG{c+c1}{// 可以访问}
+\PYG{+w}{    }\PYG{c+c1}{// pub.protectedVar = 20;  // 无法访问}
+\PYG{+w}{    }\PYG{c+c1}{// pub.protectedFunc();    // 无法访问}
+\PYG{+w}{    }\PYG{n}{pub}\PYG{p}{.}\PYG{n}{test}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{ProtectedDerived}\PYG{+w}{ }\PYG{n}{prot}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// prot.publicVar = 10;    // 无法访问}
+\PYG{+w}{    }\PYG{c+c1}{// prot.publicFunc();      // 无法访问}
+\PYG{+w}{    }\PYG{n}{prot}\PYG{p}{.}\PYG{n}{test}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{PrivateDerived}\PYG{+w}{ }\PYG{n}{priv}\PYG{p}{;}
+\PYG{+w}{    }\PYG{c+c1}{// priv.publicVar = 10;    // 无法访问}
+\PYG{+w}{    }\PYG{c+c1}{// priv.publicFunc();      // 无法访问}
+\PYG{+w}{    }\PYG{n}{priv}\PYG{p}{.}\PYG{n}{test}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cin}\PYG{p}{.}\PYG{n}{get}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

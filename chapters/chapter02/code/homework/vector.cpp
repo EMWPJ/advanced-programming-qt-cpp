@@ -111,8 +111,10 @@ Vector Vector::multiply(double scalar) const {
     std::vector<double> result_data(m_size);
 
     // 使用std::transform和Lambda表达式进行向量标量乘法
-    std::transform(m_data.begin(), m_data.end(), result_data.begin(),
-                   [scalar](double x) { return x * scalar; });
+    std::transform(m_data.begin(), m_data.end(), result_data.begin(), [scalar](double x) { return x * scalar; });
+    // for (int i = 0; i < m_size; i++) {
+    //     result_data[i] = m_data[i] * scalar;
+    // }
 
     return Vector(std::move(result_data));
 }
@@ -142,10 +144,12 @@ Vector Vector::multiply(double scalar) const {
  */
 double Vector::norm() const {
     // 使用std::accumulate和Lambda表达式计算平方和
-    double sum_of_squares = std::accumulate(
-        m_data.begin(), m_data.end(), 0.0,
-        [](double acc, double x) { return acc + x * x; }
-    );
+    double sum_of_squares = std::accumulate( m_data.begin(), m_data.end(), 0.0, [](double acc, double x) { return acc + x * x; } );
+
+    // double sum_of_squares = 0.0;
+    // for (int i = 0; i < m_size; i++) {
+    //     sum_of_squares += m_data[i] * m_data[i];
+    // }
     return std::sqrt(sum_of_squares);
 }
 
@@ -161,7 +165,9 @@ double Vector::norm() const {
  */
 void Vector::print() const {
     // 使用std::for_each和Lambda表达式打印向量元素
-    std::for_each(m_data.begin(), m_data.end(),
-                  [](double x) { std::cout << x << " "; });
+    std::for_each(m_data.begin(), m_data.end(), [](double x) { std::cout << x << " "; });
+    // for (int i = 0; i < m_size; i++) {
+    //     std::cout << m_data[i] << " ";
+    // }
     std::cout << std::endl << std::flush;  // 换行并立即输出
 }

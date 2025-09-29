@@ -84,3 +84,83 @@ jobs:
           **/build/CMakeCache.txt
           **/build/*.log
           **/build/*.txt
+
+  latex:
+    runs-on: windows-latest
+    name: Build LaTeX documents
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install TeX Live
+      uses: xu-cheng/texlive-action@v2
+      with:
+        scheme: full
+        packages: |
+          ctex
+          minted
+          xcolor
+          hyperref
+          booktabs
+          multirow
+          multicol
+          float
+          tikz
+          pgfplots
+          tcolorbox
+          fontspec
+
+    - name: Build LaTeX documents
+      run: |
+        cd chapters
+        Write-Host "Building LaTeX documents..."
+
+        # 编译所有章节
+        for ($i = 1; $i -le 6; $i++) {
+          $chapterDir = "chapter{0:D2}" -f $i
+          $chapterFile = "$chapterDir.tex"
+
+          Write-Host "Building $chapterDir..."
+
+          if (Test-Path $chapterDir) {
+            cd $chapterDir
+
+            # 清理旧文件
+            Get-ChildItem "*.aux", "*.log", "*.out", "*.toc", "*.nav", "*.snm", "*.vrb" -ErrorAction SilentlyContinue | Remove-Item -Force
+            Get-ChildItem "_minted-*" -Directory -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force
+
+            # 第一次编译
+            Write-Host "First compilation of $chapterFile..."
+            xelatex -shell-escape -interaction=nonstopmode $chapterFile
+
+            if ($LASTEXITCODE -eq 0) {
+              # 第二次编译（处理交叉引用）
+              Write-Host "Second compilation of $chapterFile..."
+              xelatex -shell-escape -interaction=nonstopmode $chapterFile
+
+              if ($LASTEXITCODE -eq 0) {
+                Write-Host "$chapterDir compiled successfully!"
+              } else {
+                Write-Host "Error: Second compilation failed for $chapterDir"
+                exit 1
+              }
+            } else {
+              Write-Host "Error: First compilation failed for $chapterDir"
+              exit 1
+            }
+
+            cd ..
+          } else {
+            Write-Host "Warning: Directory $chapterDir not found, skipping"
+          }
+        }
+
+        Write-Host "All LaTeX documents built successfully!"
+      shell: powershell
+
+    - name: Upload PDF artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: latex-pdfs
+        path: chapters/chapter*/chapter*.pdf
