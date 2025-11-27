@@ -1,0 +1,75 @@
+digraph MKLSparseBLASOverview {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    SparseBLASModule [label="MKL 稀疏BLAS模块\nSparse BLAS Module", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=3];
+
+    // 主要模块
+    Level1 [label="Level 1\n稀疏向量操作\nSparse Vector Operations\n(?axpyi, ?doti, ?gthr, ?sctr等)", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=12, penwidth=2.5];
+
+    Level2_3 [label="Level 2/3\n传统接口\nLegacy Interface\n(mkl_?csrgemv, mkl_?csrmm等)", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=12, penwidth=2.5];
+
+    InspectorExecutor [label="Inspector-Executor\n检查器-执行器接口\n(mkl_sparse_?_mv, mkl_sparse_?_mm等)", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=12, penwidth=2.5];
+
+    FormatConvert [label="格式转换\nFormat Conversion\n(mkl_?dnscsr, mkl_?csrcoo等)", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=12, penwidth=2.5];
+
+    SparseQR [label="稀疏QR分解\nSparse QR\n(mkl_sparse_?_qr等)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=12, penwidth=2.5];
+
+    // 存储格式
+    Formats [label="存储格式\nStorage Formats\nCSR, CSC, COO, BSR, DIA, SKY", fillcolor="#bbdefb", color="#1976d2", shape=ellipse, style="bold,rounded", fontsize=11, penwidth=2.5];
+
+    // 矩阵描述符
+    MatrixDescr [label="矩阵描述符\nMatrix Descriptor\n矩阵类型/填充模式/对角类型", fillcolor="#bbdefb", color="#1976d2", shape=ellipse, style="bold,rounded", fontsize=11, penwidth=2.5];
+
+    // 运算类型
+    OperationTypes [label="运算类型\nOperation Types\n转置/非转置/共轭转置", fillcolor="#bbdefb", color="#1976d2", shape=ellipse, style="bold,rounded", fontsize=11, penwidth=2.5];
+
+    // 性能优化
+    Optimization [label="性能优化\nPerformance Optimization\n多线程/SIMD/内存优化", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=11, penwidth=2.5];
+
+    // 主模块连接
+    SparseBLASModule -> Level1 [label="包含", color="#6a1b9a", style="bold", penwidth=3, arrowsize=1.2];
+    SparseBLASModule -> Level2_3 [label="包含", color="#6a1b9a", style="bold", penwidth=3, arrowsize=1.2];
+    SparseBLASModule -> InspectorExecutor [label="包含", color="#6a1b9a", style="bold", penwidth=3, arrowsize=1.2];
+    SparseBLASModule -> FormatConvert [label="包含", color="#6a1b9a", style="bold", penwidth=3, arrowsize=1.2];
+    SparseBLASModule -> SparseQR [label="包含", color="#6a1b9a", style="bold", penwidth=3, arrowsize=1.2];
+
+    // 支持功能
+    SparseBLASModule -> Formats [penwidth=3, arrowsize=1.2, label="支持", color="#1976d2", style="dashed"];
+    SparseBLASModule -> MatrixDescr [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="dashed"];
+    SparseBLASModule -> OperationTypes [penwidth=3, arrowsize=1.2, label="支持", color="#1976d2", style="dashed"];
+    SparseBLASModule -> Optimization [penwidth=3, arrowsize=1.2, label="支持", color="#d84315", style="dashed"];
+
+    // 模块与格式关系
+    Level1 -> Formats [penwidth=2, label="使用", color="#666666", style="dotted"];
+    Level2_3 -> Formats [penwidth=2, label="使用", color="#666666", style="dotted"];
+    InspectorExecutor -> Formats [penwidth=2, label="使用", color="#666666", style="dotted"];
+    FormatConvert -> Formats [penwidth=2, label="转换", color="#666666", style="dotted"];
+
+    // 模块与描述符关系
+    Level2_3 -> MatrixDescr [penwidth=2, label="使用", color="#666666", style="dotted"];
+    InspectorExecutor -> MatrixDescr [penwidth=2, label="使用", color="#666666", style="dotted"];
+
+    // 模块与运算类型关系
+    Level2_3 -> OperationTypes [penwidth=2, label="使用", color="#666666", style="dotted"];
+    InspectorExecutor -> OperationTypes [penwidth=2, label="使用", color="#666666", style="dotted"];
+
+    // 模块与优化关系
+    InspectorExecutor -> Optimization [penwidth=2, label="优化", color="#666666", style="dotted"];
+    Level2_3 -> Optimization [penwidth=2, label="优化", color="#666666", style="dotted"];
+
+    // 模块间关系
+    FormatConvert -> Level2_3 [penwidth=3, arrowsize=1.2, label="为", color="#2e7d32", style="dashed"];
+    FormatConvert -> InspectorExecutor [penwidth=3, arrowsize=1.2, label="为", color="#2e7d32", style="dashed"];
+
+    labelloc="t";
+    label="MKL 稀疏BLAS模块概览图\nMKL Sparse BLAS Module Overview";
+}

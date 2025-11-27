@@ -1,0 +1,62 @@
+digraph MKLBLAS {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    BLASModule [label="BLAS模块\n基础线性代数子程序", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    Level1 [label="Level 1\n向量运算", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level1Basic [label="基本运算\n点积 (dot)\n范数 (nrm2, asum)\n缩放 (scal)\n向量加减 (axpy)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level1Util [label="工具函数\n向量复制 (copy)\n向量交换 (swap)\n最大索引 (iamax, iamin)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level1Rot [label="旋转函数\n向量旋转 (rot, rotg)\n改进旋转 (rotm, rotmg)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Level2 [label="Level 2\n矩阵-向量运算", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level2Basic [label="基本运算\n矩阵-向量乘法 (gemv)\n对称矩阵-向量 (symv)\n三角矩阵-向量 (trmv)\n三角矩阵求解 (trsv)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level2Rank [label="Rank更新\n矩阵-向量外积 (ger)\n对称rank-1 (syr)\n对称rank-2 (syr2)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level2Band [label="带状矩阵\n一般带状 (gbmv)\n对称带状 (sbmv)\n三角带状 (tbmv, tbsv)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level2Pack [label="打包矩阵\n对称打包 (spmv, spr, spr2)\n三角打包 (tpmv, tpsv)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level2Complex [label="复数厄米\n厄米矩阵-向量 (hemv)\n厄米rank-1 (her)\n厄米rank-2 (her2)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Level3 [label="Level 3\n矩阵-矩阵运算", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level3Basic [label="基本运算\n矩阵乘法 (gemm)\n对称矩阵乘法 (symm)\n三角矩阵乘法 (trmm)\n三角矩阵求解 (trsm)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level3Rank [label="Rank更新\n对称rank-k (syrk)\n对称rank-2k (syr2k)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level3Complex [label="复数厄米\n厄米矩阵乘法 (hemm)\n厄米rank-k (herk)\n厄米rank-2k (her2k)", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Optimizations [label="性能优化\nSIMD向量化\n多线程并行\n内存对齐\n缓存优化", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    DataTypes [label="数据类型\n单精度 (s)\n双精度 (d)\n复数单精度 (c)\n复数双精度 (z)", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    BLASModule -> Level1 [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    BLASModule -> Level2 [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    BLASModule -> Level3 [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    BLASModule -> Optimizations [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed"];
+    BLASModule -> DataTypes [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed"];
+
+    Level1 -> Level1Basic [penwidth=3.5, arrowsize=1.3, ];
+    Level1 -> Level1Util [penwidth=3.5, arrowsize=1.3, ];
+    Level1 -> Level1Rot [penwidth=3.5, arrowsize=1.3, ];
+
+    Level2 -> Level2Basic [penwidth=3.5, arrowsize=1.3, ];
+    Level2 -> Level2Rank [penwidth=3.5, arrowsize=1.3, ];
+    Level2 -> Level2Band [penwidth=3.5, arrowsize=1.3, ];
+    Level2 -> Level2Pack [penwidth=3.5, arrowsize=1.3, ];
+    Level2 -> Level2Complex [penwidth=3.5, arrowsize=1.3, ];
+
+    Level3 -> Level3Basic [penwidth=3.5, arrowsize=1.3, ];
+    Level3 -> Level3Rank [penwidth=3.5, arrowsize=1.3, ];
+    Level3 -> Level3Complex [penwidth=3.5, arrowsize=1.3, ];
+
+    Level1 -> Optimizations [penwidth=2, label="应用", color="#666666", style="dotted"];
+    Level2 -> Optimizations [penwidth=2, label="应用", color="#666666", style="dotted"];
+    Level3 -> Optimizations [penwidth=2, label="应用", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL BLAS模块详细结构图";
+}

@@ -1,0 +1,36 @@
+digraph EigenGeometry {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    GeometryModule [label="Geometry模块\n几何变换", fillcolor="#90caf9", color="#1976d2", shape=box, style="bold", fontsize=14];
+
+    Rotation [label="旋转表示\nAngleAxis (轴角)\nQuaternion (四元数)\n旋转矩阵\n欧拉角", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Translation [label="平移变换\nTranslation\n2D/3D平移向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Scaling [label="缩放变换\nScaling\n均匀/非均匀缩放", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Affine [label="仿射变换\nAffine3d\n旋转+平移+缩放", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Projective [label="投影变换\nProjective3d\n透视投影", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    TransformOps [label="变换操作\n组合变换\n逆变换\n插值", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    GeometryModule -> Rotation [label="提供", color="#1976d2", style="dashed"];
+    GeometryModule -> Translation [label="提供", color="#1976d2", style="dashed"];
+    GeometryModule -> Scaling [label="提供", color="#1976d2", style="dashed"];
+    GeometryModule -> Affine [label="提供", color="#1976d2", style="dashed"];
+    GeometryModule -> Projective [label="提供", color="#1976d2", style="dashed"];
+    GeometryModule -> TransformOps [label="提供", color="#1976d2", style="dashed"];
+
+    Rotation -> Affine [label="组成", color="#2e7d32", style="dotted"];
+    Translation -> Affine [label="组成", color="#2e7d32", style="dotted"];
+    Scaling -> Affine [label="组成", color="#2e7d32", style="dotted"];
+
+    labelloc="t";
+    label="Eigen Geometry模块详细结构图";
+}

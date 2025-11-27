@@ -1,0 +1,10 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 课程相关问题
+    url: https://github.com/YOUR_USERNAME/advanced-programming-qt-cpp/issues/new
+    about: 关于课程内容、课件或教学相关的问题
+  - name: 安全问题
+    url: https://github.com/YOUR_USERNAME/advanced-programming-qt-cpp/security/advisories/new
+    about: 报告安全漏洞（请勿公开报告）
+
+# 注意：推送到GitHub后，请将上面的 YOUR_USERNAME 替换为实际的GitHub用户名

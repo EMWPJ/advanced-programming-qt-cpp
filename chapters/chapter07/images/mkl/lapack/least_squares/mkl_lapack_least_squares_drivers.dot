@@ -1,0 +1,32 @@
+digraph MKLLAPACKLeastSquaresDrivers {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,6",
+           pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    bgcolor="#ffffff";
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+
+    LLSDriverModule [label="LAPACK最小二乘驱动例程",
+                     fillcolor="#a5d6a7", color="#388e3c",
+                     shape=box, style="bold,rounded",
+                     fontsize=22, penwidth=3];
+
+    LLSQR [label="QR方法\n?gels / ?gelsy",
+           fillcolor="#c8e6c9", color="#388e3c",
+           shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    LLSSVD [label="SVD方法\n?gelsd / ?gelss",
+            fillcolor="#c8e6c9", color="#388e3c",
+            shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    GenLLS [label="广义最小二乘\n?ggglm / ?ggglse",
+            fillcolor="#fff9c4", color="#f57c00",
+            shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    LLSDriverModule -> LLSQR [penwidth=3.5, arrowsize=1.3];
+    LLSDriverModule -> LLSSVD [penwidth=3.5, arrowsize=1.3];
+    LLSDriverModule -> GenLLS [penwidth=3.5, arrowsize=1.3];
+}

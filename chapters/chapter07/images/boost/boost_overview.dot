@@ -1,0 +1,35 @@
+digraph BoostOverview {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#fff3e0"];
+    node [fontname="Microsoft YaHei", fontsize=12, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=10];
+
+    rankdir=TB;
+    bgcolor="#fff3e0";
+
+    Boost [label="Boost科学计算库", fillcolor="#ffb74d", color="#e65100", shape=box, style="bold", fontsize=16];
+
+    Math [label="Boost.Math\n数学函数库\n(特殊函数、数值积分)", fillcolor="#ffcc80", color="#e65100", shape=box];
+    Multiprecision [label="Boost.Multiprecision\n高精度计算\n(任意精度整数/浮点数)", fillcolor="#ffcc80", color="#e65100", shape=box];
+    Accumulators [label="Boost.Accumulators\n统计累加器\n(均值、方差、分位数)", fillcolor="#ffcc80", color="#e65100", shape=box];
+    Random [label="Boost.Random\n随机数生成\n(高质量生成器和分布)", fillcolor="#ffcc80", color="#e65100", shape=box];
+    Units [label="Boost.Units\n类型安全单位系统\n(物理单位管理)", fillcolor="#ffe0b2", color="#f57c00", shape=box];
+    Geometry [label="Boost.Geometry\n几何计算\n(2D/3D几何算法)", fillcolor="#ffe0b2", color="#f57c00", shape=box];
+    Interval [label="Boost.Interval\n区间算术\n(区间分析)", fillcolor="#ffe0b2", color="#f57c00", shape=box];
+    UUID [label="Boost.UUID\n唯一标识符\n(科学数据管理)", fillcolor="#ffe0b2", color="#f57c00", shape=box];
+
+    Boost -> Math [label="", color="#e65100", style="bold", penwidth=2];
+    Boost -> Multiprecision [label="", color="#e65100", style="bold", penwidth=2];
+    Boost -> Accumulators [label="", color="#e65100", style="bold", penwidth=2];
+    Boost -> Random [label="", color="#e65100", style="bold", penwidth=2];
+    Boost -> Units [label="", color="#e65100", style="bold", penwidth=2];
+    Boost -> Geometry [label="", color="#e65100", style="bold", penwidth=2];
+    Boost -> Interval [label="", color="#e65100", style="bold", penwidth=2];
+    Boost -> UUID [label="", color="#e65100", style="bold", penwidth=2];
+
+    Math -> Multiprecision [label="可协同", color="#f57c00", style="dotted"];
+    Accumulators -> Random [label="可协同", color="#f57c00", style="dotted"];
+    Units -> Math [label="可协同", color="#f57c00", style="dotted"];
+
+    labelloc="t";
+    label="Boost科学计算库总体结构图";
+}

@@ -1,0 +1,89 @@
+digraph MKLSparseBLASQR {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    SparseQRModule [label="稀疏QR分解模块\nSparse QR Decomposition Module", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    // 输入矩阵
+    InputMatrix [label="输入矩阵A\nInput Matrix A\n(稀疏矩阵)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // QR提示
+    QRHint [label="设置QR提示\nmkl_sparse_set_qr_hint\n指定QR分解参数", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // QR创建
+    QRCreate [label="创建QR句柄\nmkl_sparse_?_qr\n创建QR分解句柄", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // QR重排序
+    QRReorder [label="QR重排序\nmkl_sparse_qr_reorder\n优化矩阵结构", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // QR分解
+    QRFactorize [label="执行QR分解\nmkl_sparse_?_qr_factorize\nA = Q * R", fillcolor="#ff6b6b", color="#c92a2a", shape=box, style="bold,rounded", fontsize=11, penwidth=2.5];
+
+    // Q和R矩阵
+    QMatrix [label="Q矩阵\n正交矩阵\nOrthogonal Matrix", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    RMatrix [label="R矩阵\n上三角矩阵\nUpper Triangular Matrix", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // QR求解
+    QRSolve [label="QR系统求解\nmkl_sparse_?_qr_solve\n求解 A*x = b", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // Q乘法
+    QRQMult [label="Q矩阵乘法\nmkl_sparse_?_qr_qmult\nQ * x 或 Q^T * x", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // R求解
+    QRRSolve [label="R系统求解\nmkl_sparse_?_qr_rsolve\n求解 R*x = b", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 输出结果
+    Solution [label="解向量x\nSolution Vector x", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    QMultResult [label="Q乘法结果\nQ * x", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    RSolveResult [label="R求解结果\nR * x = b", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 主模块连接
+    SparseQRModule -> InputMatrix [penwidth=3, arrowsize=1.2, label="输入", color="#2e7d32", style="dashed"];
+    SparseQRModule -> QRHint [penwidth=3, arrowsize=1.2, label="提供", color="#d84315", style="dashed"];
+    SparseQRModule -> QRCreate [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseQRModule -> QRReorder [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseQRModule -> QRFactorize [penwidth=3, arrowsize=1.2, label="提供", color="#c92a2a", style="dashed"];
+    SparseQRModule -> QRSolve [penwidth=3, arrowsize=1.2, label="提供", color="#f57f17", style="dashed"];
+    SparseQRModule -> QRQMult [penwidth=3, arrowsize=1.2, label="提供", color="#f57f17", style="dashed"];
+    SparseQRModule -> QRRSolve [penwidth=3, arrowsize=1.2, label="提供", color="#f57f17", style="dashed"];
+
+    // QR分解流程
+    InputMatrix -> QRHint [penwidth=3, arrowsize=1.2, label="1.设置提示", color="#d84315", style="solid"];
+    QRHint -> QRCreate [penwidth=3, arrowsize=1.2, label="2.创建句柄", color="#6a1b9a", style="solid"];
+    QRCreate -> QRReorder [penwidth=3, arrowsize=1.2, label="3.重排序", color="#6a1b9a", style="solid"];
+    QRReorder -> QRFactorize [label="4.执行分解", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+
+    // 分解结果
+    QRFactorize -> QMatrix [label="得到Q", color="#f57f17", style="bold", penwidth=3, arrowsize=1.2];
+    QRFactorize -> RMatrix [label="得到R", color="#f57f17", style="bold", penwidth=3, arrowsize=1.2];
+
+    // QR求解流程
+    QRFactorize -> QRSolve [penwidth=3, arrowsize=1.2, label="5.求解系统", color="#f57f17", style="solid"];
+    QRSolve -> Solution [label="得到解", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    // Q乘法流程
+    QMatrix -> QRQMult [penwidth=3, arrowsize=1.2, label="Q矩阵乘法", color="#f57f17", style="solid"];
+    QRQMult -> QMultResult [label="得到结果", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    // R求解流程
+    RMatrix -> QRRSolve [penwidth=3, arrowsize=1.2, label="R系统求解", color="#f57f17", style="solid"];
+    QRRSolve -> RSolveResult [label="得到解", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    // 应用场景
+    Applications [label="应用场景\nApplications\n- 最小二乘问题\n- 超定系统求解\n- 矩阵分解", fillcolor="#bbdefb", color="#1976d2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    QRSolve -> Applications [penwidth=2, label="用于", color="#666666", style="dotted"];
+    QRQMult -> Applications [penwidth=2, label="用于", color="#666666", style="dotted"];
+    QRRSolve -> Applications [penwidth=2, label="用于", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL 稀疏BLAS稀疏QR分解\nMKL Sparse BLAS Sparse QR Decomposition";
+}

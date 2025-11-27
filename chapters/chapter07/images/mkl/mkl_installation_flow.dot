@@ -1,0 +1,46 @@
+digraph MKLInstallationFlow {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="12,10", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.0;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    Start [label="开始安装MKL", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=3];
+
+    ChooseMethod [label="选择安装方法", fillcolor="#fff9c4", color="#f57f17", shape=diamond, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    OfficialInstaller [label="官方安装包\n下载Intel安装器\n运行安装程序", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+    PackageManager [label="包管理器\nLinux: apt-get install\nmacOS: brew install\nWindows: 使用安装器", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+
+    SetEnvVar [label="设置环境变量\nMKLROOT\n添加到PATH", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+
+    CMakeConfig [label="CMake配置\nfind_package(MKL)\ntarget_link_libraries", fillcolor="#bbdefb", color="#1976d2", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+
+    VerifyInstall [label="验证安装\n检查头文件\n检查库文件\n测试编译", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+
+    Success [label="安装成功", fillcolor="#a5d6a7", color="#388e3c", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=3];
+    Failed [label="安装失败\n检查错误信息", fillcolor="#ef5350", color="#c62828", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=3];
+
+    Start -> ChooseMethod [penwidth=3, arrowsize=1.2];
+    ChooseMethod -> OfficialInstaller [label="官方安装", penwidth=2.5, arrowsize=1.1];
+    ChooseMethod -> PackageManager [label="包管理器", penwidth=2.5, arrowsize=1.1];
+
+    OfficialInstaller -> SetEnvVar [penwidth=3, arrowsize=1.2];
+    PackageManager -> SetEnvVar [penwidth=3, arrowsize=1.2];
+
+    SetEnvVar -> CMakeConfig [penwidth=3, arrowsize=1.2];
+    CMakeConfig -> VerifyInstall [penwidth=3, arrowsize=1.2];
+
+    VerifyInstall -> Success [label="通过", penwidth=3, arrowsize=1.2, color="#388e3c"];
+    VerifyInstall -> Failed [label="失败", penwidth=3, arrowsize=1.2, color="#c62828"];
+
+    Failed -> ChooseMethod [label="重试", penwidth=2, arrowsize=1.0, style="dashed", color="#666666"];
+
+    labelloc="t";
+    label="MKL安装配置流程图\nMKL Installation and Configuration Flow";
+}

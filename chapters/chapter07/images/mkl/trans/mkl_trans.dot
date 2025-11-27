@@ -1,0 +1,35 @@
+digraph MKLTrans {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    TransModule [label="Trans模块\n变换和转置", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    MatrixTranspose [label="矩阵转置\n稠密矩阵转置\n稀疏矩阵转置\n原地转置", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ConjugateTranspose [label="共轭转置\n复数矩阵\nHermitian转置\n共轭操作", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Permutation [label="置换操作\n行置换\n列置换\n排列矩阵", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    FormatConversion [label="格式转换\n行主序/列主序\n存储格式转换\n布局变换", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PerformanceOpt [label="性能优化\n多线程并行\nSIMD向量化\n内存访问优化", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    TransModule -> MatrixTranspose [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    TransModule -> ConjugateTranspose [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    TransModule -> Permutation [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    TransModule -> FormatConversion [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    TransModule -> PerformanceOpt [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+
+    MatrixTranspose -> PerformanceOpt [penwidth=2, label="应用", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL Trans模块详细结构图";
+}

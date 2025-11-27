@@ -1,0 +1,36 @@
+digraph MKLLAPACKOrthogonalFact {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,7",
+           pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    bgcolor="#ffffff";
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+
+    OrthoFactModule [label="LAPACK正交分解",
+                     fillcolor="#a5d6a7", color="#388e3c",
+                     shape=box, style="bold,rounded",
+                     fontsize=22, penwidth=3];
+
+    QRFact [label="QR分解\n?geqrf / ?geqr2 / ?ormqr",
+            fillcolor="#c8e6c9", color="#388e3c",
+            shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    LQFact [label="LQ分解\n?gelqf / ?gelq2 / ?ormlq",
+            fillcolor="#c8e6c9", color="#388e3c",
+            shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    QLFact [label="QL分解\n?geqlf / ?geql2 / ?ormql",
+            fillcolor="#c8e6c9", color="#388e3c",
+            shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    BidiagFact [label="双对角化\n?gebrd / ?gebd2 / ?ormbr",
+                fillcolor="#c8e6c9", color="#388e3c",
+                shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    OrthoFactModule -> QRFact [penwidth=3.5, arrowsize=1.3];
+    OrthoFactModule -> LQFact [penwidth=3.5, arrowsize=1.3];
+    OrthoFactModule -> QLFact [penwidth=3.5, arrowsize=1.3];
+    OrthoFactModule -> BidiagFact [penwidth=3.5, arrowsize=1.3];
+}

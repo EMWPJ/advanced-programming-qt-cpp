@@ -1,0 +1,743 @@
+\documentclass[UTF8,12pt,a4paper]{ctexart}
+
+% 基本包
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{siunitx} % 改进的单位支持
+\pgfplotsset{compat=1.18}
+
+% 单位设置
+\sisetup{
+    inter-unit-product = \ensuremath{{}\cdot{}},
+    per-mode = symbol
+}
+
+% 页面设置
+\geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm,headheight=14.5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{大地电磁一维正反演理论}
+\fancyfoot[C]{\thepage}
+
+% 自定义颜色
+\definecolor{ytublue}{RGB}{0,84,159}
+\definecolor{theoremcolor}{RGB}{230,240,255}
+
+% 自定义环境
+\newtcolorbox{theorembox}[1]{
+    colback=theoremcolor,
+    colframe=ytublue,
+    title=#1,
+    fonttitle=\bfseries,
+    arc=3mm,
+    boxrule=1pt,
+    boxsep=2mm,
+    breakable % 允许跨页
+}
+
+\newtcolorbox{definitionbox}[1]{
+    colback=white,
+    colframe=ytublue!50!black,
+    title=#1,
+    fonttitle=\bfseries,
+    arc=3mm,
+    boxrule=1pt,
+    boxsep=2mm,
+    breakable % 允许跨页
+}
+
+
+% 标题信息
+\title{\textbf{大地电磁一维正反演理论讲义}}
+\author{王培杰}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\setcounter{tocdepth}{2} % 目录只显示到二级标题（subsection），不显示三级标题（subsubsection）
+\tableofcontents
+\newpage
+
+\section{引言}
+
+\subsection{大地电磁法简介}
+
+大地电磁法（Magnetotelluric, MT）是一种被动源地球物理勘探方法，利用天然电磁场作为场源，通过观测地表电磁场的变化来推断地下介质的电性结构。该方法由Tikhonov（1950年）和Cagniard（1953年）独立提出，具有以下特点：
+
+\begin{itemize}
+    \item \textbf{探测深度大}：利用低频电磁波（周期从毫秒到数千秒），可探测从几米到数百公里的深度
+    \item \textbf{成本低}：使用天然场源，无需人工发射设备
+    \item \textbf{不受地形限制}：适合复杂地形条件下的勘探
+    \item \textbf{对电阻率敏感}：可有效区分导电和电阻层
+\end{itemize}
+
+MT方法广泛应用于矿产资源勘查、地热资源开发、深部地质结构研究、地震活动带研究等领域。
+
+\subsection{一维反演的基本假设}
+
+一维MT反演假设地下介质在水平方向上均匀，仅在垂直方向上变化，即介质参数只依赖于深度$z$。这种假设适用于：
+
+\begin{itemize}
+    \item 层状地质结构
+    \item 水平层状介质
+    \item 缓变的地质构造（水平尺度远大于垂直尺度）
+\end{itemize}
+
+虽然实际地质结构往往是二维或三维的，但一维反演作为基础方法，具有以下优点：
+
+\begin{itemize}
+    \item 计算效率高：正演计算速度快，适合大规模数据处理
+    \item 理论成熟：数学推导完整，数值方法稳定
+    \item 易于理解：是学习MT反演理论的重要起点
+    \item 作为初始模型：为二维、三维反演提供初始模型
+\end{itemize}
+
+\section{MT正演问题}
+
+\subsection{物理模型}
+
+\subsubsection{层状介质模型}
+
+一维MT正演问题考虑$M$层水平层状介质，每层具有不同的电导率$\sigma_i$（或电阻率$\rho_i = 1/\sigma_i$）和厚度$d_i$。模型参数包括：
+
+\begin{itemize}
+    \item 第$i$层的电导率：$\sigma_i$（\si{S/m}），表示介质的导电能力
+    \item 第$i$层的电阻率：$\rho_i = 1/\sigma_i$（\si{\ohm.m}），表示介质的电阻能力
+    \item 第$i$层的厚度：$d_i$（\si{m}），表示该层的垂直厚度
+    \item 第$i$层的深度：$z_i = \sum_{j=0}^{i-1} d_j$（\si{m}），表示该层顶部的深度
+\end{itemize}
+
+在实际计算中，通常使用电阻率的对数形式作为模型参数：
+\begin{equation}
+m_i = \log_{10}(\rho_i) = \log_{10}(1/\sigma_i) \label{eq:model_param}
+\end{equation}
+
+使用对数形式的原因：
+\begin{itemize}
+    \item 电阻率通常跨越多个数量级（如\SI{0.1}{\ohm.m}到\SI{10000}{\ohm.m}），对数变换使参数空间更均匀
+    \item 避免数值计算的精度问题
+    \item 使优化算法更容易收敛
+\end{itemize}
+
+\subsubsection{频率范围}
+
+MT方法使用宽频带的天然电磁场，频率范围通常从\SI{e-3}{Hz}到\SI{e3}{Hz}（周期从\SI{e-3}{s}到\SI{e3}{s}）。不同频率的电磁波具有不同的穿透深度：
+
+\begin{itemize}
+    \item \textbf{高频}（短周期）：穿透深度浅，反映浅部结构
+    \item \textbf{低频}（长周期）：穿透深度深，反映深部结构
+\end{itemize}
+
+频率点数通常取61个，在对数尺度上均匀分布：
+\begin{equation}
+\log_{10}(T_i) = \log_{10}(T_{\min}) + \frac{i-1}{n-1}[\log_{10}(T_{\max}) - \log_{10}(T_{\min})] \label{eq:freq_dist}
+\end{equation}
+其中$T_i = 1/f_i$为第$i$个频点的周期，$n$为频率点数（通常$n=61$），$T_{\min}$和$T_{\max}$分别为最小和最大周期。
+
+\subsection{Maxwell方程与Helmholtz方程}
+
+\subsubsection{Maxwell方程组}
+
+对于TE（横电）极化模式，电场垂直于传播方向。在一维情况下，假设电场沿$x$方向，磁场沿$y$方向，传播沿$z$方向（垂直向下）。Maxwell方程组简化为：
+
+\begin{align}
+    \frac{\partial E_x}{\partial z} &= i\omega\mu_0 H_y \label{eq:faraday_scalar} \\
+    \frac{\partial H_y}{\partial z} &= \sigma E_x \label{eq:ampere_scalar}
+\end{align}
+
+其中：
+\begin{itemize}
+    \item $E_x(z)$：$x$方向的电场分量（\si{V/m}）
+    \item $H_y(z)$：$y$方向的磁场分量（\si{A/m}）
+    \item $\mu_0 = 4\pi \times 10^{-7}$ \si{H/m}：真空磁导率
+    \item $\omega = 2\pi f$：角频率（\si{rad/s}）
+    \item $\sigma$：电导率（\si{S/m}）
+\end{itemize}
+
+\subsubsection{Helmholtz方程的推导}
+
+从方程~\eqref{eq:faraday_scalar}和~\eqref{eq:ampere_scalar}可以推导出Helmholtz方程。
+
+首先，对方程~\eqref{eq:faraday_scalar}两边关于$z$求导：
+\begin{equation}
+\frac{\partial^2 E_x}{\partial z^2} = i\omega\mu_0 \frac{\partial H_y}{\partial z}
+\end{equation}
+
+将方程~\eqref{eq:ampere_scalar}代入上式，得到：
+\begin{equation}
+\frac{\partial^2 E_x}{\partial z^2} = i\omega\mu_0 \sigma E_x
+\end{equation}
+
+整理得到Helmholtz方程：
+\begin{equation}
+\frac{d^2 E_x}{dz^2} + k^2 E_x = 0 \label{eq:helmholtz}
+\end{equation}
+
+其中$k$为波数（复数），定义为：
+\begin{equation}
+k = \sqrt{i\omega\mu_0\sigma} \label{eq:wavenumber_complex}
+\end{equation}
+
+\subsubsection{波数的物理意义}
+
+波数$k$是复数，可以表示为：
+\begin{equation}
+k = (1+i)\sqrt{\frac{\omega\mu_0\sigma}{2}} = \alpha + i\beta \label{eq:wavenumber}
+\end{equation}
+
+其中：
+\begin{itemize}
+    \item $\alpha = \beta = \sqrt{\frac{\omega\mu_0\sigma}{2}}$：衰减系数和相位系数（实数部分和虚数部分相等）
+    \item 电磁波在导电介质中传播时会衰减，衰减长度（趋肤深度）为$\delta = 1/\alpha = \sqrt{\frac{2}{\omega\mu_0\sigma}}$
+    \item 趋肤深度决定了该频率电磁波的探测深度
+\end{itemize}
+
+\textbf{重要物理意义}：频率越低、电导率越小，趋肤深度越大，即穿透深度越深。这解释了为什么MT方法能够探测深部结构。
+
+\subsection{向上递推阻抗法}
+
+\subsubsection{基本思想}
+
+向上递推阻抗法是一种解析方法，基于传输线理论，利用层间阻抗的连续性条件，从最底层（半空间）开始，逐层向上递推到地表，计算地表阻抗。
+
+\textbf{核心思想}：
+\begin{enumerate}
+    \item 每层介质可以看作一个传输线，具有特征阻抗
+    \item 在层界面处，阻抗必须连续（物理边界条件）
+    \item 从最底层（已知）开始，利用连续性条件逐层向上计算
+\end{enumerate}
+
+\subsubsection{阻抗的定义}
+
+在MT方法中，阻抗定义为电场与磁场的比值：
+\begin{equation}
+Z(z) = \frac{E_x(z)}{H_y(z)} \label{eq:impedance_def}
+\end{equation}
+
+阻抗的单位是欧姆（\si{\ohm}），反映了介质的电性特征。
+
+\subsubsection{特征阻抗和波数}
+
+对于第$i$层均匀介质，求解Helmholtz方程~\eqref{eq:helmholtz}可以得到电磁场的解析解。在第$i$层中，电场可以表示为：
+\begin{equation}
+E_x(z) = A_i e^{-k_i z} + B_i e^{k_i z}
+\end{equation}
+其中$A_i$和$B_i$为待定系数，$k_i$为第$i$层的波数：
+\begin{equation}
+k_i = \sqrt{i\omega\mu_0\sigma_i} = (1+i)\sqrt{\frac{\omega\mu_0\sigma_i}{2}} \label{eq:layer_wavenumber}
+\end{equation}
+
+第$i$层的特征阻抗定义为：
+\begin{equation}
+Z_{0i} = \frac{i\omega\mu_0}{k_i} = \sqrt{\frac{i\omega\mu_0}{\sigma_i}} = (1+i)\sqrt{\frac{\omega\mu_0}{2\sigma_i}} \label{eq:char_impedance}
+\end{equation}
+
+特征阻抗反映了介质的固有电性特征，类似于传输线的特性阻抗。
+
+\subsubsection{阻抗递推公式的推导}
+
+考虑两层介质系统：第$i$层（厚度$d_i$）覆盖在第$i+1$层之上。在层界面处，电场和磁场必须连续，因此阻抗也连续。
+
+在第$i$层内部，考虑向上和向下传播的波的叠加。经过推导（基于传输线理论），可以得到从第$i+1$层的阻抗$Z_{i+1}$计算第$i$层顶部阻抗$Z_i$的递推公式：
+
+\begin{equation}
+Z_i = Z_{0i} \cdot \frac{Z_{i+1} + Z_{0i} \tanh(k_i d_i)}{Z_{0i} + Z_{i+1} \tanh(k_i d_i)} \label{eq:recursive}
+\end{equation}
+
+其中：
+\begin{itemize}
+    \item $Z_i$：第$i$层顶部的阻抗
+    \item $Z_{i+1}$：第$i+1$层顶部的阻抗（即第$i$层底部的阻抗）
+    \item $Z_{0i}$：第$i$层的特征阻抗
+    \item $k_i$：第$i$层的波数
+    \item $d_i$：第$i$层的厚度
+    \item $\tanh(k_i d_i)$：复双曲正切函数
+\end{itemize}
+
+\subsubsection{复双曲正切函数}
+
+对于复数$z = x + iy$，双曲正切函数定义为：
+\begin{equation}
+\tanh(z) = \frac{\sinh(z)}{\cosh(z)} = \frac{e^z - e^{-z}}{e^z + e^{-z}} \label{eq:tanh_def}
+\end{equation}
+
+对于$z = k_i d_i$，其中$k_i = (1+i)\alpha_i$，$\alpha_i = \sqrt{\frac{\omega\mu_0\sigma_i}{2}}$：
+\begin{equation}
+e^{k_i d_i} = e^{\alpha_i d_i} e^{i\alpha_i d_i} = e^{\alpha_i d_i}[\cos(\alpha_i d_i) + i\sin(\alpha_i d_i)] \label{eq:exp_complex}
+\end{equation}
+
+因此：
+\begin{align}
+\sinh(k_i d_i) &= \frac{1}{2}(e^{k_i d_i} - e^{-k_i d_i}) \label{eq:sinh} \\
+\cosh(k_i d_i) &= \frac{1}{2}(e^{k_i d_i} + e^{-k_i d_i}) \label{eq:cosh}
+\end{align}
+
+\subsubsection{递推算法}
+
+\textbf{初始化}：最底层（第$M-1$层）作为半空间，其阻抗等于特征阻抗：
+\begin{equation}
+Z_{M-1} = Z_{0,M-1} = \sqrt{\frac{i\omega\mu_0}{\sigma_{M-1}}} \label{eq:bottom_impedance}
+\end{equation}
+
+\textbf{递推过程}：
+\begin{enumerate}
+    \item 从$i = M-2$开始（倒数第二层）
+    \item 使用公式~\eqref{eq:recursive}计算$Z_i$
+    \item $i = i-1$，重复步骤2
+    \item 直到$i = 0$（地表层），得到地表阻抗$Z_0$
+\end{enumerate}
+
+\textbf{算法伪代码}：
+\begin{enumerate}[leftmargin=*,align=left]
+    \item[步骤1] 初始化：$Z_{M-1} = Z_{0,M-1}$（最底层阻抗）
+    \item[步骤2] 循环：$i$从$M-2$递减到$0$
+    \begin{enumerate}
+        \item 计算$k_i = \sqrt{i\omega\mu_0\sigma_i}$
+        \item 计算$\tanh(k_i d_i)$
+        \item 使用公式~\eqref{eq:recursive}计算$Z_i$
+    \end{enumerate}
+    \item[步骤3] 输出地表阻抗$Z_0$
+\end{enumerate}
+
+\subsection{MT响应计算}
+
+计算得到地表阻抗$Z_0$后，可计算MT响应（视电阻率和相位）：
+
+\subsubsection{视电阻率}
+
+\begin{theorembox}{视电阻率}
+视电阻率定义为：
+\begin{equation}
+\rho_a = \frac{|Z_0|^2}{\omega\mu_0} = \frac{Z_0 \cdot Z_0^*}{\omega\mu_0} \label{eq:apparent_resistivity}
+\end{equation}
+其中$Z_0^*$为$Z_0$的共轭复数，$|Z_0|^2 = [\text{Re}(Z_0)]^2 + [\text{Im}(Z_0)]^2$。
+\end{theorembox}
+
+\textbf{物理意义}：
+\begin{itemize}
+    \item 视电阻率$\rho_a$是综合反映地下一定深度范围内介质电性的等效电阻率
+    \item 它不是某一层的真实电阻率，而是多层介质的综合响应
+    \item 视电阻率的大小反映了介质的导电能力：$\rho_a$大表示电阻性强（导电性差），$\rho_a$小表示导电性强
+    \item 不同频率的视电阻率反映不同深度的电性结构（高频反映浅部，低频反映深部）
+\end{itemize}
+
+\textbf{推导说明}：对于均匀半空间，阻抗$Z = \sqrt{i\omega\mu_0/\sigma}$，代入上式可以得到$\rho_a = 1/\sigma = \rho$，即视电阻率等于真实电阻率。对于层状介质，视电阻率是等效值。
+
+\subsubsection{相位}
+
+\begin{theorembox}{相位}
+相位定义为：
+\begin{equation}
+\phi = \arctan\left(\frac{\text{Im}(Z_0)}{\text{Re}(Z_0)}\right) \quad \text{（弧度）} \label{eq:phase_rad}
+\end{equation}
+或
+\begin{equation}
+\phi = \frac{180}{\pi} \arctan\left(\frac{\text{Im}(Z_0)}{\text{Re}(Z_0)}\right) \quad \text{（度）} \label{eq:phase_deg}
+\end{equation}
+\end{theorembox}
+
+\textbf{物理意义}：
+\begin{itemize}
+    \item 相位$\phi$表示电场和磁场之间的相位差，反映了电磁场在传播过程中的延迟
+    \item 相位是复数阻抗的幅角，范围通常在$0^\circ$到$90^\circ$之间
+    \item 对于均匀半空间，相位为$45^\circ$
+    \item 相位对电阻率变化非常敏感，是反演的重要约束信息
+    \item 相位信息有助于减少反演的非唯一性
+\end{itemize}
+
+\textbf{实际应用}：在实际计算中，通常以$\log_{10}(\rho_a)$和相位$\phi$（度）的形式存储，便于后续处理和可视化。MT数据通常绘制为视电阻率和相位随频率（或周期）变化的曲线，称为MT曲线或视电阻率-相位曲线。
+
+\section{MT反演问题}
+
+\subsection{反演问题的数学表述}
+
+\subsubsection{问题定义}
+
+给定观测数据$\mathbf{d}_{obs} \in \mathbb{R}^{n}$（$n$为数据点数，通常$n = 2n_{freq}$，包含视电阻率和相位），寻找模型参数$\mathbf{m} \in \mathbb{R}^{M}$（$M$为模型层数），使得合成数据$\mathbf{d}_{syn}(\mathbf{m})$与观测数据$\mathbf{d}_{obs}$的差异最小。
+
+正演算子定义为：
+\begin{equation}
+\mathbf{d}_{syn} = F(\mathbf{m}) \label{eq:forward_operator}
+\end{equation}
+其中$F: \mathbb{R}^{M} \rightarrow \mathbb{R}^{n}$为非线性正演算子，将$M$维模型参数映射到$n$维数据空间。
+
+\textbf{数据向量结构}：$\mathbf{d}_{obs}$通常包含
+\begin{itemize}
+    \item 前$n_{freq}$个元素：$\log_{10}(\rho_a)$（对数视电阻率）
+    \item 后$n_{freq}$个元素：$\phi$（相位，单位：度）
+\end{itemize}
+其中$n_{freq}$为频率点数。
+
+\textbf{模型向量结构}：$\mathbf{m}$包含
+\begin{itemize}
+    \item $m_i = \log_{10}(\rho_i)$：第$i$层电阻率的对数（$i = 0, 1, \ldots, M-1$）
+    \item 每层的厚度$d_i$通常预先设定（在对数深度尺度上等间距分布）
+\end{itemize}
+
+\subsubsection{不适定性问题}
+
+反演问题通常是不适定的（ill-posed），表现为：
+
+\begin{itemize}
+    \item \textbf{解不唯一}：多个不同的模型可能产生相同或非常相似的观测数据。这是由于：
+    \begin{itemize}
+        \item 数据量有限（通常几十到上百个数据点）
+        \item 模型参数较多（通常几十层）
+        \item 数据对深部的敏感度较低
+    \end{itemize}
+    
+    \item \textbf{解不稳定}：观测数据的小扰动（测量误差）可能导致模型的大变化。这要求：
+    \begin{itemize}
+        \item 引入先验信息约束模型
+        \item 使用正则化方法稳定解
+    \end{itemize}
+    
+    \item \textbf{过度拟合}：模型可能过度复杂，包含虚假结构（由噪声引起的）。需要通过正则化惩罚复杂模型。
+\end{itemize}
+
+因此，需要引入正则化约束来稳定反演过程，得到合理的、稳定的解。
+
+\subsection{目标函数}
+
+\subsubsection{数据拟合项}
+
+数据拟合项衡量合成数据与观测数据的差异，使用L2范数（最小二乘）：
+\begin{equation}
+\Phi_d(\mathbf{m}) = \|\mathbf{d}_{obs} - \mathbf{d}_{syn}(\mathbf{m})\|^2 = \sum_{i=1}^{n} [d_{obs,i} - d_{syn,i}(\mathbf{m})]^2 \label{eq:data_fit}
+\end{equation}
+
+数据拟合项的物理意义：
+\begin{itemize}
+    \item 衡量模型预测与观测的吻合程度
+    \item 越小表示模型越能解释观测数据
+    \item 但过小的拟合误差可能表示过度拟合
+\end{itemize}
+
+\subsubsection{正则化项}
+
+正则化项引入先验信息，约束模型的平滑性或简单性：
+\begin{equation}
+\Phi_m(\mathbf{m}) = \|L \mathbf{m}\|^2 \label{eq:regularization}
+\end{equation}
+其中$L$为正则化矩阵，编码先验信息。
+
+正则化项的物理意义：
+\begin{itemize}
+    \item 反映我们对模型的先验认知（如：模型应该平滑）
+    \item 惩罚复杂模型，防止过度拟合
+    \item 使解更稳定，更符合地质实际情况
+\end{itemize}
+
+\subsubsection{总目标函数}
+
+阻尼最小二乘（Tikhonov正则化）目标函数为：
+\begin{equation}
+\Phi(\mathbf{m}) = \Phi_d(\mathbf{m}) + \lambda \Phi_m(\mathbf{m}) = \|\mathbf{d}_{obs} - \mathbf{d}_{syn}(\mathbf{m})\|^2 + \lambda \|L \mathbf{m}\|^2 \label{eq:objective}
+\end{equation}
+
+其中：
+\begin{itemize}
+    \item $\Phi_d(\mathbf{m})$：数据拟合项，衡量数据拟合程度
+    \item $\Phi_m(\mathbf{m})$：模型约束项（正则化项），衡量模型的复杂程度
+    \item $\lambda > 0$：正则化参数，平衡数据拟合和模型约束
+    \begin{itemize}
+        \item $\lambda$大：更重视模型平滑，可能牺牲数据拟合
+        \item $\lambda$小：更重视数据拟合，模型可能振荡
+    \end{itemize}
+    \item $L$：正则化矩阵，编码先验信息
+\end{itemize}
+
+\subsection{正则化矩阵}
+
+\subsubsection{平滑度约束（SMOOTHNESS）}
+
+二阶差分矩阵，惩罚模型参数的二阶导数，使模型平滑：
+\begin{equation}
+L_{ij} = \begin{cases}
+    1, & j = i \\
+    -2, & j = i+1 \\
+    1, & j = i+2 \\
+    0, & \text{其他}
+\end{cases} \label{eq:smoothness_matrix}
+\end{equation}
+
+对应的约束为：
+\begin{equation}
+\Phi_m(\mathbf{m}) = \sum_{i=1}^{M-2} (m_i - 2m_{i+1} + m_{i+2})^2
+\end{equation}
+
+这惩罚相邻层之间的二阶差分（即二阶导数），使模型平滑。正则化矩阵$L$的维度为$(M-2) \times M$。
+
+\textbf{物理意义}：假设真实地球的电性结构变化是平滑的，避免出现剧烈跳跃的虚假结构。
+
+\subsubsection{平坦度约束（FLATNESS）}
+
+一阶差分矩阵，惩罚模型梯度：
+\begin{equation}
+L_{ij} = \begin{cases}
+    -1, & j = i \\
+    1, & j = i+1 \\
+    0, & \text{其他}
+\end{cases} \label{eq:flatness_matrix}
+\end{equation}
+
+对应的约束为：
+\begin{equation}
+\Phi_m(\mathbf{m}) = \sum_{i=1}^{M-1} (m_{i+1} - m_i)^2
+\end{equation}
+
+这惩罚相邻层之间的变化，使模型变化平坦。正则化矩阵$L$的维度为$(M-1) \times M$。
+
+\subsubsection{最小范数约束（MINIMUM\_NORM）}
+
+单位矩阵，最小化模型参数的L2范数：
+\begin{equation}
+L = I \label{eq:minnorm_matrix}
+\end{equation}
+
+对应的约束为：
+\begin{equation}
+\Phi_m(\mathbf{m}) = \sum_{i=1}^{M} m_i^2
+\end{equation}
+
+这使模型参数尽可能小（接近参考模型）。正则化矩阵$L$为$M \times M$单位矩阵。
+
+\textbf{实际应用}：平滑度约束（SMOOTHNESS）最为常用，因为它最符合大多数地质结构的实际情况。
+
+\subsection{高斯-牛顿法}
+
+\subsubsection{非线性问题的线性化}
+
+正演算子$F(\mathbf{m})$是非线性的，无法直接求解。在模型$\mathbf{m}^{(k)}$附近进行一阶泰勒展开：
+\begin{equation}
+\mathbf{d}_{syn}(\mathbf{m}) \approx \mathbf{d}_{syn}(\mathbf{m}^{(k)}) + J^{(k)} (\mathbf{m} - \mathbf{m}^{(k)}) \label{eq:linearization}
+\end{equation}
+
+其中$J^{(k)}$为Jacobian矩阵（也称为灵敏度矩阵或梯度矩阵），元素为：
+\begin{equation}
+J_{ij}^{(k)} = \frac{\partial d_{syn,i}}{\partial m_j}\Big|_{\mathbf{m}=\mathbf{m}^{(k)}} \label{eq:jacobian}
+\end{equation}
+
+Jacobian矩阵的维度为$n \times M$，表示每个数据对每个模型参数的灵敏度（即：模型参数变化时，数据的变化率）。
+
+\textbf{物理意义}：
+\begin{itemize}
+    \item $J_{ij}$大：数据$i$对模型参数$j$敏感
+    \item $J_{ij}$小：数据$i$对模型参数$j$不敏感
+    \item 通常浅层参数对高频数据敏感，深层参数对低频数据敏感
+\end{itemize}
+
+\subsubsection{残差向量}
+
+定义残差向量（数据拟合误差）：
+\begin{equation}
+\mathbf{r}^{(k)} = \mathbf{d}_{obs} - \mathbf{d}_{syn}(\mathbf{m}^{(k)}) \label{eq:residual}
+\end{equation}
+
+线性化后的数据拟合项为：
+\begin{equation}
+\Phi_d(\mathbf{m}) \approx \|\mathbf{r}^{(k)} - J^{(k)} \delta\mathbf{m}\|^2 \label{eq:linearized_data_fit}
+\end{equation}
+其中$\delta\mathbf{m} = \mathbf{m} - \mathbf{m}^{(k)}$为模型更新量。
+
+\subsubsection{正规方程的推导}
+
+将目标函数在$\mathbf{m}^{(k)}$附近线性化：
+\begin{equation}
+\Phi(\mathbf{m}) \approx \|\mathbf{r}^{(k)} - J^{(k)} \delta\mathbf{m}\|^2 + \lambda \|L (\mathbf{m}^{(k)} + \delta\mathbf{m})\|^2 \label{eq:linearized_objective}
+\end{equation}
+
+展开第一项：
+\begin{equation}
+\|\mathbf{r}^{(k)} - J^{(k)} \delta\mathbf{m}\|^2 = (\mathbf{r}^{(k)} - J^{(k)} \delta\mathbf{m})^T (\mathbf{r}^{(k)} - J^{(k)} \delta\mathbf{m})
+\end{equation}
+\begin{equation}
+= (\mathbf{r}^{(k)})^T \mathbf{r}^{(k)} - 2 (\mathbf{r}^{(k)})^T J^{(k)} \delta\mathbf{m} + (\delta\mathbf{m})^T (J^{(k)})^T J^{(k)} \delta\mathbf{m}
+\end{equation}
+
+展开第二项（忽略常数项$\|L \mathbf{m}^{(k)}\|^2$）：
+\begin{equation}
+\lambda \|L (\mathbf{m}^{(k)} + \delta\mathbf{m})\|^2 \approx \lambda [(\mathbf{m}^{(k)})^T L^T L \mathbf{m}^{(k)} + 2 (\mathbf{m}^{(k)})^T L^T L \delta\mathbf{m} + (\delta\mathbf{m})^T L^T L \delta\mathbf{m}]
+\end{equation}
+
+对$\delta\mathbf{m}$求导并令其为零：
+\begin{equation}
+\frac{\partial \Phi}{\partial \delta\mathbf{m}} = -2 (J^{(k)})^T \mathbf{r}^{(k)} + 2 (J^{(k)})^T J^{(k)} \delta\mathbf{m} + 2\lambda L^T L (\mathbf{m}^{(k)} + \delta\mathbf{m}) = 0
+\end{equation}
+
+整理得到正规方程（Normal Equation）：
+\begin{equation}
+[(J^{(k)})^T J^{(k)} + \lambda L^T L] \delta\mathbf{m} = (J^{(k)})^T \mathbf{r}^{(k)} - \lambda L^T L \mathbf{m}^{(k)} \label{eq:normal_equation}
+\end{equation}
+
+当初始模型$\mathbf{m}^{(0)}$接近零或正则化项较小时，可忽略$\lambda L^T L \mathbf{m}^{(k)}$项，得到简化形式：
+\begin{equation}
+[(J^{(k)})^T J^{(k)} + \lambda L^T L] \delta\mathbf{m} = (J^{(k)})^T \mathbf{r}^{(k)} \label{eq:normal_equation_simple}
+\end{equation}
+
+\textbf{方程性质}：
+\begin{itemize}
+    \item 系数矩阵$(J^{(k)})^T J^{(k)} + \lambda L^T L$是对称正定矩阵
+    \item 可使用Cholesky分解高效求解
+    \item 正则化项$\lambda L^T L$使矩阵条件数改善，数值更稳定
+\end{itemize}
+
+\subsubsection{迭代更新}
+
+模型更新公式为：
+\begin{equation}
+\mathbf{m}^{(k+1)} = \mathbf{m}^{(k)} + \delta\mathbf{m}^{(k)} \label{eq:update}
+\end{equation}
+
+\textbf{迭代过程}：
+\begin{enumerate}
+    \item 计算当前模型的合成数据$\mathbf{d}_{syn}(\mathbf{m}^{(k)})$
+    \item 计算残差$\mathbf{r}^{(k)} = \mathbf{d}_{obs} - \mathbf{d}_{syn}(\mathbf{m}^{(k)})$
+    \item 计算Jacobian矩阵$J^{(k)}$
+    \item 求解正规方程得到$\delta\mathbf{m}^{(k)}$
+    \item 更新模型：$\mathbf{m}^{(k+1)} = \mathbf{m}^{(k)} + \delta\mathbf{m}^{(k)}$
+    \item 检查收敛判据，如未收敛则返回步骤1
+\end{enumerate}
+
+\subsection{Jacobian矩阵的计算}
+
+\subsubsection{有限差分法}
+
+由于正演算子的解析导数难以计算，使用有限差分法近似Jacobian矩阵。
+
+\textbf{前向差分法}：
+\begin{equation}
+J_{ij} = \frac{\partial d_{syn,i}}{\partial m_j} \approx \frac{d_{syn,i}(\mathbf{m} + \epsilon \mathbf{e}_j) - d_{syn,i}(\mathbf{m})}{\epsilon} \label{eq:forward_diff}
+\end{equation}
+
+其中：
+\begin{itemize}
+    \item $\mathbf{e}_j$为第$j$个标准基向量（第$j$个分量为1，其他为0）
+    \item $\epsilon$为扰动步长，通常$\epsilon = 10^{-5}$或$10^{-6}$
+    \item 需要$M$次正演计算（每列一次）
+\end{itemize}
+
+\textbf{中心差分法}（更精确但计算量加倍）：
+\begin{equation}
+J_{ij} \approx \frac{d_{syn,i}(\mathbf{m} + \epsilon \mathbf{e}_j) - d_{syn,i}(\mathbf{m} - \epsilon \mathbf{e}_j)}{2\epsilon} \label{eq:central_diff}
+\end{equation}
+需要$2M$次正演计算。
+
+\textbf{计算复杂度}：
+\begin{itemize}
+    \item Jacobian矩阵大小为$n \times M$，通常$n \gg M$（如$n=122$，$M=40$）
+    \item 前向差分法需要$M$次正演计算
+    \item 中心差分法需要$2M$次正演计算
+    \item 正演计算是反演的主要计算开销
+\end{itemize}
+
+\subsection{收敛判据与停止条件}
+
+\subsubsection{收敛判据}
+
+\textbf{模型更新判据}：模型更新量的L2范数小于容差
+\begin{equation}
+\|\delta\mathbf{m}^{(k)}\| < \text{tol\_dm} \label{eq:model_update_criterion}
+\end{equation}
+通常使用$\text{tol\_dm} = 10^{-4}$，表示模型已收敛（更新量很小）。
+
+\textbf{残差判据}：数据拟合残差的L2范数小于容差
+\begin{equation}
+\|\mathbf{r}^{(k)}\| = \|\mathbf{d}_{obs} - \mathbf{d}_{syn}(\mathbf{m}^{(k)})\| < \text{tol\_residual} \label{eq:residual_criterion}
+\end{equation}
+
+\textbf{相对残差判据}：相对残差小于容差
+\begin{equation}
+\frac{\|\mathbf{r}^{(k)}\|}{\|\mathbf{d}_{obs}\|} < \text{tol\_relative} \label{eq:relative_residual_criterion}
+\end{equation}
+通常设置$\text{tol\_relative} = 10^{-3}$或更小。
+
+\textbf{最大迭代次数}：防止无限迭代，通常设置$\text{max\_iter} = 20$。
+
+\subsubsection{正则化参数的选择}
+
+正则化参数$\lambda$的选择影响反演结果：
+\begin{itemize}
+    \item $\lambda$过大：模型过度平滑，数据拟合差，可能丢失真实结构
+    \item $\lambda$过小：模型可能振荡，不稳定，可能包含虚假结构
+    \item 需要通过L曲线法或交叉验证选择最优$\lambda$，平衡数据拟合和模型平滑度
+\end{itemize}
+
+\textbf{L曲线法}：绘制$\log(\|\mathbf{r}\|)$ vs $\log(\|L\mathbf{m}\|)$曲线，选择拐点处的$\lambda$值。
+
+\section{数值实现要点}
+
+\subsection{数值稳定性}
+
+\subsubsection{复数运算}
+
+MT正演涉及大量复数运算，需要注意：
+
+\begin{itemize}
+    \item 使用高精度浮点数（double精度，64位）进行所有计算
+    \item 避免除零和数值溢出，检查分母是否为零
+    \item 检查NaN（Not a Number）和Inf（无穷大）值
+    \item 对双曲函数计算要注意数值稳定性（避免$e^x$溢出）
+\end{itemize}
+
+\textbf{数值稳定性技巧}：
+\begin{itemize}
+    \item 在计算$\tanh(z)$时，如果$|z|$很大，直接使用$\tanh(z) \approx \text{sign}(z)$
+    \item 使用对数空间进行计算，避免数值溢出
+\end{itemize}
+
+\subsubsection{矩阵求解}
+
+正规方程$(J^T J + \lambda L^T L) \delta\mathbf{m} = J^T \mathbf{r}$是对称正定线性方程组，可使用：
+
+\begin{itemize}
+    \item \textbf{Cholesky分解}：适用于对称正定矩阵，效率高，数值稳定
+    \item \textbf{LU分解}：更通用但效率略低
+    \item \textbf{QR分解}：数值稳定性最好，但计算量大
+\end{itemize}
+
+推荐使用Cholesky分解，因为系数矩阵是对称正定的。
+
+\subsection{计算效率优化}
+
+\subsubsection{矩阵运算优化}
+
+使用高性能数学库（如Intel MKL、OpenBLAS）进行矩阵运算：
+
+\begin{itemize}
+    \item \texttt{cblas\_dsyrk}：计算$J^T J$（对称矩阵的秩$k$更新），利用对称性加速
+    \item \texttt{cblas\_dgemv}：计算$J^T \mathbf{r}$（矩阵-向量乘法）
+    \item \texttt{LAPACKE\_dposv}：求解对称正定线性方程组（Cholesky分解）
+    \item \texttt{cblas\_dgemm}：通用矩阵乘法（备选方案）
+\end{itemize}
+
+这些库通常针对现代CPU进行了优化，包括SIMD（单指令多数据）指令集优化。
+
+\subsubsection{并行计算}
+
+MT正反演计算具有天然的并行性：
+
+\begin{itemize}
+    \item \textbf{频率循环并行化}：不同频率的正演计算相互独立，可并行执行。对于$n_{freq}$个频率，可使用$n_{freq}$个线程并行计算。
+    \item \textbf{Jacobian矩阵并行化}：每个参数的扰动计算独立，可并行计算各列。对于$M$个参数，可使用$M$个线程并行计算。
+    \item \textbf{矩阵运算并行化}：BLAS库内部支持多线程并行，自动利用多核CPU。
+    \item 建议使用OpenMP或Intel TBB实现多线程并行。
+\end{itemize}
+
+\textbf{并行策略}：优先并行化频率循环（粗粒度并行），因为每个频率的正演计算时间较长，并行效率高。
+
+
+\end{document}

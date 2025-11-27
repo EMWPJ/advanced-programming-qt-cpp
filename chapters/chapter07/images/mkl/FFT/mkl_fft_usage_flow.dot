@@ -1,0 +1,46 @@
+digraph MKLFFTUsageFlow {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="14,12", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.0;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    Start [label="使用MKL FFT", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=3];
+
+    ChooseAPI [label="选择FFT API", fillcolor="#fff9c4", color="#f57f17", shape=diamond, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    DFTI [label="DFTI接口\nmkl_dfti.h\n现代C++接口\n推荐使用", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+    FFTW3X [label="FFTW3X接口\nmkl_fftw3x.h\nFFTW兼容接口\n迁移方便", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+
+    CreateDescriptor [label="创建描述符\nDftiCreateDescriptor\n设置变换类型\n设置数据精度\n设置维度", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+
+    CommitDescriptor [label="提交描述符\nDftiCommitDescriptor\n分配工作空间\n优化计算计划", fillcolor="#bbdefb", color="#1976d2", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+
+    ComputeFFT [label="执行FFT\nDftiComputeForward\nDftiComputeBackward\n前向/反向变换", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+
+    FreeDescriptor [label="释放描述符\nDftiFreeDescriptor\n释放工作空间", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=14, penwidth=2.5];
+
+    End [label="完成", fillcolor="#a5d6a7", color="#388e3c", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=3];
+
+    Start -> ChooseAPI [penwidth=3, arrowsize=1.2];
+    ChooseAPI -> DFTI [label="DFTI接口", penwidth=2.5, arrowsize=1.1];
+    ChooseAPI -> FFTW3X [label="FFTW兼容", penwidth=2.5, arrowsize=1.1];
+
+    DFTI -> CreateDescriptor [penwidth=3, arrowsize=1.2];
+    FFTW3X -> CreateDescriptor [penwidth=3, arrowsize=1.2, style="dashed"];
+
+    CreateDescriptor -> CommitDescriptor [penwidth=3, arrowsize=1.2];
+    CommitDescriptor -> ComputeFFT [penwidth=3, arrowsize=1.2];
+    ComputeFFT -> FreeDescriptor [penwidth=3, arrowsize=1.2];
+    FreeDescriptor -> End [penwidth=3, arrowsize=1.2, color="#388e3c"];
+
+    ComputeFFT -> ComputeFFT [label="多次变换\n重用描述符", penwidth=2, arrowsize=1.0, style="dashed", color="#666666"];
+
+    labelloc="t";
+    label="MKL FFT使用流程图\nMKL FFT Usage Flow";
+}

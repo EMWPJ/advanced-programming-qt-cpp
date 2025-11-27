@@ -18,6 +18,7 @@
 ### 2. 克隆到本地
 
 ```bash
+# 请将 YOUR_USERNAME 替换为实际的GitHub用户名
 git clone https://github.com/YOUR_USERNAME/advanced-programming-qt-cpp.git
 cd advanced-programming-qt-cpp
 ```

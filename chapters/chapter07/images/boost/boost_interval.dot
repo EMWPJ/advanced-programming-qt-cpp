@@ -1,0 +1,35 @@
+digraph BoostInterval {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#fff3e0"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fff3e0";
+
+    IntervalModule [label="Boost.Interval模块\n区间算术", fillcolor="#ffe0b2", color="#f57c00", shape=box, style="bold", fontsize=14];
+
+    IntervalTypes [label="区间类型\ninterval<T>\n闭区间 [a,b]\n开区间 (a,b)\n半开区间", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    BasicOps [label="基本运算\n区间加减乘除\n区间幂运算\n区间比较\n包含关系", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Functions [label="区间函数\n三角函数\n指数对数\n平方根\n区间扩展函数", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Rounding [label="舍入控制\n向上舍入\n向下舍入\n舍入模式\n精度控制", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Validation [label="区间验证\n数值范围检查\n溢出检测\n不确定值处理\n错误边界", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    Applications [label="应用场景\n数值稳定性分析\n误差传播分析\n全局优化\n约束满足问题", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    IntervalModule -> IntervalTypes [label="提供", color="#f57c00", style="dashed"];
+    IntervalModule -> BasicOps [label="提供", color="#f57c00", style="dashed"];
+    IntervalModule -> Functions [label="提供", color="#f57c00", style="dashed"];
+    IntervalModule -> Rounding [label="提供", color="#f57c00", style="dashed"];
+    IntervalModule -> Validation [label="提供", color="#f57c00", style="dashed"];
+    IntervalModule -> Applications [label="支持", color="#f57c00", style="dashed"];
+
+    IntervalTypes -> BasicOps [label="操作", color="#2e7d32", style="dotted"];
+    BasicOps -> Validation [label="验证", color="#2e7d32", style="dotted"];
+
+    labelloc="t";
+    label="Boost.Interval模块详细结构图";
+}

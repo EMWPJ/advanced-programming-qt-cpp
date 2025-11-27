@@ -1,0 +1,40 @@
+digraph EigenSparse {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    SparseModule [label="Sparse模块\n稀疏矩阵支持", fillcolor="#90caf9", color="#1976d2", shape=box, style="bold", fontsize=14];
+
+    CSR [label="CSR格式\n压缩稀疏行格式\n(Compressed Sparse Row)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+    CSC [label="CSC格式\n压缩稀疏列格式\n(Compressed Sparse Column)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+    COO [label="COO格式\n坐标格式\n(Coordinate Format)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+    BlockSparse [label="Block Sparse\n块稀疏格式", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    SparseOps [label="稀疏矩阵运算\n矩阵乘法\n矩阵加法\n矩阵转置", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    SparseLU [label="稀疏LU分解\nSparseLU\n一般稀疏矩阵", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+    SparseQR [label="稀疏QR分解\nSparseQR\n超定稀疏系统", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+    SparseCholesky [label="稀疏Cholesky分解\nSimplicialCholesky\n对称正定稀疏矩阵", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    Conversion [label="格式转换\ntoDense()\nsparseView()\n与稠密矩阵互转", fillcolor="#e1bee7", color="#7b1fa2", shape=ellipse];
+
+    SparseModule -> CSR [label="支持", color="#1976d2", style="dashed"];
+    SparseModule -> CSC [label="支持", color="#1976d2", style="dashed"];
+    SparseModule -> COO [label="支持", color="#1976d2", style="dashed"];
+    SparseModule -> BlockSparse [label="支持", color="#1976d2", style="dashed"];
+
+    SparseModule -> SparseOps [label="提供", color="#1976d2", style="dashed"];
+    SparseModule -> SparseLU [label="提供", color="#1976d2", style="dashed"];
+    SparseModule -> SparseQR [label="提供", color="#1976d2", style="dashed"];
+    SparseModule -> SparseCholesky [label="提供", color="#1976d2", style="dashed"];
+    SparseModule -> Conversion [label="提供", color="#1976d2", style="dashed"];
+
+    CSR -> SparseOps [label="用于", color="#2e7d32", style="dotted"];
+    CSC -> SparseOps [label="用于", color="#2e7d32", style="dotted"];
+
+    labelloc="t";
+    label="Eigen Sparse模块详细结构图";
+}

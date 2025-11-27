@@ -1,0 +1,53 @@
+digraph MKLVML {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    VMLModule [label="VML模块\n向量数学库", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    ArithmeticFuncs [label="算术函数\nAdd, Sub, Mul, Div\n元素级运算\n向量加减乘除", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PowerRootFuncs [label="幂和根函数\nPow, Sqrt, Cbrt\nInv, InvSqrt\n高次根函数", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ExpLogFuncs [label="指数和对数函数\nExp, Ln, Log10, Log2\nExp2, Exp10\nLog1p, Expm1", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    TrigFuncs [label="三角函数\nSin, Cos, Tan\nAsin, Acos, Atan\nAtan2, SinCos", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    HyperbolicFuncs [label="双曲函数\nSinh, Cosh, Tanh\nAsinh, Acosh, Atanh", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SpecialFuncs [label="特殊函数\nErf, Erfc\nGamma, LGamma\nTGamma", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    RoundingFuncs [label="舍入函数\nFloor, Ceil\nRound, Trunc\nNearbyInt", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    MiscFuncs [label="杂项函数\nAbs, Fabs\nFmod, Remainder\nCopySign, NextAfter", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    AccuracyModes [label="精度模式\n高精度模式 (HA)\n低精度模式 (LA)\n增强精度模式 (EP)\n性能vs精度权衡", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SIMDOptimization [label="SIMD优化\n自动向量化\nSSE/AVX指令集\n多线程并行\n批量处理优化", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    VMLModule -> ArithmeticFuncs [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VMLModule -> PowerRootFuncs [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VMLModule -> ExpLogFuncs [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VMLModule -> TrigFuncs [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VMLModule -> HyperbolicFuncs [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VMLModule -> SpecialFuncs [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VMLModule -> RoundingFuncs [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VMLModule -> MiscFuncs [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VMLModule -> AccuracyModes [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed"];
+    VMLModule -> SIMDOptimization [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed"];
+
+    ArithmeticFuncs -> SIMDOptimization [penwidth=2, label="应用", color="#666666", style="dotted"];
+    PowerRootFuncs -> SIMDOptimization [penwidth=2, label="应用", color="#666666", style="dotted"];
+    ExpLogFuncs -> SIMDOptimization [penwidth=2, label="应用", color="#666666", style="dotted"];
+    TrigFuncs -> SIMDOptimization [penwidth=2, label="应用", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL VML模块详细结构图";
+}

@@ -1,0 +1,69 @@
+digraph MKLOverview {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    MKL [label="Intel OneMKL库", fillcolor="#ba68c8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    BLAS [label="BLAS\n基础线性代数子程序\n(Level 1/2/3)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    LAPACK [label="LAPACK\n线性代数包\n(矩阵分解、特征值)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    FFT [label="FFT\n快速傅里叶变换\n(信号处理)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DFT [label="DFT\n离散傅里叶变换\n(DFT接口)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    FFTW3X [label="FFTW3X\nFFTW接口兼容\n(FFTW API)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Pardiso [label="Pardiso\n并行直接稀疏求解器\n(大规模稀疏系统)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    VML [label="VML\n向量数学库\n(向量数学函数)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    VSL [label="VSL\n向量统计库\n(随机数生成)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    VSLEssl [label="VSL_ESSL\nESSL兼容接口\n(IBM ESSL兼容)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SparseBLAS [label="稀疏BLAS\n稀疏矩阵基本运算\n(稀疏矩阵乘法等)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SparseDirectSolvers [label="稀疏直接求解器\nPardiso等\n(直接方法)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SparseEigSolvers [label="稀疏特征值求解器\n大规模特征值问题\n(迭代方法)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SparseIterSolvers [label="稀疏迭代求解器\nCG/BiCG/GMRES\n(迭代方法)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Statistics [label="统计函数\n统计量计算\n数据汇总", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DataFitting [label="数据拟合\n曲线拟合\n插值算法", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    NonlinearSolvers [label="非线性求解器\n非线性方程组\n(Newton法等)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    PDEPoisson [label="PDE Poisson\n泊松方程求解器\n(偏微分方程)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    PDETT [label="PDE TT\n时间相关PDE求解器\n(时间演化)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Trans [label="Trans\n变换和转置\n(矩阵变换)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Service [label="Service\n服务函数\n(工具函数)", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    MKL -> BLAS [penwidth=3.5, arrowsize=1.3];
+    MKL -> LAPACK [penwidth=3.5, arrowsize=1.3];
+    MKL -> FFT [penwidth=3.5, arrowsize=1.3];
+    MKL -> DFT [penwidth=3.5, arrowsize=1.3];
+    MKL -> FFTW3X [penwidth=3.5, arrowsize=1.3];
+    MKL -> Pardiso [penwidth=3.5, arrowsize=1.3];
+    MKL -> VML [penwidth=3.5, arrowsize=1.3];
+    MKL -> VSL [penwidth=3.5, arrowsize=1.3];
+    MKL -> VSLEssl [penwidth=3.5, arrowsize=1.3];
+    MKL -> SparseBLAS [penwidth=3.5, arrowsize=1.3];
+    MKL -> SparseDirectSolvers [penwidth=3.5, arrowsize=1.3];
+    MKL -> SparseEigSolvers [penwidth=3.5, arrowsize=1.3];
+    MKL -> SparseIterSolvers [penwidth=3.5, arrowsize=1.3];
+    MKL -> Statistics [penwidth=3.5, arrowsize=1.3];
+    MKL -> DataFitting [penwidth=3.5, arrowsize=1.3];
+    MKL -> NonlinearSolvers [penwidth=3.5, arrowsize=1.3];
+    MKL -> PDEPoisson [penwidth=3.5, arrowsize=1.3];
+    MKL -> PDETT [penwidth=3.5, arrowsize=1.3];
+    MKL -> Trans [penwidth=3.5, arrowsize=1.3];
+    MKL -> Service [penwidth=3.5, arrowsize=1.3];
+
+    LAPACK -> BLAS [label="依赖", color="#666666", style="dotted", penwidth=2];
+    Pardiso -> BLAS [label="依赖", color="#666666", style="dotted", penwidth=2];
+    SparseBLAS -> BLAS [label="扩展", color="#666666", style="dotted", penwidth=2];
+    SparseDirectSolvers -> SparseBLAS [label="依赖", color="#666666", style="dotted", penwidth=2];
+    SparseEigSolvers -> SparseBLAS [label="依赖", color="#666666", style="dotted", penwidth=2];
+    SparseIterSolvers -> SparseBLAS [label="依赖", color="#666666", style="dotted", penwidth=2];
+    DFT -> FFT [label="相关", color="#666666", style="dotted", penwidth=2];
+    FFTW3X -> FFT [label="接口", color="#666666", style="dotted", penwidth=2];
+    Pardiso -> SparseDirectSolvers [label="属于", color="#666666", style="dotted", penwidth=2];
+
+    labelloc="t";
+    label="Intel OneMKL库总体结构图";
+}

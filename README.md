@@ -5,7 +5,16 @@
 [![Qt](https://img.shields.io/badge/Qt-6.0%2B-green.svg)](https://www.qt.io/)
 
 本项目包含长江大学地球物理与石油资源学院《高等程序设计 - Qt/C++》课程的完整教学资料，包括课件、代码示例和实验指导。
-本项目部分开发工作借助了AI工具Cursor，特此说明。
+
+> **注意**: 本项目部分开发工作借助了AI工具Cursor，特此说明。
+
+## 📋 项目状态
+
+
+![GitHub last commit](https://img.shields.io/github/last-commit/EMWPJ/advanced-programming-qt-cpp)
+![GitHub repo size](https://img.shields.io/github/repo-size/EMWPJ/advanced-programming-qt-cpp)
+![GitHub issues](https://img.shields.io/github/issues/EMWPJ/advanced-programming-qt-cpp)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/EMWPJ/advanced-programming-qt-cpp)
 
 ## 📚 课程简介
 
@@ -60,6 +69,7 @@
 - 网络编程
 - 多线程编程
 - 高级应用开发
+
 
 ## 🏗️ 项目结构
 
@@ -130,8 +140,12 @@ brew install mactex
 
 ### 克隆项目
 ```bash
-git clone https://github.com/your-username/advanced-programming-qt-cpp.git
+# 请将 EMWPJ 替换为实际的GitHub用户名
+git clone https://github.com/EMWPJ/advanced-programming-qt-cpp.git
 cd advanced-programming-qt-cpp
+
+# 或者直接克隆主仓库（如果已创建）
+# git clone https://github.com/EMWPJ/advanced-programming-qt-cpp.git
 ```
 
 ### 编译第一个示例
@@ -202,7 +216,9 @@ cmake --build . --config Release
 
 欢迎提交Issue和Pull Request来改进本课程资料！
 
-### 贡献流程
+详细的贡献指南请查看 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+### 快速开始
 1. Fork 本仓库
 2. 创建特性分支: `git checkout -b feature/new-feature`
 3. 提交更改: `git commit -m 'Add new feature'`

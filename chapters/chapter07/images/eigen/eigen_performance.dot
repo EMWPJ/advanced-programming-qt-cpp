@@ -1,0 +1,26 @@
+digraph EigenPerformance {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    Performance [label="性能优化", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    ExprTemplate [label="表达式模板\n延迟求值\n自动优化", fillcolor="#bbdefb", color="#1565c0", shape=ellipse];
+
+    Noalias [label="noalias()\n避免临时对象", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Eval [label="eval()\n强制求值", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    SIMD [label="SIMD向量化\nSSE/AVX\n数倍加速", fillcolor="#e1bee7", color="#7b1fa2", shape=ellipse];
+
+    Performance -> ExprTemplate [label="", color="#1565c0", style="bold"];
+    Performance -> Noalias [label="", color="#1565c0", style="bold"];
+    Performance -> Eval [label="", color="#1565c0", style="bold"];
+    Performance -> SIMD [label="", color="#1565c0", style="bold"];
+
+    labelloc="t";
+    label="表达式模板与性能优化";
+}

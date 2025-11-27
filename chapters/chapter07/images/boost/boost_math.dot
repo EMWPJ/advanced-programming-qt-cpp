@@ -1,0 +1,32 @@
+digraph BoostMath {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#fff3e0"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fff3e0";
+
+    MathModule [label="Boost.Math模块\n数学函数库", fillcolor="#ffcc80", color="#e65100", shape=box, style="bold", fontsize=14];
+
+    SpecialFuncs [label="特殊函数\n贝塞尔函数\n椭圆积分\n伽马函数\nBeta函数\n误差函数", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    NumericalInteg [label="数值积分\n梯形法则\n辛普森法则\n高斯-勒让德积分\n自适应积分", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    RootFinding [label="根查找\n二分法\n牛顿法\n割线法\n布伦特法", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Optimization [label="优化算法\n最小化\n最大化\n约束优化", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Distributions [label="概率分布\n连续分布\n离散分布\n统计函数", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Constants [label="数学常数\nπ, e, 黄金比例\n物理常数\n单位转换", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    MathModule -> SpecialFuncs [label="提供", color="#e65100", style="dashed"];
+    MathModule -> NumericalInteg [label="提供", color="#e65100", style="dashed"];
+    MathModule -> RootFinding [label="提供", color="#e65100", style="dashed"];
+    MathModule -> Optimization [label="提供", color="#e65100", style="dashed"];
+    MathModule -> Distributions [label="提供", color="#e65100", style="dashed"];
+    MathModule -> Constants [label="提供", color="#e65100", style="dashed"];
+
+    labelloc="t";
+    label="Boost.Math模块详细结构图";
+}

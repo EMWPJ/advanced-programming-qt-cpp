@@ -176,6 +176,27 @@
     escapeinside=||,           % 可在代码中使用 |LaTeX| 插入 LaTeX 命令
 }
 
+% CMake代码高亮设置
+\setminted[cmake]{
+    fontsize=\tiny,
+    fontfamily=tt,
+    linenos=true,
+    frame=lines,
+    framesep=3mm,
+    rulecolor=\color{green!20},
+    bgcolor=green!5,
+    baselinestretch=1.2,
+    breaklines=true,
+    breakautoindent=true,
+    tabsize=4,
+    xleftmargin=5mm,
+    xrightmargin=5mm,
+    numbersep=8pt,
+    obeytabs=true,
+    samepage=false,
+    escapeinside=||,
+}
+
 % 设置标题页颜色，与frame标题保持一致
 \setbeamercolor{title}{bg=frametitlebg, fg=ytublue!80!black}
 \setbeamercolor{subtitle}{bg=frametitlebg, fg=ytublue!70!black}

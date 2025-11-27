@@ -1,0 +1,309 @@
+digraph MKLSparseBLAS {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    SparseBLASModule [label="稀疏BLAS模块\nSparse BLAS Module", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    // ========== Level 1: 稀疏向量操作 ==========
+    Level1Group [label="Level 1: 稀疏向量操作\nSparse Vector Operations", fillcolor="#bbdefb", color="#1976d2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Axpyi [label="?axpyi\n稀疏向量缩放相加\ny[indx[i]] = y[indx[i]] + α*x[i]", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Doti [label="?doti\n稀疏向量点积\n点积运算", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Dotci [label="?dotci\n共轭点积\n复数共轭点积", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Dotui [label="?dotui\n无共轭点积\n复数无共轭点积", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Gthr [label="?gthr\n收集稀疏向量\n从稠密向量提取稀疏向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Gthrz [label="?gthrz\n收集并归零\n提取后归零原向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Roti [label="?roti\nGivens旋转\n稀疏向量旋转", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Sctr [label="?sctr\n分散稀疏向量\n从稀疏向量填充稠密向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // ========== Level 2/3: 传统接口 ==========
+    Level2_3Group [label="Level 2/3: 传统接口\nLegacy Interface", fillcolor="#bbdefb", color="#1976d2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 矩阵-向量乘法 (GEMV)
+    CSRGemv [label="mkl_?csrgemv\nCSR矩阵-向量乘法\n通用矩阵乘法", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRGemv [label="mkl_?bsrgemv\nBSR矩阵-向量乘法\n块压缩稀疏行", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOGemv [label="mkl_?coogemv\nCOO矩阵-向量乘法\n坐标格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIAGemv [label="mkl_?diagemv\nDIA矩阵-向量乘法\n对角线格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 对称矩阵-向量乘法 (SYMV)
+    CSRSymv [label="mkl_?csrsymv\nCSR对称矩阵-向量\n对称矩阵乘法", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRSymv [label="mkl_?bsrsymv\nBSR对称矩阵-向量\n块对称矩阵", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOSymv [label="mkl_?coosymv\nCOO对称矩阵-向量\n对称坐标格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIASymv [label="mkl_?diasymv\nDIA对称矩阵-向量\n对称对角线格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 三角矩阵求解 (TRSV)
+    CSRTrsv [label="mkl_?csrtrsv\nCSR三角矩阵求解\n上/下三角求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRTrsv [label="mkl_?bsrtrsv\nBSR三角矩阵求解\n块三角求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOTrsv [label="mkl_?cootrsv\nCOO三角矩阵求解\n坐标格式三角求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIATrsv [label="mkl_?diatrsv\nDIA三角矩阵求解\n对角线格式三角求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 矩阵-矩阵乘法 (GEMM)
+    CSRMM [label="mkl_?csrmm\nCSR矩阵-矩阵乘法\n稀疏×稠密矩阵", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRMM [label="mkl_?bsrmm\nBSR矩阵-矩阵乘法\n块矩阵乘法", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSCMM [label="mkl_?cscmm\nCSC矩阵-矩阵乘法\n列压缩格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOMM [label="mkl_?coomm\nCOO矩阵-矩阵乘法\n坐标格式矩阵乘法", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIAMM [label="mkl_?diamm\nDIA矩阵-矩阵乘法\n对角线格式矩阵乘法", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SKYMM [label="mkl_?skymm\nSKY矩阵-矩阵乘法\n天空线格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 三角矩阵求解系统 (TRSM)
+    CSRSM [label="mkl_?csrsm\nCSR三角矩阵系统求解\n多右端项求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSCSM [label="mkl_?cscsm\nCSC三角矩阵系统求解\n列格式系统求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOSM [label="mkl_?coosm\nCOO三角矩阵系统求解\n坐标格式系统求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRSM [label="mkl_?bsrsm\nBSR三角矩阵系统求解\n块系统求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIASM [label="mkl_?diasm\nDIA三角矩阵系统求解\n对角线格式系统求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SKYSM [label="mkl_?skysm\nSKY三角矩阵系统求解\n天空线格式系统求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // ========== Inspector-Executor 接口 ==========
+    InspectorExecutorGroup [label="Inspector-Executor接口\nInspector-Executor Interface", fillcolor="#bbdefb", color="#1976d2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 矩阵管理
+    MatrixCreate [label="矩阵创建\nmkl_sparse_?_create_csr/csc/coo/bsr\n创建稀疏矩阵句柄", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixDestroy [label="矩阵销毁\nmkl_sparse_destroy\n释放矩阵资源", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixExport [label="矩阵导出\nmkl_sparse_?_export_csr/csc/bsr\n导出矩阵数据", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixCopy [label="矩阵复制\nmkl_sparse_copy\n复制稀疏矩阵", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixSetValue [label="设置值\nmkl_sparse_?_set_value\n设置矩阵元素值", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixUpdateValues [label="更新值\nmkl_sparse_?_update_values\n更新矩阵元素", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixOrder [label="矩阵排序\nmkl_sparse_order\n对矩阵进行排序", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 格式转换
+    FormatConvert [label="格式转换\nmkl_sparse_convert_csr/bsr\n格式间转换", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 优化提示
+    HintMV [label="MV提示\nmkl_sparse_set_mv_hint\n矩阵-向量乘法提示", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintSV [label="SV提示\nmkl_sparse_set_sv_hint\n系统求解提示", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintMM [label="MM提示\nmkl_sparse_set_mm_hint\n矩阵-矩阵乘法提示", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintSM [label="SM提示\nmkl_sparse_set_sm_hint\n系统矩阵乘法提示", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintDotMV [label="DotMV提示\nmkl_sparse_set_dotmv_hint\n点积矩阵-向量提示", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintSymGS [label="SymGS提示\nmkl_sparse_set_symgs_hint\n对称Gauss-Seidel提示", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintMemory [label="内存提示\nmkl_sparse_set_memory_hint\n内存使用提示", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintLUSmoother [label="LU平滑提示\nmkl_sparse_set_lu_smoother_hint\nLU平滑器提示", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Optimize [label="优化\nmkl_sparse_optimize\n执行优化", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 执行操作
+    ExecMV [label="矩阵-向量\nmkl_sparse_?_mv\nInspector-executor SpMV", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecTRSV [label="三角求解\nmkl_sparse_?_trsv\nInspector-executor TRSV", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecMM [label="矩阵-矩阵\nmkl_sparse_?_mm\nInspector-executor SpMM", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecTRSM [label="三角系统\nmkl_sparse_?_trsm\nInspector-executor TRSM", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecAdd [label="矩阵加法\nmkl_sparse_?_add\nInspector-executor 加法", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSpMM [label="稀疏×稀疏\nmkl_sparse_spmm\n稀疏矩阵乘法", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSp2M [label="稀疏×2矩阵\nmkl_sparse_sp2m\n两个稀疏矩阵乘积", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSYPR [label="对称乘积\nmkl_sparse_sypr\n对称矩阵乘积", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSYRGS [label="对称GS\nmkl_sparse_?_symgs\n对称Gauss-Seidel", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSYRK [label="对称秩K\nmkl_sparse_syrk\n对称秩K更新", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecDotMV [label="点积MV\nmkl_sparse_?_dotmv\n点积矩阵-向量", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecLUSmoother [label="LU平滑\nmkl_sparse_?_lu_smoother\nLU平滑器", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // ========== 格式转换函数 ==========
+    FormatConvertGroup [label="格式转换函数\nFormat Conversion", fillcolor="#bbdefb", color="#1976d2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    DnsCSR [label="mkl_?dnscsr\n稠密→CSR\n稠密矩阵转CSR", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRCOO [label="mkl_?csrcoo\nCSR↔COO\nCSR与COO互转", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRBSR [label="mkl_?csrbsr\nCSR↔BSR\nCSR与BSR互转", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRCSC [label="mkl_?csrcsc\nCSR↔CSC\nCSR与CSC互转", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRDIA [label="mkl_?csrdia\nCSR↔DIA\nCSR与DIA互转", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRSKY [label="mkl_?csrsky\nCSR↔SKY\nCSR与SKY互转", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRAdd [label="mkl_?csradd\nCSR矩阵加法\nCSR格式矩阵相加", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRMultCSR [label="mkl_?csrmultcsr\nCSR×CSR→CSR\n稀疏矩阵乘法", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRMultD [label="mkl_?csrmultd\nCSR×CSR→稠密\n稀疏×稀疏→稠密", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // ========== 稀疏QR ==========
+    SparseQRGroup [label="稀疏QR\nSparse QR", fillcolor="#bbdefb", color="#1976d2", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    QRCreate [label="QR创建\nmkl_sparse_?_qr\n创建QR分解句柄", fillcolor="#e1bee7", color="#6a1b9a", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    QRReorder [label="QR重排序\nmkl_sparse_qr_reorder\nQR重排序", fillcolor="#e1bee7", color="#6a1b9a", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    QRFactorize [label="QR分解\nmkl_sparse_?_qr_factorize\n执行QR分解", fillcolor="#e1bee7", color="#6a1b9a", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    QRSolve [label="QR求解\nmkl_sparse_?_qr_solve\nQR系统求解", fillcolor="#e1bee7", color="#6a1b9a", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    QRQMult [label="Q乘法\nmkl_sparse_?_qr_qmult\nQ矩阵乘法", fillcolor="#e1bee7", color="#6a1b9a", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    QRRSolve [label="R求解\nmkl_sparse_?_qr_rsolve\nR系统求解", fillcolor="#e1bee7", color="#6a1b9a", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    QRHint [label="QR提示\nmkl_sparse_set_qr_hint\nQR分解提示", fillcolor="#e1bee7", color="#6a1b9a", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // ========== 存储格式 ==========
+    Formats [label="存储格式\nCSR/CSC/COO/BSR/DIA/SKY\n多种稀疏格式", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixDescr [label="矩阵描述符\nmatrix_descr\n矩阵类型/填充模式/对角类型", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    OperationTypes [label="运算类型\nNON_TRANSPOSE/TRANSPOSE\nCONJUGATE_TRANSPOSE", fillcolor="#e1bee7", color="#6a1b9a", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Optimization [label="性能优化\n多线程/SIMD/内存优化\n缓存友好/线程控制", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // ========== 主模块连接 ==========
+    SparseBLASModule -> Level1Group [penwidth=3, arrowsize=1.2, label="包含", color="#6a1b9a", style="dashed"];
+    SparseBLASModule -> Level2_3Group [penwidth=3, arrowsize=1.2, label="包含", color="#6a1b9a", style="dashed"];
+    SparseBLASModule -> InspectorExecutorGroup [penwidth=3, arrowsize=1.2, label="包含", color="#6a1b9a", style="dashed"];
+    SparseBLASModule -> FormatConvertGroup [penwidth=3, arrowsize=1.2, label="包含", color="#6a1b9a", style="dashed"];
+    SparseBLASModule -> SparseQRGroup [penwidth=3, arrowsize=1.2, label="包含", color="#6a1b9a", style="dashed"];
+    SparseBLASModule -> Formats [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+    SparseBLASModule -> MatrixDescr [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseBLASModule -> OperationTypes [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+    SparseBLASModule -> Optimization [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+
+    // ========== Level 1 连接 ==========
+    Level1Group -> Axpyi [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level1Group -> Doti [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level1Group -> Dotci [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level1Group -> Dotui [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level1Group -> Gthr [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level1Group -> Gthrz [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level1Group -> Roti [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level1Group -> Sctr [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+
+    // ========== Level 2/3 连接 ==========
+    Level2_3Group -> CSRGemv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> BSRGemv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> COOGemv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> DIAGemv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> CSRSymv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> BSRSymv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> COOSymv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> DIASymv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> CSRTrsv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> BSRTrsv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> COOTrsv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> DIATrsv [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> CSRMM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> BSRMM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> CSCMM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> COOMM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> DIAMM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> SKYMM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> CSRSM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> CSCSM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> COOSM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> BSRSM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> DIASM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    Level2_3Group -> SKYSM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+
+    // ========== Inspector-Executor 连接 ==========
+    InspectorExecutorGroup -> MatrixCreate [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> MatrixDestroy [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> MatrixExport [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> MatrixCopy [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> MatrixSetValue [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> MatrixUpdateValues [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> MatrixOrder [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> FormatConvert [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> HintMV [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> HintSV [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> HintMM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> HintSM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> HintDotMV [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> HintSymGS [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> HintMemory [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> HintLUSmoother [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> Optimize [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecMV [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecTRSV [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecMM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecTRSM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecAdd [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecSpMM [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecSp2M [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecSYPR [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecSYRGS [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecSYRK [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecDotMV [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    InspectorExecutorGroup -> ExecLUSmoother [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+
+    // ========== 格式转换连接 ==========
+    FormatConvertGroup -> DnsCSR [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    FormatConvertGroup -> CSRCOO [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    FormatConvertGroup -> CSRBSR [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    FormatConvertGroup -> CSRCSC [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    FormatConvertGroup -> CSRDIA [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    FormatConvertGroup -> CSRSKY [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    FormatConvertGroup -> CSRAdd [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    FormatConvertGroup -> CSRMultCSR [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    FormatConvertGroup -> CSRMultD [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+
+    // ========== 稀疏QR连接 ==========
+    SparseQRGroup -> QRHint [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    SparseQRGroup -> QRCreate [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    SparseQRGroup -> QRReorder [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    SparseQRGroup -> QRFactorize [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    SparseQRGroup -> QRSolve [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    SparseQRGroup -> QRQMult [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+    SparseQRGroup -> QRRSolve [penwidth=3, arrowsize=1.2, label="提供", color="#1976d2", style="solid"];
+
+    // ========== 格式与操作关系 ==========
+    Formats -> CSRGemv [penwidth=2, label="支持", color="#666666", style="dotted"];
+    Formats -> BSRGemv [penwidth=2, label="支持", color="#666666", style="dotted"];
+    Formats -> COOGemv [penwidth=2, label="支持", color="#666666", style="dotted"];
+    Formats -> DIAGemv [penwidth=2, label="支持", color="#666666", style="dotted"];
+    Formats -> MatrixCreate [penwidth=2, label="使用", color="#666666", style="dotted"];
+    Formats -> ExecMV [penwidth=2, label="用于", color="#666666", style="dotted"];
+    Formats -> ExecMM [penwidth=2, label="用于", color="#666666", style="dotted"];
+
+    // ========== 描述符与操作关系 ==========
+    MatrixDescr -> CSRSymv [penwidth=2, label="描述", color="#666666", style="dotted"];
+    MatrixDescr -> ExecMV [penwidth=2, label="描述", color="#666666", style="dotted"];
+    MatrixDescr -> ExecMM [penwidth=2, label="描述", color="#666666", style="dotted"];
+    MatrixDescr -> ExecTRSV [penwidth=2, label="描述", color="#666666", style="dotted"];
+    MatrixDescr -> ExecTRSM [penwidth=2, label="描述", color="#666666", style="dotted"];
+
+    // ========== 运算类型关系 ==========
+    OperationTypes -> CSRGemv [penwidth=2, label="控制", color="#666666", style="dotted"];
+    OperationTypes -> ExecMV [penwidth=2, label="控制", color="#666666", style="dotted"];
+    OperationTypes -> ExecMM [penwidth=2, label="控制", color="#666666", style="dotted"];
+
+    // ========== 优化提示流程 ==========
+    HintMV -> Optimize [penwidth=3, arrowsize=1.2, label="→", color="#d84315", style="dashed"];
+    HintSV -> Optimize [penwidth=3, arrowsize=1.2, label="→", color="#d84315", style="dashed"];
+    HintMM -> Optimize [penwidth=3, arrowsize=1.2, label="→", color="#d84315", style="dashed"];
+    HintSM -> Optimize [penwidth=3, arrowsize=1.2, label="→", color="#d84315", style="dashed"];
+    HintDotMV -> Optimize [penwidth=3, arrowsize=1.2, label="→", color="#d84315", style="dashed"];
+    HintSymGS -> Optimize [penwidth=3, arrowsize=1.2, label="→", color="#d84315", style="dashed"];
+    HintMemory -> Optimize [penwidth=3, arrowsize=1.2, label="→", color="#d84315", style="dashed"];
+    HintLUSmoother -> Optimize [penwidth=3, arrowsize=1.2, label="→", color="#d84315", style="dashed"];
+    Optimize -> ExecMV [penwidth=2, label="优化", color="#666666", style="dotted"];
+    Optimize -> ExecMM [penwidth=2, label="优化", color="#666666", style="dotted"];
+    Optimize -> ExecTRSV [penwidth=2, label="优化", color="#666666", style="dotted"];
+    Optimize -> ExecTRSM [penwidth=2, label="优化", color="#666666", style="dotted"];
+
+    // ========== 矩阵管理流程 ==========
+    MatrixCreate -> MatrixSetValue [penwidth=3, arrowsize=1.2, label="→", color="#2e7d32", style="dashed"];
+    MatrixSetValue -> MatrixUpdateValues [penwidth=3, arrowsize=1.2, label="→", color="#2e7d32", style="dashed"];
+    MatrixUpdateValues -> MatrixOrder [penwidth=3, arrowsize=1.2, label="→", color="#2e7d32", style="dashed"];
+    MatrixOrder -> FormatConvert [penwidth=3, arrowsize=1.2, label="→", color="#2e7d32", style="dashed"];
+    FormatConvert -> MatrixExport [penwidth=3, arrowsize=1.2, label="→", color="#2e7d32", style="dashed"];
+    MatrixCreate -> MatrixDestroy [penwidth=3, arrowsize=1.2, label="配对", color="#2e7d32", style="dashed"];
+
+    // ========== QR流程 ==========
+    QRHint -> QRCreate [penwidth=3, arrowsize=1.2, label="→", color="#6a1b9a", style="dashed"];
+    QRCreate -> QRReorder [penwidth=3, arrowsize=1.2, label="→", color="#6a1b9a", style="dashed"];
+    QRReorder -> QRFactorize [penwidth=3, arrowsize=1.2, label="→", color="#6a1b9a", style="dashed"];
+    QRFactorize -> QRSolve [penwidth=3, arrowsize=1.2, label="→", color="#6a1b9a", style="dashed"];
+    QRFactorize -> QRQMult [penwidth=3, arrowsize=1.2, label="→", color="#6a1b9a", style="dashed"];
+    QRFactorize -> QRRSolve [penwidth=3, arrowsize=1.2, label="→", color="#6a1b9a", style="dashed"];
+
+    // ========== 格式转换关系 ==========
+    DnsCSR -> Formats [penwidth=2, label="转换到", color="#666666", style="dotted"];
+    CSRCOO -> Formats [penwidth=2, label="转换", color="#666666", style="dotted"];
+    CSRBSR -> Formats [penwidth=2, label="转换", color="#666666", style="dotted"];
+    CSRCSC -> Formats [penwidth=2, label="转换", color="#666666", style="dotted"];
+    CSRDIA -> Formats [penwidth=2, label="转换", color="#666666", style="dotted"];
+    CSRSKY -> Formats [penwidth=2, label="转换", color="#666666", style="dotted"];
+
+    // ========== 性能优化关系 ==========
+    Optimization -> ExecMV [penwidth=2, label="优化", color="#666666", style="dotted"];
+    Optimization -> ExecMM [penwidth=2, label="优化", color="#666666", style="dotted"];
+    Optimization -> ExecTRSV [penwidth=2, label="优化", color="#666666", style="dotted"];
+    Optimization -> ExecTRSM [penwidth=2, label="优化", color="#666666", style="dotted"];
+    Optimization -> CSRGemv [penwidth=2, label="优化", color="#666666", style="dotted"];
+    Optimization -> CSRMM [penwidth=2, label="优化", color="#666666", style="dotted"];
+
+    // ========== 执行操作关系 ==========
+    MatrixCreate -> HintMV [penwidth=3, arrowsize=1.2, label="→", color="#f57f17", style="dashed"];
+    MatrixCreate -> HintMM [penwidth=3, arrowsize=1.2, label="→", color="#f57f17", style="dashed"];
+    HintMV -> ExecMV [penwidth=3, arrowsize=1.2, label="→", color="#f57f17", style="dashed"];
+    HintMM -> ExecMM [penwidth=3, arrowsize=1.2, label="→", color="#f57f17", style="dashed"];
+    HintSV -> ExecTRSV [penwidth=3, arrowsize=1.2, label="→", color="#f57f17", style="dashed"];
+    HintSM -> ExecTRSM [penwidth=3, arrowsize=1.2, label="→", color="#f57f17", style="dashed"];
+
+    labelloc="t";
+    label="MKL 稀疏BLAS模块完整结构图\nComplete Structure of MKL Sparse BLAS Module";
+}

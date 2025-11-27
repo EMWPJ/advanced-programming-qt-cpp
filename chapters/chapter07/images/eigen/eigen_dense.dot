@@ -1,0 +1,54 @@
+digraph EigenDense {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    DenseModule [label="Dense模块\n稠密矩阵和向量运算", fillcolor="#90caf9", color="#1976d2", shape=box, style="bold", fontsize=14];
+
+    CoreSub [label="Core子模块\nMatrix, Array, Vector\n基础数据类型", fillcolor="#bbdefb", color="#1565c0", shape=box];
+
+    MatrixTypes [label="矩阵类型\nMatrixXd (动态)\nMatrix3d (固定3x3)\nMatrix<类型,行,列>\n编译时尺寸检查", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    ArrayTypes [label="Array类型\nArrayXd (动态数组)\n元素级运算\n.*, ./, .min(), .max()\n与Matrix互转", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    VectorTypes [label="向量类型\nVectorXd (动态向量)\nVector3d (固定3维)\n行向量/列向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    BasicOps [label="基础运算\n加减乘除\n转置、共轭\n范数、统计量", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    BlockOps [label="块操作\nblock() 子矩阵\nrow(), col() 行/列\nhead(), tail() 首尾\nsegment() 片段", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    MapType [label="Map类型\n零拷贝映射\n映射现有内存\nMap<MatrixXd>\n避免数据拷贝", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    LUDecomp [label="LU分解\nPartialPivLU\n一般方阵求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+    QRDecomp [label="QR分解\nHouseholderQR\n超定系统求解", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+    CholeskyDecomp [label="Cholesky分解\nLLT/LDLT\n对称正定矩阵", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+    SVDDecomp [label="SVD分解\nJacobiSVD\n最稳定的分解", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    ExprTemplate [label="表达式模板\n延迟求值\n自动优化\n避免临时对象\nnoalias(), eval()", fillcolor="#e1bee7", color="#7b1fa2", shape=ellipse];
+
+    SIMDOptimization [label="SIMD优化\n内存对齐(16字节)\nSSE/AVX指令集\n固定大小矩阵优化\n向量化运算", fillcolor="#e1bee7", color="#7b1fa2", shape=ellipse];
+
+    DenseModule -> CoreSub [label="包含", color="#1976d2", style="bold"];
+    CoreSub -> MatrixTypes [label="提供", color="#1565c0", style="dashed"];
+    CoreSub -> ArrayTypes [label="提供", color="#1565c0", style="dashed"];
+    CoreSub -> VectorTypes [label="提供", color="#1565c0", style="dashed"];
+
+    DenseModule -> BasicOps [label="提供", color="#1976d2", style="dashed"];
+    DenseModule -> BlockOps [label="提供", color="#1976d2", style="dashed"];
+    DenseModule -> MapType [label="提供", color="#1976d2", style="dashed"];
+    DenseModule -> LUDecomp [label="提供", color="#1976d2", style="dashed"];
+    DenseModule -> QRDecomp [label="提供", color="#1976d2", style="dashed"];
+    DenseModule -> CholeskyDecomp [label="提供", color="#1976d2", style="dashed"];
+    DenseModule -> SVDDecomp [label="提供", color="#1976d2", style="dashed"];
+    DenseModule -> ExprTemplate [label="支持", color="#1976d2", style="dashed"];
+    DenseModule -> SIMDOptimization [label="支持", color="#1976d2", style="dashed"];
+
+    MatrixTypes -> BasicOps [label="支持", color="#2e7d32", style="dotted"];
+    ArrayTypes -> BasicOps [label="支持", color="#2e7d32", style="dotted"];
+
+    labelloc="t";
+    label="Eigen Dense模块详细结构图";
+}

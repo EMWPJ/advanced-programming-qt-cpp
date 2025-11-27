@@ -1,0 +1,64 @@
+digraph EigenCore {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    CoreModule [label="Core模块\n核心功能基础", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=14];
+
+    MatrixBase [label="Matrix基础类型\nMatrix<Scalar, Rows, Cols>\nMatrixXd (动态)\nMatrix3d (固定3x3)\n编译时尺寸检查", fillcolor="#bbdefb", color="#1565c0", shape=box];
+
+    ArrayBase [label="Array基础类型\nArray<Scalar, Rows, Cols>\nArrayXd (动态)\nArray3d (固定3维)\n元素级运算", fillcolor="#bbdefb", color="#1565c0", shape=box];
+
+    VectorBase [label="Vector基础类型\nVector = Matrix<Scalar, Size, 1>\nVectorXd (动态列向量)\nRowVectorXd (行向量)\nVector3d (固定3维)", fillcolor="#bbdefb", color="#1565c0", shape=box];
+
+    TypeSystem [label="类型系统\n固定大小 (编译时)\n动态大小 (运行时)\n类型后缀: d/f/i/cd\nDynamic 占位符", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    MemoryManagement [label="内存管理\n内存对齐 (16字节)\nEIGEN_MAKE_ALIGNED_OPERATOR_NEW\n自动内存分配\n内存池优化", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    MapType [label="Map类型\n零拷贝内存映射\nMap<MatrixXd>\n映射现有数组\n避免数据复制", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    AccessOps [label="访问操作\noperator() 元素访问\noperator[] 向量访问\nrow(), col() 行/列访问\ncoeff() 系数访问", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Initialization [label="初始化\n零初始化\n随机初始化\n单位矩阵\n常量矩阵\n逗号初始化", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    BlockOps [label="块操作\nblock() 子矩阵\nhead(), tail() 首尾\nsegment() 片段\ntopLeftCorner() 角落", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    ExprTemplate [label="表达式模板\n延迟求值机制\n自动优化表达式\n避免临时对象\nnoalias() 优化提示", fillcolor="#e1bee7", color="#7b1fa2", shape=ellipse];
+
+    SIMDSupport [label="SIMD支持\nSSE/AVX指令集\n向量化运算\n内存对齐优化\n固定大小矩阵加速", fillcolor="#e1bee7", color="#7b1fa2", shape=ellipse];
+
+    CoreModule -> MatrixBase [label="提供", color="#1565c0", style="bold"];
+    CoreModule -> ArrayBase [label="提供", color="#1565c0", style="bold"];
+    CoreModule -> VectorBase [label="提供", color="#1565c0", style="bold"];
+
+    CoreModule -> TypeSystem [label="支持", color="#1565c0", style="dashed"];
+    CoreModule -> MemoryManagement [label="支持", color="#1565c0", style="dashed"];
+    CoreModule -> MapType [label="提供", color="#1565c0", style="dashed"];
+
+    CoreModule -> AccessOps [label="提供", color="#1565c0", style="dashed"];
+    CoreModule -> Initialization [label="提供", color="#1565c0", style="dashed"];
+    CoreModule -> BlockOps [label="提供", color="#1565c0", style="dashed"];
+
+    CoreModule -> ExprTemplate [label="实现", color="#1565c0", style="dashed"];
+    CoreModule -> SIMDSupport [label="支持", color="#1565c0", style="dashed"];
+
+    MatrixBase -> TypeSystem [label="使用", color="#1565c0", style="dotted"];
+    ArrayBase -> TypeSystem [label="使用", color="#1565c0", style="dotted"];
+    VectorBase -> TypeSystem [label="使用", color="#1565c0", style="dotted"];
+
+    MatrixBase -> MemoryManagement [label="依赖", color="#1565c0", style="dotted"];
+    ArrayBase -> MemoryManagement [label="依赖", color="#1565c0", style="dotted"];
+
+    MatrixBase -> AccessOps [label="支持", color="#1565c0", style="dotted"];
+    ArrayBase -> AccessOps [label="支持", color="#1565c0", style="dotted"];
+    VectorBase -> AccessOps [label="支持", color="#1565c0", style="dotted"];
+
+    MatrixBase -> ExprTemplate [label="基于", color="#1565c0", style="dotted"];
+    ArrayBase -> ExprTemplate [label="基于", color="#1565c0", style="dotted"];
+
+    labelloc="t";
+    label="Eigen Core模块详细结构图";
+}

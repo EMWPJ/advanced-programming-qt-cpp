@@ -1,0 +1,23 @@
+digraph EigenInstallation {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    Installation [label="Eigen安装与配置", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    Install [label="安装\n下载解压\n无需编译", fillcolor="#bbdefb", color="#1565c0", shape=ellipse];
+    Config [label="CMake配置\nfind_path\ninclude_directories", fillcolor="#bbdefb", color="#1565c0", shape=ellipse];
+    Headers [label="头文件\nEigen/Dense\nEigen/Sparse\nEigen/Geometry", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+    Types [label="常用类型\nMatrixXd\nVectorXd\nArrayXd", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Installation -> Install [label="", color="#1565c0", style="bold"];
+    Installation -> Config [label="", color="#1565c0", style="bold"];
+    Installation -> Headers [label="", color="#1565c0", style="bold"];
+    Installation -> Types [label="", color="#1565c0", style="bold"];
+
+    labelloc="t";
+    label="Eigen安装与配置";
+}

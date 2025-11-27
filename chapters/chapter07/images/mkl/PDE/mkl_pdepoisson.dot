@@ -1,0 +1,38 @@
+digraph MKLPDEPoisson {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    PDEPoissonModule [label="PDE Poisson模块\n泊松方程求解器", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    PoissonEquation [label="泊松方程\n∇²u = f\n椭圆型PDE\n边界值问题", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Discretization [label="离散化方法\n有限差分\n有限元\n网格生成", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Solvers [label="求解器\n直接求解器\n迭代求解器\n多网格方法", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    BoundaryConditions [label="边界条件\nDirichlet边界\nNeumann边界\n混合边界", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PerformanceOpt [label="性能优化\n并行计算\nGPU加速\n大规模问题", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Applications [label="应用场景\n静电学\n流体力学\n图像处理", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PDEPoissonModule -> PoissonEquation [penwidth=3, arrowsize=1.2, label="求解", color="#6a1b9a", style="dashed"];
+    PDEPoissonModule -> Discretization [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    PDEPoissonModule -> Solvers [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    PDEPoissonModule -> BoundaryConditions [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+    PDEPoissonModule -> PerformanceOpt [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+    PDEPoissonModule -> Applications [penwidth=3, arrowsize=1.2, label="应用", color="#6a1b9a", style="dashed"];
+
+    Discretization -> Solvers [penwidth=2, label="生成", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL PDE Poisson模块详细结构图";
+}

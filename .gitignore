@@ -59,6 +59,7 @@ Makefile*
 *.swp
 *.swo
 *~
+texput.log
 
 # minted LaTeX package
 _minted-*

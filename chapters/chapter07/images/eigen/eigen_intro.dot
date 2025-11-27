@@ -1,0 +1,20 @@
+digraph EigenIntro {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=12, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=10];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    Eigen [label="Eigen\n线性代数库", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    Features [label="特性\n轻量级\n表达式模板\n纯头文件", fillcolor="#bbdefb", color="#1565c0", shape=ellipse];
+
+    Applications [label="应用\n图形学\n机器人\n机器学习", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Eigen -> Features [label="", color="#1565c0", style="bold", penwidth=2];
+    Eigen -> Applications [label="", color="#1565c0", style="bold", penwidth=2];
+
+    labelloc="t";
+    label="Eigen简介";
+}

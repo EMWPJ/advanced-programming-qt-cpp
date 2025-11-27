@@ -1,0 +1,38 @@
+digraph MKLService {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    ServiceModule [label="Service模块\n服务函数和工具", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    ThreadControl [label="线程控制\nmkl_set_num_threads\n线程数设置\nNUMA控制", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    MemoryManagement [label="内存管理\n内存分配\n内存对齐\n内存释放", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    VersionInfo [label="版本信息\nMKL版本查询\n功能检查\n兼容性检查", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ErrorHandling [label="错误处理\n错误码定义\n错误信息\n调试支持", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PerformanceMonitoring [label="性能监控\n性能计数器\n计时函数\n性能分析", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    UtilityFunctions [label="工具函数\n数学常数\n辅助函数\n通用工具", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ServiceModule -> ThreadControl [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    ServiceModule -> MemoryManagement [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    ServiceModule -> VersionInfo [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    ServiceModule -> ErrorHandling [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    ServiceModule -> PerformanceMonitoring [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    ServiceModule -> UtilityFunctions [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+
+    ThreadControl -> PerformanceMonitoring [penwidth=2, label="监控", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL Service模块详细结构图";
+}

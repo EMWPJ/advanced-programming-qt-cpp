@@ -1,0 +1,20 @@
+digraph EigenNaming {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    Naming [label="Eigen命名约定", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    Pattern [label="命名模式\nMatrixXd (X=Dynamic)\nMatrix3d (固定3x3)\nVectorXd (向量)", fillcolor="#bbdefb", color="#1565c0", shape=ellipse];
+
+    Suffix [label="类型后缀\nd=double\nf=float\ni=int\ncd=complex", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Naming -> Pattern [label="", color="#1565c0", style="bold"];
+    Naming -> Suffix [label="", color="#1565c0", style="bold"];
+
+    labelloc="t";
+    label="Eigen命名约定";
+}

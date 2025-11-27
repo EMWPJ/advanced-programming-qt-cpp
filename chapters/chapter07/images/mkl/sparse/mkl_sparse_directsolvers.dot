@@ -1,0 +1,38 @@
+digraph MKLSparseDirectSolvers {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    SparseDirectSolversModule [label="稀疏直接求解器模块\n直接方法求解稀疏系统", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    Pardiso [label="Pardiso\n并行直接稀疏求解器\nLU/Cholesky分解\n三阶段求解", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SparseLU [label="稀疏LU分解\n一般稀疏矩阵\n符号分解\n数值分解", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SparseCholesky [label="稀疏Cholesky分解\n对称正定矩阵\n高效稳定\n内存优化", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SparseQR [label="稀疏QR分解\n超定稀疏系统\n最小二乘问题\n正交分解", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ParallelComputing [label="并行计算\n多线程并行\n分布式计算\n负载均衡", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    MemoryOptimization [label="内存优化\n自动内存管理\n内存重用\n大规模矩阵", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SparseDirectSolversModule -> Pardiso [penwidth=3, arrowsize=1.2, label="包含", color="#6a1b9a", style="bold"];
+    SparseDirectSolversModule -> SparseLU [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseDirectSolversModule -> SparseCholesky [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseDirectSolversModule -> SparseQR [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseDirectSolversModule -> ParallelComputing [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+    SparseDirectSolversModule -> MemoryOptimization [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+
+    Pardiso -> ParallelComputing [penwidth=2, label="使用", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL 稀疏直接求解器模块详细结构图";
+}

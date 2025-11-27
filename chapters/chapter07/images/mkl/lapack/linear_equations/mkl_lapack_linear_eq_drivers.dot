@@ -1,0 +1,36 @@
+digraph MKLLAPACKLinearEqDrivers {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8",
+           pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    bgcolor="#ffffff";
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+
+    DriverModule [label="LAPACK线性方程组 - 驱动例程",
+                  fillcolor="#90caf9", color="#1976d2",
+                  shape=box, style="bold,rounded",
+                  fontsize=22, penwidth=3];
+
+    GenDriver [label="一般系统\n?gesv / ?gesvx / ?gesvxx",
+               fillcolor="#ffe0b2", color="#e65100",
+               shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    SymDriver [label="对称正定\n?posv / ?posvx / ?posvxx",
+               fillcolor="#ffe0b2", color="#e65100",
+               shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    SymIndefDriver [label="对称不定\n?sysv / ?sysv_aa / ?sysvx",
+                    fillcolor="#ffe0b2", color="#e65100",
+                    shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    BandDriver [label="带状系统\n?gbsv / ?gbsvx / ?gtsv",
+                fillcolor="#ffe0b2", color="#e65100",
+                shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    DriverModule -> GenDriver [penwidth=3.5, arrowsize=1.3];
+    DriverModule -> SymDriver [penwidth=3.5, arrowsize=1.3];
+    DriverModule -> SymIndefDriver [penwidth=3.5, arrowsize=1.3];
+    DriverModule -> BandDriver [penwidth=3.5, arrowsize=1.3];
+}

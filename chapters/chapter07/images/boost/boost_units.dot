@@ -1,0 +1,32 @@
+digraph BoostUnits {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#fff3e0"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fff3e0";
+
+    UnitsModule [label="Boost.Units模块\n类型安全单位系统", fillcolor="#ffe0b2", color="#f57c00", shape=box, style="bold", fontsize=14];
+
+    BaseUnits [label="基本单位\n长度 (meter)\n质量 (kilogram)\n时间 (second)\n电流 (ampere)\n温度 (kelvin)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    DerivedUnits [label="派生单位\n速度 (m/s)\n加速度 (m/s²)\n力 (N = kg·m/s²)\n能量 (J = N·m)\n功率 (W = J/s)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    UnitConversion [label="单位转换\n自动转换\n显式转换\n转换因子", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    TypeSafety [label="类型安全\n编译时检查\n防止单位错误\n量纲分析", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    CustomUnits [label="自定义单位\n定义新单位\n复合单位\n单位系统扩展", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    UnitsModule -> BaseUnits [label="提供", color="#f57c00", style="dashed"];
+    UnitsModule -> DerivedUnits [label="提供", color="#f57c00", style="dashed"];
+    UnitsModule -> UnitConversion [label="提供", color="#f57c00", style="dashed"];
+    UnitsModule -> TypeSafety [label="提供", color="#f57c00", style="dashed"];
+    UnitsModule -> CustomUnits [label="支持", color="#f57c00", style="dashed"];
+
+    BaseUnits -> DerivedUnits [label="组成", color="#2e7d32", style="dotted"];
+    DerivedUnits -> UnitConversion [label="支持", color="#2e7d32", style="dotted"];
+
+    labelloc="t";
+    label="Boost.Units模块详细结构图";
+}

@@ -1,0 +1,102 @@
+digraph MKLSparseBLASLevel2_3 {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    Level2_3Module [label="Level 2/3: 传统接口\nLegacy Interface", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    // 矩阵-向量乘法 (GEMV)
+    GEMVGroup [label="矩阵-向量乘法 (GEMV)\ny = α*A*x + β*y", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    CSRGemv [label="mkl_?csrgemv\nCSR格式\n压缩稀疏行", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRGemv [label="mkl_?bsrgemv\nBSR格式\n块压缩稀疏行", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOGemv [label="mkl_?coogemv\nCOO格式\n坐标格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIAGemv [label="mkl_?diagemv\nDIA格式\n对角线格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 对称矩阵-向量乘法 (SYMV)
+    SYMVGroup [label="对称矩阵-向量 (SYMV)\ny = α*A*x + β*y", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    CSRSymv [label="mkl_?csrsymv\nCSR对称矩阵", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRSymv [label="mkl_?bsrsymv\nBSR对称矩阵", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOSymv [label="mkl_?coosymv\nCOO对称矩阵", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIASymv [label="mkl_?diasymv\nDIA对称矩阵", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 三角矩阵求解 (TRSV)
+    TRSVGroup [label="三角矩阵求解 (TRSV)\nA*x = b 或 A^T*x = b", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    CSRTrsv [label="mkl_?csrtrsv\nCSR三角矩阵", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRTrsv [label="mkl_?bsrtrsv\nBSR三角矩阵", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOTrsv [label="mkl_?cootrsv\nCOO三角矩阵", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIATrsv [label="mkl_?diatrsv\nDIA三角矩阵", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 矩阵-矩阵乘法 (GEMM)
+    GEMMGroup [label="矩阵-矩阵乘法 (GEMM)\nC = α*A*B + β*C", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    CSRMM [label="mkl_?csrmm\nCSR格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRMM [label="mkl_?bsrmm\nBSR格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSCMM [label="mkl_?cscmm\nCSC格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOMM [label="mkl_?coomm\nCOO格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIAMM [label="mkl_?diamm\nDIA格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SKYMM [label="mkl_?skymm\nSKY格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 三角矩阵系统求解 (TRSM)
+    TRSMGroup [label="三角矩阵系统求解 (TRSM)\nA*X = B 或 A^T*X = B", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    CSRSM [label="mkl_?csrsm\nCSR格式", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSCSM [label="mkl_?cscsm\nCSC格式", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COOSM [label="mkl_?coosm\nCOO格式", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSRSM [label="mkl_?bsrsm\nBSR格式", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIASM [label="mkl_?diasm\nDIA格式", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SKYSM [label="mkl_?skysm\nSKY格式", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 主模块连接
+    Level2_3Module -> GEMVGroup [label="提供", color="#f57f17", style="bold", penwidth=3, arrowsize=1.2];
+    Level2_3Module -> SYMVGroup [label="提供", color="#f57f17", style="bold", penwidth=3, arrowsize=1.2];
+    Level2_3Module -> TRSVGroup [label="提供", color="#d84315", style="bold", penwidth=3, arrowsize=1.2];
+    Level2_3Module -> GEMMGroup [label="提供", color="#f57f17", style="bold", penwidth=3, arrowsize=1.2];
+    Level2_3Module -> TRSMGroup [label="提供", color="#d84315", style="bold", penwidth=3, arrowsize=1.2];
+
+    // GEMV组连接
+    GEMVGroup -> CSRGemv [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    GEMVGroup -> BSRGemv [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    GEMVGroup -> COOGemv [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    GEMVGroup -> DIAGemv [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+
+    // SYMV组连接
+    SYMVGroup -> CSRSymv [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    SYMVGroup -> BSRSymv [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    SYMVGroup -> COOSymv [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    SYMVGroup -> DIASymv [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+
+    // TRSV组连接
+    TRSVGroup -> CSRTrsv [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+    TRSVGroup -> BSRTrsv [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+    TRSVGroup -> COOTrsv [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+    TRSVGroup -> DIATrsv [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+
+    // GEMM组连接
+    GEMMGroup -> CSRMM [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    GEMMGroup -> BSRMM [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    GEMMGroup -> CSCMM [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    GEMMGroup -> COOMM [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    GEMMGroup -> DIAMM [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+    GEMMGroup -> SKYMM [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="solid"];
+
+    // TRSM组连接
+    TRSMGroup -> CSRSM [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+    TRSMGroup -> CSCSM [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+    TRSMGroup -> COOSM [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+    TRSMGroup -> BSRSM [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+    TRSMGroup -> DIASM [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+    TRSMGroup -> SKYSM [penwidth=3, arrowsize=1.2, label="包含", color="#d84315", style="solid"];
+
+    labelloc="t";
+    label="MKL 稀疏BLAS Level 2/3: 传统接口\nMKL Sparse BLAS Level 2/3: Legacy Interface";
+}

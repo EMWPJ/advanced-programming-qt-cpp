@@ -1,0 +1,45 @@
+digraph MKLBLASOverview {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    BLASModule [label="BLAS模块\n基础线性代数子程序\n(Basic Linear Algebra Subprograms)", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    Level1 [label="BLAS Level 1\n向量运算\n(18个函数)", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level1Desc [label="主要函数：\n?asum, ?axpy, ?copy\n?copy_batch, ?copy_batch_strided\n?dot, ?sdot, ?dotc, ?dotu\n?nrm2, ?rot, ?rotg\n?rotm, ?rotmg, ?scal\n?swap, i?amax, i?amin, ?cabs1", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=9, penwidth=2.5];
+
+    Level2 [label="BLAS Level 2\n矩阵-向量运算\n(26个函数)", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level2Desc [label="主要函数：\n?gbmv, ?gemv, ?ger, ?gerc, ?geru\n?hbmv, ?hemv, ?her, ?her2\n?hpmv, ?hpr, ?hpr2\n?sbmv, ?spmv, ?spr, ?spr2\n?symv, ?syr, ?syr2\n?tbmv, ?tbsv, ?tpmv, ?tpsv\n?trmv, ?trsv", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=9, penwidth=2.5];
+
+    Level3 [label="BLAS Level 3\n矩阵-矩阵运算\n(9个函数)", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    Level3Desc [label="主要函数：\n?gemm, ?hemm, ?herk\n?her2k, ?symm, ?syrk\n?syr2k, ?trmm, ?trsm", fillcolor="#e8f5e9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=9, penwidth=2.5];
+
+    Optimizations [label="性能优化\nSIMD向量化\n多线程并行\n内存对齐\n缓存优化", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    DataTypes [label="数据类型\n单精度 (s)\n双精度 (d)\n复数单精度 (c)\n复数双精度 (z)", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    BLASModule -> Level1 [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed", fontsize=10];
+    BLASModule -> Level2 [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed", fontsize=10];
+    BLASModule -> Level3 [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed", fontsize=10];
+    BLASModule -> Optimizations [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed", fontsize=10];
+    BLASModule -> DataTypes [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed", fontsize=10];
+
+    Level1 -> Level1Desc [penwidth=3.5, arrowsize=1.3, ];
+    Level2 -> Level2Desc [penwidth=3.5, arrowsize=1.3, ];
+    Level3 -> Level3Desc [penwidth=3.5, arrowsize=1.3, ];
+
+    Level1 -> Optimizations [penwidth=2, label="应用", color="#666666", style="dotted"];
+    Level2 -> Optimizations [penwidth=2, label="应用", color="#666666", style="dotted"];
+    Level3 -> Optimizations [penwidth=2, label="应用", color="#666666", style="dotted"];
+
+    Level1 -> DataTypes [penwidth=2, color="#666666", style="dotted"];
+    Level2 -> DataTypes [penwidth=2, color="#666666", style="dotted"];
+    Level3 -> DataTypes [penwidth=2, color="#666666", style="dotted"];
+}

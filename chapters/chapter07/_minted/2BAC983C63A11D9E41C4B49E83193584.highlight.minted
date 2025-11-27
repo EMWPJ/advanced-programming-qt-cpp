@@ -1,0 +1,164 @@
+\begin{MintedVerbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}iostream\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}boost/units/systems/si.hpp\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}boost/units/systems/cgs.hpp\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}boost/units/systems/si/io.hpp\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}boost/units/io.hpp\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}}\PYG{c+cp}{include}\PYG{+w}{ }\PYG{c+cpf}{\PYGZlt{}windows.h\PYGZgt{}}
+
+\PYG{k}{using}\PYG{+w}{ }\PYG{k}{namespace}\PYG{+w}{ }\PYG{n+nn}{std}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{k}{namespace}\PYG{+w}{ }\PYG{n+nn}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n+nn}{units}\PYG{p}{;}
+\PYG{c+c1}{// 避免命名空间冲突，使用明确的命名空间限定}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{length}\PYG{p}{;}
+\PYG{c+c1}{// 注意：不能使用 using boost::units::si::time; 因为与标准库的 time() 函数冲突}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{mass}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{velocity}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{acceleration}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{force}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{energy}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{power}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{temperature}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{volume}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{mass\PYGZus{}density}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{area}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{pressure}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{meter}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{second}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{kilogram}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{meter\PYGZus{}per\PYGZus{}second\PYGZus{}squared}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{meter\PYGZus{}per\PYGZus{}second}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{kelvin}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cubic\PYGZus{}meter}\PYG{p}{;}
+\PYG{k}{using}\PYG{+w}{ }\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{square\PYGZus{}meter}\PYG{p}{;}
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n}{SetConsoleOutputCP}\PYG{p}{(}\PYG{l+m+mi}{65001}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{SetConsoleCP}\PYG{p}{(}\PYG{l+m+mi}{65001}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{=== Boost.Units单位系统示例 ===}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 示例1: 基本单位使用}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{1. 基本单位使用:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 长度}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{length}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{distance}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{100.0}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{meter}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{距离: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{distance}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 时间（使用完全限定名避免与标准库 time() 函数冲突）}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{boost}\PYG{o}{:}\PYG{o}{:}\PYG{n}{units}\PYG{o}{:}\PYG{o}{:}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{time}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{time\PYGZus{}span}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{10.0}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{second}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{时间: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{time\PYGZus{}span}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ s}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 速度 = 距离 / 时间}
+\PYG{+w}{    }\PYG{k}{auto}\PYG{+w}{ }\PYG{n}{speed\PYGZus{}val}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{distance}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{time\PYGZus{}span}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{velocity}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{speed}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{speed\PYGZus{}val}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{速度: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{speed}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m/s}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 加速度 = 速度 / 时间}
+\PYG{+w}{    }\PYG{k}{auto}\PYG{+w}{ }\PYG{n}{accel\PYGZus{}val}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{speed}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{time\PYGZus{}span}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{acceleration}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{accel}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{accel\PYGZus{}val}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{加速度: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{accel}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m/s²}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 示例2: 质量、力和能量}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{2. 质量、力和能量:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{mass}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{m}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{5.0}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{kilogram}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{acceleration}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{g}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{9.81}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{meter\PYGZus{}per\PYGZus{}second\PYGZus{}squared}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 力 = 质量 × 加速度}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{force}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{F}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{g}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{质量: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ kg}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{重力加速度: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{g}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m/s²}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{力: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{F}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ N}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 能量 = 力 × 距离}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{energy}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{E}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{F}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{distance}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{能量: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{E}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ J}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 功率 = 能量 / 时间}
+\PYG{+w}{    }\PYG{k}{auto}\PYG{+w}{ }\PYG{n}{P\PYGZus{}val}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{E}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{time\PYGZus{}span}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{power}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{P}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{P\PYGZus{}val}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{功率: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{P}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ W}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 示例3: 单位转换}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{3. 单位转换:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// SI单位}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{length}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{d\PYGZus{}si}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{1.0}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{meter}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{SI单位: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{d\PYGZus{}si}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 转换为CGS单位（需要显式转换）}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{cgs}\PYG{o}{:}\PYG{o}{:}\PYG{n}{length}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{d\PYGZus{}cgs}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{cgs}\PYG{o}{:}\PYG{o}{:}\PYG{n}{length}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{n}{d\PYGZus{}si}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{CGS单位: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{d\PYGZus{}cgs}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ cm}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 提取数值}
+\PYG{+w}{    }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{value\PYGZus{}si}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{d\PYGZus{}si}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{value\PYGZus{}cgs}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{d\PYGZus{}cgs}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{数值 (SI): }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{value\PYGZus{}si}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{数值 (CGS): }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{value\PYGZus{}cgs}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 示例4: 温度单位}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{4. 温度单位:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{temperature}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{T1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{273.15}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{kelvin}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{temperature}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{T2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{373.15}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{kelvin}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{temperature}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{delta\PYGZus{}T}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{T2}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{T1}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{温度1: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{T1}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ K}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{温度2: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{T2}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ K}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{温差: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{delta\PYGZus{}T}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ K}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 示例5: 复合单位}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{5. 复合单位:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 密度 = 质量 / 体积}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{volume}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{V}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{2.0}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{cubic\PYGZus{}meter}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{mass\PYGZus{}density}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{rho}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{V}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{体积: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{V}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m³}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{质量: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ kg}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{密度: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{rho}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ kg/m³}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 压力 = 力 / 面积}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{area}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{A}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.1}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{square\PYGZus{}meter}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{pressure}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{F}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{面积: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m²}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{压力: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ Pa}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 示例6: 单位检查（编译时）}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{6. 单位检查示例:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{以下代码会在编译时报错（已注释）:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{// quantity\PYGZlt{}length\PYGZgt{} wrong = speed;  // 错误！}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{// quantity\PYGZlt{}velocity\PYGZgt{} wrong2 = distance;  // 错误！}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{单位系统在编译时检查单位一致性，防止单位错误。}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 示例7: 自定义单位}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{7. 单位运算:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 速度的平方}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{velocity}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{v}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{10.0}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{meter\PYGZus{}per\PYGZus{}second}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{auto}\PYG{+w}{ }\PYG{n}{v\PYGZus{}squared}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{速度: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m/s}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{速度的平方: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{v\PYGZus{}squared}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ (m/s)²}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 动能 = 0.5 * m * v²}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{energy}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{kinetic\PYGZus{}energy}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{v}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{动能: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{kinetic\PYGZus{}energy}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ J}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 示例8: 不同单位系统的混合使用}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{8. 单位系统混合使用:}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{length}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{length\PYGZus{}si}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{1000.0}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{meter}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{cgs}\PYG{o}{:}\PYG{o}{:}\PYG{n}{length}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{length\PYGZus{}cgs}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{100000.0}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{cgs}\PYG{o}{:}\PYG{o}{:}\PYG{n}{centimeter}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 可以进行比较（需要转换为同一单位系统）}
+\PYG{+w}{    }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{length}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{length\PYGZus{}cgs\PYGZus{}si}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{quantity}\PYG{o}{\PYGZlt{}}\PYG{n}{si}\PYG{o}{:}\PYG{o}{:}\PYG{n}{length}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{n}{length\PYGZus{}cgs}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{length\PYGZus{}si}\PYG{+w}{ }\PYG{o}{=}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{length\PYGZus{}cgs\PYGZus{}si}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{长度相等: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{length\PYGZus{}si}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m = }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{length\PYGZus{}cgs}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ cm}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{c+c1}{// 可以相加（需要转换为同一单位系统）}
+\PYG{+w}{    }\PYG{k}{auto}\PYG{+w}{ }\PYG{n}{total\PYGZus{}length}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{length\PYGZus{}si}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{length\PYGZus{}cgs\PYGZus{}si}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{总长度: }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{total\PYGZus{}length}\PYG{p}{.}\PYG{n}{value}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ m}\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{endl}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{cin}\PYG{p}{.}\PYG{n}{get}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

@@ -1,0 +1,39 @@
+digraph MKLNonlinearSolvers {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    NonlinearSolversModule [label="非线性求解器模块\n非线性方程组求解", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    NewtonMethod [label="Newton方法\nNewton-Raphson\n快速收敛\n需要雅可比矩阵", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    QuasiNewton [label="拟Newton方法\nBFGS\nL-BFGS\n无需雅可比矩阵", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    TrustRegion [label="信赖域方法\n信赖域算法\n全局收敛\n鲁棒性强", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    LineSearch [label="线搜索方法\nArmijo条件\nWolfe条件\n步长选择", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ConvergenceControl [label="收敛控制\n收敛准则\n迭代次数限制\n残差控制", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Applications [label="应用场景\n优化问题\n非线性方程组\n参数估计", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    NonlinearSolversModule -> NewtonMethod [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    NonlinearSolversModule -> QuasiNewton [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    NonlinearSolversModule -> TrustRegion [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    NonlinearSolversModule -> LineSearch [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    NonlinearSolversModule -> ConvergenceControl [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    NonlinearSolversModule -> Applications [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+
+    NewtonMethod -> LineSearch [penwidth=2, label="使用", color="#666666", style="dotted"];
+    QuasiNewton -> LineSearch [penwidth=2, label="使用", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL 非线性求解器模块详细结构图";
+}

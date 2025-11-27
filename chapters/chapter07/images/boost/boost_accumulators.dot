@@ -1,0 +1,35 @@
+digraph BoostAccumulators {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#fff3e0"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fff3e0";
+
+    AccumulatorsModule [label="Boost.Accumulators模块\n统计累加器", fillcolor="#ffcc80", color="#e65100", shape=box, style="bold", fontsize=14];
+
+    Mean [label="均值统计\nmean\n加权均值\n累积均值", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Variance [label="方差统计\nvariance\n标准差\n偏度、峰度", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Quantiles [label="分位数\nquantile\n中位数\n百分位数", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    MinMax [label="最值统计\nmin\nmax\n范围", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Moments [label="矩统计\nmoment\n中心矩\n累积量", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Streaming [label="流式处理\n增量更新\n内存高效\n实时统计", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    AccumulatorsModule -> Mean [label="提供", color="#e65100", style="dashed"];
+    AccumulatorsModule -> Variance [label="提供", color="#e65100", style="dashed"];
+    AccumulatorsModule -> Quantiles [label="提供", color="#e65100", style="dashed"];
+    AccumulatorsModule -> MinMax [label="提供", color="#e65100", style="dashed"];
+    AccumulatorsModule -> Moments [label="提供", color="#e65100", style="dashed"];
+    AccumulatorsModule -> Streaming [label="支持", color="#e65100", style="dashed"];
+
+    Mean -> Streaming [label="支持", color="#2e7d32", style="dotted"];
+    Variance -> Streaming [label="支持", color="#2e7d32", style="dotted"];
+
+    labelloc="t";
+    label="Boost.Accumulators模块详细结构图";
+}

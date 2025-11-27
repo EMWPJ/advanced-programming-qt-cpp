@@ -1,0 +1,33 @@
+digraph EigenGeometryDetail {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    Geometry [label="几何变换", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    Rotation [label="旋转\nAngleAxis\nQuaternion\n旋转矩阵\n欧拉角", fillcolor="#bbdefb", color="#1565c0", shape=ellipse];
+
+    Translation [label="平移\nTranslation2d/3d", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Scaling [label="缩放\nScaling\n均匀/非均匀", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Affine [label="仿射变换\nAffine3d\n旋转+平移+缩放", fillcolor="#e1bee7", color="#7b1fa2", shape=ellipse];
+
+    Projective [label="投影变换\nProjective3d\n透视投影", fillcolor="#f8bbd0", color="#c2185b", shape=ellipse];
+
+    Operations [label="操作\n组合: T1 * T2\n逆变换: inverse()\n插值: slerp()", fillcolor="#b2dfdb", color="#00695c", shape=ellipse, fontsize=10];
+
+    Geometry -> Rotation [label="", color="#1565c0", style="bold"];
+    Geometry -> Translation [label="", color="#1565c0", style="bold"];
+    Geometry -> Scaling [label="", color="#1565c0", style="bold"];
+    Geometry -> Affine [label="", color="#1565c0", style="bold"];
+    Geometry -> Projective [label="", color="#1565c0", style="bold"];
+
+    Geometry -> Operations [label="", color="#1565c0", style="dashed"];
+
+    labelloc="t";
+    label="几何变换详细";
+}

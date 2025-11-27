@@ -1,0 +1,96 @@
+digraph MKLSparseBLASFormatConvert {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    FormatConvertModule [label="格式转换模块\nFormat Conversion Module", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    // 存储格式
+    Dense [label="稠密格式\nDense Format\n(dns)", fillcolor="#bbdefb", color="#1976d2", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSR [label="CSR格式\nCompressed Sparse Row\n压缩稀疏行", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSC [label="CSC格式\nCompressed Sparse Column\n压缩稀疏列", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    COO [label="COO格式\nCoordinate Format\n坐标格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BSR [label="BSR格式\nBlock Sparse Row\n块压缩稀疏行", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DIA [label="DIA格式\nDiagonal Format\n对角线格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SKY [label="SKY格式\nSkyline Format\n天空线格式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 转换函数
+    DnsCSR [label="mkl_?dnscsr\n稠密→CSR", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRCOO [label="mkl_?csrcoo\nCSR↔COO", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRBSR [label="mkl_?csrbsr\nCSR↔BSR", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRCSC [label="mkl_?csrcsc\nCSR↔CSC", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRDIA [label="mkl_?csrdia\nCSR↔DIA", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRSKY [label="mkl_?csrsky\nCSR↔SKY", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 矩阵运算
+    CSRAdd [label="mkl_?csradd\nCSR矩阵加法\nC = α*A + β*B", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRMultCSR [label="mkl_?csrmultcsr\nCSR×CSR→CSR\nC = A * B", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CSRMultD [label="mkl_?csrmultd\nCSR×CSR→稠密\nC = A * B (稠密)", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // Inspector-Executor格式转换
+    IEConvertCSR [label="mkl_sparse_convert_csr\nInspector-Executor\nCSR格式转换", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    IEConvertBSR [label="mkl_sparse_convert_bsr\nInspector-Executor\nBSR格式转换", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 主模块连接
+    FormatConvertModule -> Dense [penwidth=3, arrowsize=1.2, label="支持", color="#1976d2", style="dashed"];
+    FormatConvertModule -> CSR [penwidth=3, arrowsize=1.2, label="支持", color="#f57f17", style="dashed"];
+    FormatConvertModule -> CSC [penwidth=3, arrowsize=1.2, label="支持", color="#f57f17", style="dashed"];
+    FormatConvertModule -> COO [penwidth=3, arrowsize=1.2, label="支持", color="#f57f17", style="dashed"];
+    FormatConvertModule -> BSR [penwidth=3, arrowsize=1.2, label="支持", color="#f57f17", style="dashed"];
+    FormatConvertModule -> DIA [penwidth=3, arrowsize=1.2, label="支持", color="#f57f17", style="dashed"];
+    FormatConvertModule -> SKY [penwidth=3, arrowsize=1.2, label="支持", color="#f57f17", style="dashed"];
+
+    // 格式转换关系（以CSR为中心）
+    Dense -> DnsCSR [penwidth=3, arrowsize=1.2, label="转换", color="#1976d2", style="solid"];
+    DnsCSR -> CSR [label="→", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    CSR -> CSRCOO [penwidth=3, arrowsize=1.2, label="转换", color="#2e7d32", style="solid"];
+    CSRCOO -> COO [label="↔", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    CSR -> CSRBSR [penwidth=3, arrowsize=1.2, label="转换", color="#2e7d32", style="solid"];
+    CSRBSR -> BSR [label="↔", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    CSR -> CSRCSC [penwidth=3, arrowsize=1.2, label="转换", color="#2e7d32", style="solid"];
+    CSRCSC -> CSC [label="↔", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    CSR -> CSRDIA [penwidth=3, arrowsize=1.2, label="转换", color="#2e7d32", style="solid"];
+    CSRDIA -> DIA [label="↔", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    CSR -> CSRSKY [penwidth=3, arrowsize=1.2, label="转换", color="#2e7d32", style="solid"];
+    CSRSKY -> SKY [label="↔", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    // 矩阵运算
+    CSR -> CSRAdd [penwidth=3, arrowsize=1.2, label="运算", color="#d84315", style="dashed"];
+    CSRAdd -> CSR [penwidth=3, arrowsize=1.2, label="结果", color="#d84315", style="dashed"];
+
+    CSR -> CSRMultCSR [penwidth=3, arrowsize=1.2, label="运算", color="#d84315", style="dashed"];
+    CSRMultCSR -> CSR [penwidth=3, arrowsize=1.2, label="结果", color="#d84315", style="dashed"];
+
+    CSR -> CSRMultD [penwidth=3, arrowsize=1.2, label="运算", color="#d84315", style="dashed"];
+    CSRMultD -> Dense [penwidth=3, arrowsize=1.2, label="结果", color="#d84315", style="dashed"];
+
+    // Inspector-Executor格式转换
+    CSR -> IEConvertCSR [penwidth=3, arrowsize=1.2, label="IE转换", color="#6a1b9a", style="dashed"];
+    IEConvertCSR -> CSR [label="→", color="#6a1b9a", style="bold", penwidth=3, arrowsize=1.2];
+
+    BSR -> IEConvertBSR [penwidth=3, arrowsize=1.2, label="IE转换", color="#6a1b9a", style="dashed"];
+    IEConvertBSR -> BSR [label="→", color="#6a1b9a", style="bold", penwidth=3, arrowsize=1.2];
+
+    // 格式特点说明
+    CSR [xlabel="最常用\n性能好"];
+    CSC [xlabel="列访问\n转置"];
+    COO [xlabel="简单\n易构建"];
+    BSR [xlabel="块结构\n性能优"];
+    DIA [xlabel="对角矩阵\n高效"];
+    SKY [xlabel="对称矩阵\n紧凑"];
+
+    labelloc="t";
+    label="MKL 稀疏BLAS格式转换\nMKL Sparse BLAS Format Conversion";
+}

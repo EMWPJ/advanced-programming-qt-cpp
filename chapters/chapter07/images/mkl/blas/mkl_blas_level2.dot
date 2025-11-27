@@ -1,0 +1,41 @@
+digraph MKLBLASLevel2 {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.3;
+    ranksep=0.9;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    Level2Header [label="BLAS Level 2\n矩阵-向量运算\n(Matrix-Vector Operations)", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16];
+
+    BasicMV [label="基本矩阵-向量运算\n(Basic Matrix-Vector)", fillcolor="#e8f5e9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    GemvOps [label="?gemv (一般矩阵-向量)\n?symv (对称矩阵-向量)\n?trmv (三角矩阵-向量)\n?trsv (三角矩阵求解)", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    RankUpdates [label="Rank更新运算\n(Rank Updates)", fillcolor="#e8f5e9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    GerOps [label="?ger, ?gerc, ?geru (矩阵-向量外积)\n?syr, ?syr2 (对称rank-1, rank-2)", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    BandMatrix [label="带状矩阵\n(Banded Matrix)", fillcolor="#e8f5e9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    BandOps [label="?gbmv (一般带状)\n?sbmv (对称带状)\n?tbmv (三角带状)\n?tbsv (三角带状求解)", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PackedMatrix [label="打包矩阵\n(Packed Matrix)", fillcolor="#e8f5e9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    PackedOps [label="?spmv (对称打包)\n?spr, ?spr2 (打包rank更新)\n?tpmv (三角打包)\n?tpsv (三角打包求解)", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Hermitian [label="复数厄米矩阵\n(Hermitian Matrix)", fillcolor="#e8f5e9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HermitianOps [label="?hemv (厄米矩阵-向量)\n?her, ?her2 (厄米rank-1, rank-2)\n?hbmv (厄米带状矩阵-向量)\n?hpmv (厄米打包矩阵-向量)\n?hpr, ?hpr2 (厄米打包rank-1, rank-2)", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Level2Header -> BasicMV [penwidth=3.5, arrowsize=1.3, ];
+    Level2Header -> RankUpdates [penwidth=3.5, arrowsize=1.3, ];
+    Level2Header -> BandMatrix [penwidth=3.5, arrowsize=1.3, ];
+    Level2Header -> PackedMatrix [penwidth=3.5, arrowsize=1.3, ];
+    Level2Header -> Hermitian [penwidth=3.5, arrowsize=1.3, ];
+
+    BasicMV -> GemvOps [penwidth=3.5, arrowsize=1.3, ];
+    RankUpdates -> GerOps [penwidth=3.5, arrowsize=1.3, ];
+    BandMatrix -> BandOps [penwidth=3.5, arrowsize=1.3, ];
+    PackedMatrix -> PackedOps [penwidth=3.5, arrowsize=1.3, ];
+    Hermitian -> HermitianOps [penwidth=3.5, arrowsize=1.3, ];
+}

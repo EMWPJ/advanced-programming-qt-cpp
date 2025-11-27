@@ -1,0 +1,35 @@
+digraph BoostGeometry {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#fff3e0"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fff3e0";
+
+    GeometryModule [label="Boost.Geometry模块\n几何计算", fillcolor="#ffe0b2", color="#f57c00", shape=box, style="bold", fontsize=14];
+
+    BasicShapes [label="基本几何形状\n点 (Point)\n线段 (Segment)\n多边形 (Polygon)\n圆 (Circle)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    SpatialOps [label="空间关系\n相交 (intersects)\n包含 (within)\n重叠 (overlaps)\n距离 (distance)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    GeometricAlgos [label="几何算法\n凸包 (convex_hull)\n缓冲区 (buffer)\n简化 (simplify)\n联合 (union)", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Transformations [label="几何变换\n平移 (translate)\n旋转 (rotate)\n缩放 (scale)\n仿射变换", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    SpatialIndex [label="空间索引\nR-tree\n四叉树\n空间查询优化", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    CoordinateSystems [label="坐标系\n笛卡尔坐标\n球面坐标\n地理坐标\n坐标转换", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    GeometryModule -> BasicShapes [label="提供", color="#f57c00", style="dashed"];
+    GeometryModule -> SpatialOps [label="提供", color="#f57c00", style="dashed"];
+    GeometryModule -> GeometricAlgos [label="提供", color="#f57c00", style="dashed"];
+    GeometryModule -> Transformations [label="提供", color="#f57c00", style="dashed"];
+    GeometryModule -> SpatialIndex [label="提供", color="#f57c00", style="dashed"];
+    GeometryModule -> CoordinateSystems [label="提供", color="#f57c00", style="dashed"];
+
+    BasicShapes -> SpatialOps [label="操作", color="#2e7d32", style="dotted"];
+    BasicShapes -> GeometricAlgos [label="处理", color="#2e7d32", style="dotted"];
+
+    labelloc="t";
+    label="Boost.Geometry模块详细结构图";
+}

@@ -1,0 +1,23 @@
+digraph EigenOperations {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    Operations [label="基础运算", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    MatrixOps [label="矩阵运算\nA + B\nA * B\nA * scalar", fillcolor="#bbdefb", color="#1565c0", shape=ellipse];
+
+    Transpose [label="转置与共轭\ntranspose()\nadjoint()", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Notes [label="注意\n转置返回表达式\n需eval()求值", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, fontsize=10];
+
+    Operations -> MatrixOps [label="", color="#1565c0", style="bold"];
+    Operations -> Transpose [label="", color="#1565c0", style="bold"];
+    Transpose -> Notes [label="", color="#1565c0", style="dashed"];
+
+    labelloc="t";
+    label="基础运算：加减乘除、转置、共轭";
+}

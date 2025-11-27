@@ -1,0 +1,20 @@
+digraph EigenSizing {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=LR;
+    bgcolor="#e3f2fd";
+
+    FixedSize [label="固定大小\nMatrix3d\n编译时确定\n栈分配\nSIMD优化", fillcolor="#bbdefb", color="#1565c0", shape=box];
+
+    DynamicSize [label="动态大小\nMatrixXd\n运行时确定\n堆分配\n灵活", fillcolor="#c8e6c9", color="#2e7d32", shape=box];
+
+    Comparison [label="对比\n小矩阵→固定\n大矩阵→动态", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, fontsize=10];
+
+    FixedSize -> Comparison [label="", color="#1565c0", style="dashed"];
+    DynamicSize -> Comparison [label="", color="#1565c0", style="dashed"];
+
+    labelloc="t";
+    label="固定大小 vs 动态大小";
+}

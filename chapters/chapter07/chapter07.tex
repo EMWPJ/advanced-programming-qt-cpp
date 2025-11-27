@@ -1,0 +1,833 @@
+\documentclass[UTF8,aspectratio=169]{beamer}
+
+\include{../setup.tex}
+
+% 文档信息
+\title{高等程序设计 - Qt/C++}
+\subtitle{第7章：C++科学计算}
+\author{王培杰}
+\institute{长江大学地球物理与石油资源学院}
+\date{\today}
+
+\begin{document}
+
+% 标题页
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 目录页
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[hideothersubsections]
+    \end{multicols}
+\end{frame}
+
+% ========== C++标准库cmath ==========
+
+\section{C++标准库cmath}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection,hideothersubsections]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{C++标准库cmath简介}
+    \begin{ytublock}{cmath库}
+        \begin{itemize}
+            \item C++标准库中的数学函数库
+            \item 提供基础数学运算函数
+            \item 包含三角函数、指数对数、幂函数等
+            \item 无需额外安装，编译器自带
+            \item 跨平台兼容性好
+            \item 是学习科学计算的基础
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{cmath主要函数分类}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{三角函数}
+                \begin{itemize}
+                    \item \texttt{sin}, \texttt{cos}, \texttt{tan} - 基本三角函数
+                    \item \texttt{asin}, \texttt{acos}, \texttt{atan} - 反三角函数
+                    \item \texttt{sinh}, \texttt{cosh}, \texttt{tanh} - 双曲函数
+                    \item \texttt{atan2} - 双参数反正切
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{指数与对数}
+                \begin{itemize}
+                    \item \texttt{exp} - 自然指数
+                    \item \texttt{log} - 自然对数
+                    \item \texttt{log10} - 常用对数
+                    \item \texttt{log2} - 以2为底的对数
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{幂函数与取整}
+                \begin{itemize}
+                    \item \texttt{pow} - 幂运算
+                    \item \texttt{sqrt} - 平方根
+                    \item \texttt{cbrt} - 立方根
+                    \item \texttt{ceil} - 向上取整
+                    \item \texttt{floor} - 向下取整
+                    \item \texttt{round} - 四舍五入
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{其他函数}
+                \begin{itemize}
+                    \item \texttt{abs}, \texttt{fabs} - 绝对值
+                    \item \texttt{fmod} - 取模
+                    \item \texttt{fmax}, \texttt{fmin} - 最值
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{cmath使用示例}
+    \begin{ytublock}{基本使用}
+        \begin{itemize}
+            \item \textbf{头文件}：\texttt{\#include <cmath>}
+            \item \textbf{命名空间}：函数在\texttt{std}命名空间中
+            \item \textbf{精度}：支持\texttt{float}, \texttt{double}, \texttt{long double}
+        \end{itemize}
+    \end{ytublock}
+
+    \vspace{0.2cm}
+    \begin{ytublock}{示例代码}
+        \begin{itemize}
+            \item \texttt{double x = std::sin(3.14159 / 2);} // 计算sin(π/2)
+            \item \texttt{double y = std::pow(2.0, 3.0);} // 计算2³
+            \item \texttt{double z = std::sqrt(16.0);} // 计算√16
+            \item \texttt{double w = std::log(2.71828);} // 计算ln(e)
+            \item \texttt{double angle = std::atan2(y, x);} // 计算角度
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{cmath的局限性}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{功能限制}
+                \begin{itemize}
+                    \item 只提供基础数学函数
+                    \item 缺少特殊函数（贝塞尔、伽马等）
+                    \item 不支持高精度计算
+                    \item 不支持向量化运算
+                    \item 无统计分布函数
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{性能限制}
+                \begin{itemize}
+                    \item 单元素计算，无SIMD优化
+                    \item 不适合大规模向量运算
+                    \item 无并行计算支持
+                    \item 性能优化有限
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{学习路径}
+                \begin{itemize}
+                    \item cmath是基础，需要掌握
+                    \item 进阶到Boost扩展功能
+                    \item 使用Eigen进行矩阵运算
+                    \item 使用MKL获得高性能
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ========== Boost科学计算库 ==========
+
+\section{Boost科学计算库}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection,hideothersubsections]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{Boost简介}
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/boost/boost_overview.pdf}
+
+\end{frame}
+
+\begin{frame}{Boost.Math模块}
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/boost/boost_math.pdf}
+\end{frame}
+
+\begin{frame}{Boost.Math详细功能}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{特殊函数}
+                \begin{itemize}
+                    \item \textbf{贝塞尔函数}：
+                      \begin{itemize}
+                        \item \texttt{cyl\_bessel\_j(n, x)}
+                        \item \texttt{cyl\_bessel\_i(n, x)}
+                      \end{itemize}
+                    \item \textbf{伽马函数}：
+                      \begin{itemize}
+                        \item \texttt{tgamma(x)} - 伽马函数
+                        \item \texttt{lgamma(x)} - 对数伽马
+                      \end{itemize}
+                    \item \textbf{椭圆积分}：\texttt{ellint\_1(k)}, \texttt{ellint\_2(k)}
+                    \item \textbf{误差函数}：\texttt{erf(x)}, \texttt{erfc(x)}
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{统计分布}
+                \begin{itemize}
+                    \item \textbf{连续分布}：正态、t、卡方、F分布
+                    \item \textbf{离散分布}：二项、泊松、几何分布
+                    \item \textbf{操作}：\texttt{pdf()}, \texttt{cdf()}, \texttt{quantile()}
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{数值工具}
+                \begin{itemize}
+                    \item \textbf{求根算法}：
+                      \begin{itemize}
+                        \item \texttt{bisect()} - 二分法
+                        \item \texttt{newton()} - 牛顿法
+                      \end{itemize}
+                    \item \textbf{插值方法}：线性插值、三次样条
+                    \item \textbf{数值积分}：梯形法则、辛普森法则
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{安装与使用}
+                \begin{itemize}
+                    \item \textbf{包管理器}：
+                      \begin{itemize}
+                        \item Linux: \texttt{sudo apt-get install libboost-all-dev}
+                        \item macOS: \texttt{brew install boost}
+                      \end{itemize}
+                    \item \textbf{CMake}：\texttt{find\_package(Boost REQUIRED COMPONENTS math)}
+                    \item \textbf{头文件}：\texttt{\#include <boost/math/special\_functions.hpp>}
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Boost.Math使用示例}
+    \begin{ytublock}{特殊函数示例}
+        \begin{itemize}
+            \item \texttt{double gamma\_val = boost::math::tgamma(5.0);} // 计算Γ(5)
+            \item \texttt{double bessel\_j = boost::math::cyl\_bessel\_j(0, 1.0);} // J₀(1)
+            \item \texttt{double erf\_val = boost::math::erf(1.0);} // 误差函数
+        \end{itemize}
+    \end{ytublock}
+
+    \vspace{0.2cm}
+    \begin{ytublock}{统计分布示例}
+        \begin{itemize}
+            \item \texttt{boost::math::normal\_distribution<> norm(0, 1);} // 标准正态分布
+            \item \texttt{double prob = pdf(norm, 1.0);} // 概率密度
+            \item \texttt{double cum = cdf(norm, 1.0);} // 累积分布
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Boost.Multiprecision高精度计算}
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/boost/boost_multiprecision.pdf}
+\end{frame}
+
+\begin{frame}{Boost.Multiprecision详细功能}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{高精度整数}
+                \begin{itemize}
+                    \item \texttt{cpp\_int} - 任意精度整数
+                    \item \texttt{int128\_t}, \texttt{int256\_t} - 固定精度
+                    \item 支持标准运算符：+、-、*、/、\%
+                    \item 支持高级函数：\texttt{sqrt()}
+                    \item 无溢出问题
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{高精度浮点}
+                \begin{itemize}
+                    \item \texttt{cpp\_dec\_float\_50} - 50位小数
+                    \item \texttt{cpp\_dec\_float\_100} - 100位小数
+                    \item \texttt{cpp\_bin\_float} - 二进制浮点（更高精度）
+                    \item 精确的十进制表示，适合金融计算
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{使用示例}
+                \begin{itemize}
+                    \item \texttt{\#include <boost/multiprecision/cpp\_int.hpp>}
+                    \item \texttt{using namespace boost::multiprecision;}
+                    \item \texttt{cpp\_int n = 12345678901234567890;}
+                    \item \texttt{cpp\_int result = n * n;} // 无溢出
+                    \item \texttt{cpp\_dec\_float\_50 pi = 3.141592653589793238462643383279502884197;}
+                \end{itemize}
+            \end{ytublock}
+
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Boost.Random随机数生成}
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/boost/boost_random.pdf}
+\end{frame}
+
+\begin{frame}{Boost.Accumulators统计累加器}
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/boost/boost_accumulators.pdf}
+\end{frame}
+
+\begin{frame}{Boost.Geometry几何算法}
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/boost/boost_geometry.pdf}
+\end{frame}
+\begin{frame}{Boost安装与使用}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{安装方式}
+                \begin{itemize}
+                    \item Linux: \texttt{sudo apt install libboost-all-dev}
+                    \item macOS: \texttt{brew install boost}
+                    \item Windows: vcpkg或源码编译
+                    \item 验证版本: \texttt{dpkg -l | grep libboost}
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{编译链接}
+                \begin{itemize}
+                    \item 头文件库：无需链接
+                    \item 编译时添加: \texttt{-I/usr/include/boost}
+                    \item 需要链接的库: \texttt{-lboost\_system -lboost\_filesystem}
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{CMake集成}
+                \begin{itemize}
+                    \item \texttt{find\_package(Boost REQUIRED)}
+                    \item \texttt{target\_link\_libraries(target Boost::boost)}
+                    \item 指定组件: \texttt{find\_package(Boost REQUIRED COMPONENTS system filesystem)}
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ========== Eigen线性代数库 ==========
+
+\section{Eigen线性代数库}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection,hideothersubsections]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{Eigen简介}
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/eigen/eigen_overview.pdf}
+\end{frame}
+
+\begin{frame}{Eigen核心模块}
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/eigen/eigen_core.pdf}
+\end{frame}
+
+\begin{frame}{Eigen基本类型}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{动态大小}
+                \begin{itemize}
+                    \item \texttt{MatrixXd} - 动态矩阵（double）
+                    \item \texttt{VectorXd} - 动态向量（double）
+                    \item \texttt{ArrayXd} - 动态数组（元素级运算）
+                    \item 运行时确定尺寸
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{固定大小}
+                \begin{itemize}
+                    \item \texttt{Matrix3d} - 3x3矩阵（double）
+                    \item \texttt{Vector3d} - 3维向量（double）
+                    \item \texttt{Matrix4f} - 4x4矩阵（float）
+                    \item 编译时确定尺寸，性能更好
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{命名规则}
+                \begin{itemize}
+                    \item \texttt{Matrix} - 矩阵类型
+                    \item \texttt{Vector} - 向量类型
+                    \item \texttt{Array} - 数组类型（元素级）
+                    \item \texttt{X} - 动态大小
+                    \item \texttt{d} - double, \texttt{f} - float
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{类型转换}
+                \begin{itemize}
+                    \item \texttt{Matrix::array()} - 转为Array
+                    \item \texttt{Array::matrix()} - 转为Matrix
+                    \item 零开销转换
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Eigen稠密矩阵模块}
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/eigen/eigen_dense.pdf}
+\end{frame}
+
+\begin{frame}{Eigen基本运算}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{矩阵运算}
+                \begin{itemize}
+                    \item 加减：\texttt{A + B}, \texttt{A - B}
+                    \item 乘法：\texttt{A * B}（矩阵乘法）
+                    \item 标量：\texttt{A * scalar}, \texttt{A / scalar}
+                    \item 转置：\texttt{A.transpose()}
+                    \item 共轭转置：\texttt{A.adjoint()}
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{元素访问}
+                \begin{itemize}
+                    \item \texttt{A(i, j)} - 矩阵元素
+                    \item \texttt{v[i]} - 向量元素
+                    \item \texttt{A.block(i,j,m,n)} - 子矩阵
+                    \item \texttt{A.row(i)}, \texttt{A.col(j)} - 行/列
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{初始化方法}
+                \begin{itemize}
+                    \item \texttt{MatrixXd::Zero(m,n)} - 零矩阵
+                    \item \texttt{MatrixXd::Identity(m,n)} - 单位矩阵
+                    \item \texttt{MatrixXd::Random(m,n)} - 随机矩阵
+                    \item 逗号初始化：\texttt{A << 1,2,3,4,5,6;}
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{统计与范数}
+                \begin{itemize}
+                    \item \texttt{A.sum()}, \texttt{A.mean()} - 和、均值
+                    \item \texttt{A.norm()} - Frobenius范数
+                    \item \texttt{A.minCoeff()}, \texttt{A.maxCoeff()} - 最值
+                    \item \texttt{A.determinant()} - 行列式
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Eigen矩阵分解}
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/eigen/eigen_solvers.pdf}
+\end{frame}
+
+\begin{frame}{Eigen矩阵分解方法}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{LU分解}
+                \begin{itemize}
+                    \item \texttt{PartialPivLU<MatrixXd> lu(A);}
+                    \item \texttt{x = lu.solve(b);}
+                    \item 适用于一般方阵
+                    \item 复杂度：O(n³)
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{QR分解}
+                \begin{itemize}
+                    \item \texttt{HouseholderQR<MatrixXd> qr(A);}
+                    \item \texttt{x = qr.solve(b);}
+                    \item 适用于超定系统
+                    \item 最小二乘问题
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{Cholesky分解}
+                \begin{itemize}
+                    \item \texttt{LLT<MatrixXd> chol(A);}
+                    \item \texttt{x = chol.solve(b);}
+                    \item 适用于对称正定矩阵
+                    \item 复杂度：O(n³/3)，更快
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{SVD分解}
+                \begin{itemize}
+                    \item \texttt{JacobiSVD<MatrixXd> svd(A);}
+                    \item 最稳定的分解方法
+                    \item 适用于任意矩阵
+                    \item 可用于伪逆、降维
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Eigen特征值与特征向量模块}
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/eigen/eigen_eigenvalues.pdf}
+\end{frame}
+
+\begin{frame}{Eigen使用示例}
+    \begin{ytublock}{线性方程组求解}
+        \begin{itemize}
+            \item \texttt{\#include <Eigen/Dense>}
+            \item \texttt{using namespace Eigen;}
+            \item \texttt{MatrixXd A(3, 3);}
+            \item \texttt{A << 1, 2, 3, 4, 5, 6, 7, 8, 10;}
+            \item \texttt{VectorXd b(3);}
+            \item \texttt{b << 3, 3, 4;}
+            \item \texttt{VectorXd x = A.colPivHouseholderQr().solve(b);}
+        \end{itemize}
+    \end{ytublock}
+
+    \vspace{0.2cm}
+    \begin{ytublock}{特征值计算}
+        \begin{itemize}
+            \item \texttt{SelfAdjointEigenSolver<MatrixXd> eigensolver(A);}
+            \item \texttt{VectorXd eigenvalues = eigensolver.eigenvalues();}
+            \item \texttt{MatrixXd eigenvectors = eigensolver.eigenvectors();}
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Eigen稀疏矩阵模块}
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/eigen/eigen_sparse.pdf}
+\end{frame}
+
+\begin{frame}{Eigen几何变换模块}
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/eigen/eigen_geometry.pdf}
+\end{frame}
+
+\begin{frame}{Eigen安装与配置}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{安装方法}
+                \begin{itemize}
+                    \item 下载源码解压即可
+                    \item 纯头文件库，无需编译
+                    \item 包管理器安装更方便
+                      \begin{itemize}
+                        \item Linux: \texttt{apt-get install libeigen3-dev}
+                        \item macOS: \texttt{brew install eigen}
+                      \end{itemize}
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{CMake配置}
+                \begin{itemize}
+                    \item \texttt{find\_path(EIGEN3\_INCLUDE\_DIR Eigen3)}
+                    \item \texttt{include\_directories(\$\{EIGEN3\_INCLUDE\_DIR\})}
+                    \item 或使用 \texttt{find\_package(Eigen3)}
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{头文件包含}
+                \begin{itemize}
+                    \item \texttt{\#include <Eigen/Dense>} - 所有稠密矩阵
+                    \item \texttt{\#include <Eigen/Sparse>} - 稀疏矩阵
+                    \item \texttt{\#include <Eigen/Geometry>} - 几何变换
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ========== Intel OneMKL库 ==========
+
+\section{Intel OneMKL库}
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \tableofcontents[currentsection,hideothersubsections]
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{OneMKL简介}
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/mkl/mkl_overview.pdf}
+
+    \begin{ytublock}{OneMKL 概览}
+        \textbf{Intel oneAPI Math Kernel Library}（OneMKL）是 Intel 的高性能数学核心库，专为 x86/x86\_64 平台深度优化。\textbf{模块}：BLAS、LAPACK、ScaLAPACK、FFT、DFT、FFTW3 接口、Pardiso 稀疏求解器、VML（向量数学库）、VSL（向量统计库）等。\textbf{并行}：自动利用多核 CPU、SIMD（AVX/AVX-512）及多线程，支持 OpenMP 与 TBB。\textbf{跨平台}：Windows、Linux、macOS；C/C++、Fortran、Python、DPC++。CMake 一行 \texttt{find\_package(MKL)} 即可启用。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{BLAS基础线性代数子程序}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/blas/mkl_blas_overview.pdf}
+\end{frame}
+
+\begin{frame}{BLAS详细结构}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/blas/mkl_blas.pdf}
+\end{frame}
+
+\begin{frame}{BLAS Level 1：向量运算}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/blas/mkl_blas_level1.pdf}
+\end{frame}
+
+\begin{frame}{BLAS Level 2：矩阵-向量运算}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/blas/mkl_blas_level2.pdf}
+\end{frame}
+
+\begin{frame}{BLAS Level 3：矩阵-矩阵运算}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/blas/mkl_blas_level3.pdf}
+\end{frame}
+
+\begin{frame}{BLAS函数列表}
+    \begin{columns}
+        \begin{column}{0.32\textwidth}
+            \begin{ytublock}{Level 1：向量运算}
+                \begin{itemize}
+                    \item \texttt{ddot}、\texttt{sdot} - 向量点积
+                    \item \texttt{dnrm2}、\texttt{dasum} - 向量范数
+                    \item \texttt{dscal} - 向量缩放
+                    \item \texttt{daxpy} - 向量线性组合
+                    \item \texttt{dcopy} - 向量复制
+                    \item \texttt{idamax} - 最大元素索引
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \begin{ytublock}{Level 2：矩阵-向量}
+                \begin{itemize}
+                    \item \texttt{dgemv} - 一般矩阵向量乘法
+                    \item \texttt{dsymv} - 对称矩阵向量乘法
+                    \item \texttt{dtrmv} - 三角矩阵向量乘法
+                    \item \texttt{dger} - 外积更新
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \begin{ytublock}{Level 3：矩阵-矩阵}
+                \begin{itemize}
+                    \item \texttt{dgemm} - 一般矩阵乘法
+                    \item \texttt{dsymm} - 对称矩阵乘法
+                    \item \texttt{dtrmm} - 三角矩阵乘法
+                    \item \texttt{dsyrk} - 对称秩k更新
+                    \item \texttt{dtrsm} - 三角矩阵求解
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LAPACK线性代数包}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/lapack/mkl_lapack.pdf}
+\end{frame}
+
+\begin{frame}{LAPACK线性方程组求解}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/lapack/linear_equations/mkl_lapack_linear_equations.pdf}
+\end{frame}
+
+\begin{frame}{LAPACK矩阵分解方法}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/lapack/linear_equations/mkl_lapack_linear_eq_matrix_factorization.pdf}
+\end{frame}
+
+\begin{frame}{LAPACK特征值问题}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/lapack/eigenvalue/mkl_lapack_eigenvalue_drivers.pdf}
+\end{frame}
+
+\begin{frame}{LAPACK主要功能}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{矩阵分解}
+                \begin{itemize}
+                    \item \texttt{dgesv} - LU分解求解
+                    \item \texttt{dpotrf} - Cholesky分解
+                    \item \texttt{dgeqrf} - QR分解
+                    \item \texttt{dgesvd} - SVD分解
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{线性方程组}
+                \begin{itemize}
+                    \item \texttt{dgesv} - 一般矩阵求解
+                    \item \texttt{dposv} - 对称正定求解
+                    \item \texttt{dgels} - 最小二乘问题
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{特征值问题}
+                \begin{itemize}
+                    \item \texttt{dsyev} - 对称矩阵特征值
+                    \item \texttt{dgeev} - 一般矩阵特征值
+                    \item \texttt{dsygv} - 广义特征值
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{使用场景}
+                \begin{itemize}
+                    \item 大规模矩阵运算（>1000x1000）
+                    \item 高性能计算需求
+                    \item 科学计算、工程应用
+                    \item 需要极致性能的场景
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{MKL稀疏矩阵模块}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/sparse/mkl_sparse_blas_overview.pdf}
+\end{frame}
+
+\begin{frame}{稀疏BLAS详细结构}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/sparse/mkl_sparse_blas.pdf}
+\end{frame}
+
+\begin{frame}{稀疏矩阵直接求解器}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/sparse/mkl_sparse_directsolvers.pdf}
+\end{frame}
+
+\begin{frame}{稀疏矩阵迭代求解器}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/sparse/mkl_sparse_itersolvers.pdf}
+\end{frame}
+
+\begin{frame}{MKL FFT快速傅里叶变换}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/FFT/mkl_dft.pdf}
+\end{frame}
+
+\begin{frame}{MKL VML向量数学库}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/VML/mkl_vml.pdf}
+\end{frame}
+
+\begin{frame}{MKL VSL随机数生成库}
+    \centering
+    \includegraphics[width=0.99\textwidth]{images/mkl/VSL/mkl_vsl.pdf}
+\end{frame}
+
+\begin{frame}{OneMKL安装与配置}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{安装方法}
+                \begin{itemize}
+                    \item \textbf{官方安装包}：
+                      \begin{itemize}
+                        \item 从Intel官网下载
+                        \item 运行安装程序
+                        \item 设置环境变量 \texttt{MKLROOT}
+                      \end{itemize}
+                    \item \textbf{包管理器}：
+                      \begin{itemize}
+                        \item Linux: \texttt{apt-get install libmkl-dev}
+                        \item macOS: \texttt{brew install mkl}
+                      \end{itemize}
+                \end{itemize}
+            \end{ytublock}
+
+            \begin{ytublock}{CMake配置}
+                \begin{itemize}
+                    \item \texttt{find\_package(MKL)}
+                    \item \texttt{target\_link\_libraries} 链接库
+                    \item 链接库示例：
+                      \begin{itemize}
+                        \item \texttt{mkl\_intel\_lp64}
+                        \item \texttt{mkl\_core}
+                        \item \texttt{mkl\_sequential}
+                      \end{itemize}
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{头文件包含}
+                \begin{itemize}
+                    \item \texttt{\#include <mkl.h>} - 所有MKL函数
+                    \item \texttt{\#include <mkl\_blas.h>} - BLAS函数
+                    \item \texttt{\#include <mkl\_lapacke.h>} - LAPACK接口
+                    \item \texttt{\#include <mkl\_dfti.h>} - FFT接口
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ========== 总结 ==========
+
+\section{总结}
+
+\begin{frame}{总结}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{本章要点}
+                \begin{itemize}
+                    \item 掌握C++标准库cmath基础
+                    \item 了解Boost科学计算组件
+                    \item 学会Eigen线性代数库的使用
+                    \item 了解Intel OneMKL高性能计算
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{ytublock}{学习路径}
+                \begin{itemize}
+                    \item 从标准库cmath开始学习基础
+                    \item 进阶到Boost扩展数学功能
+                    \item 使用Eigen进行矩阵运算
+                    \item 需要高性能时考虑MKL
+                \end{itemize}
+            \end{ytublock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{进一步学习}
+    \begin{ytublock}{推荐资源}
+        \begin{itemize}
+            \item C++标准库文档：\texttt{https://en.cppreference.com}
+            \item Boost官方文档：\texttt{https://www.boost.org}
+            \item Eigen官方文档：\texttt{https://eigen.tuxfamily.org}
+            \item Intel OneMKL文档：\texttt{https://software.intel.com/mkl}
+        \end{itemize}
+    \end{ytublock}
+
+    \begin{ytublock}{实践项目建议}
+        \begin{itemize}
+            \item 实现一个简单的线性方程组求解器
+            \item 开发一个矩阵运算性能测试工具
+            \item 构建一个科学计算工作流示例
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\end{document}

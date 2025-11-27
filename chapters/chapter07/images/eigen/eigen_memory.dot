@@ -1,0 +1,23 @@
+digraph EigenMemory {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    Memory [label="内存管理", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    Alignment [label="内存对齐\n16字节对齐\nSIMD优化", fillcolor="#bbdefb", color="#1565c0", shape=ellipse];
+
+    Allocation [label="内存分配\n固定→栈\n动态→堆", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    MapType [label="Map类型\n零拷贝\n映射现有内存", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Memory -> Alignment [label="", color="#1565c0", style="bold"];
+    Memory -> Allocation [label="", color="#1565c0", style="bold"];
+    Memory -> MapType [label="", color="#1565c0", style="bold"];
+
+    labelloc="t";
+    label="内存管理与Map类型";
+}

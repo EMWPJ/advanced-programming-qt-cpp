@@ -1,0 +1,29 @@
+digraph EigenEigenvalues {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    EigenvaluesModule [label="Eigenvalues模块\n特征值和特征向量", fillcolor="#90caf9", color="#1976d2", shape=box, style="bold", fontsize=14];
+
+    SelfAdjoint [label="对称矩阵特征值\nSelfAdjointEigenSolver\n实对称矩阵\n特征值+特征向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    General [label="一般矩阵特征值\nEigenSolver\n复数特征值\n特征值+特征向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Generalized [label="广义特征值\nGeneralizedEigenSolver\nAx = λBx\n广义特征值问题", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    Complex [label="复数矩阵特征值\nComplexEigenSolver\n复数矩阵特征值", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    PartialEigen [label="部分特征值\n迭代方法\n只计算部分特征值\n大规模矩阵", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    EigenvaluesModule -> SelfAdjoint [label="提供", color="#1976d2", style="dashed"];
+    EigenvaluesModule -> General [label="提供", color="#1976d2", style="dashed"];
+    EigenvaluesModule -> Generalized [label="提供", color="#1976d2", style="dashed"];
+    EigenvaluesModule -> Complex [label="提供", color="#1976d2", style="dashed"];
+    EigenvaluesModule -> PartialEigen [label="提供", color="#1976d2", style="dashed"];
+
+    labelloc="t";
+    label="Eigen Eigenvalues模块详细结构图";
+}

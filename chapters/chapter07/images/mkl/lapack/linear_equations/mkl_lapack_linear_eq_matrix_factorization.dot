@@ -1,0 +1,36 @@
+digraph MKLLAPACKLinearEqMatrixFact {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,7",
+           pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    bgcolor="#ffffff";
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+
+    MatrixFactModule [label="LAPACK线性方程组 - 矩阵分解",
+                      fillcolor="#a5d6a7", color="#388e3c",
+                      shape=box, style="bold,rounded",
+                      fontsize=22, penwidth=3];
+
+    LUFact [label="LU分解\n?getrf / ?getf2 / ?getc2",
+            fillcolor="#c8e6c9", color="#388e3c",
+            shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    CholeskyFact [label="Cholesky分解\n?potrf / ?potf2",
+                  fillcolor="#c8e6c9", color="#388e3c",
+                  shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    LDLFact [label="LDL分解\n?sytrf / ?sytf2",
+             fillcolor="#c8e6c9", color="#388e3c",
+             shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    BandLUFact [label="带状LU分解\n?gbtrf / ?gbtf2",
+                fillcolor="#c8e6c9", color="#388e3c",
+                shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    MatrixFactModule -> LUFact [penwidth=3.5, arrowsize=1.3];
+    MatrixFactModule -> CholeskyFact [penwidth=3.5, arrowsize=1.3];
+    MatrixFactModule -> LDLFact [penwidth=3.5, arrowsize=1.3];
+    MatrixFactModule -> BandLUFact [penwidth=3.5, arrowsize=1.3];
+}

@@ -1,0 +1,29 @@
+digraph MKLLAPACKLeastSquaresEigenvalue {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="11,8",
+           pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    bgcolor="#ffffff";
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+
+    LSEigenModule [label="LAPACK最小二乘和特征值问题模块",
+                  fillcolor="#ce93d8", color="#7b1fa2",
+                  shape=box, style="bold,rounded",
+                  fontsize=22, penwidth=3];
+
+    CompRoutines [label="计算例程\n?geqrf / ?gesvd / ?syev / ?geev",
+                  fillcolor="#e1bee7", color="#7b1fa2",
+                  shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    DriverRoutines [label="驱动例程\n?gels / ?syev / ?geev / ?gesvd",
+                    fillcolor="#a5d6a7", color="#388e3c",
+                    shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    LSEigenModule -> CompRoutines [penwidth=3.5, arrowsize=1.3];
+    LSEigenModule -> DriverRoutines [penwidth=3.5, arrowsize=1.3];
+}

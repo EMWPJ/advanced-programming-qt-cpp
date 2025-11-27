@@ -1,0 +1,70 @@
+digraph MKLSparseBLASLevel1 {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    Level1Module [label="Level 1: 稀疏向量操作\nSparse Vector Operations", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    // 向量运算
+    Axpyi [label="?axpyi\n稀疏向量缩放相加\n y[indx[i]] = y[indx[i]] + α*x[i]\n y = y + α*x (稀疏)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Doti [label="?doti\n稀疏向量点积\n result = Σ(x[i] * y[indx[i]])\n 实数点积", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Dotci [label="?dotci\n共轭点积\n result = Σ(conj(x[i]) * y[indx[i]])\n 复数共轭点积", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Dotui [label="?dotui\n无共轭点积\n result = Σ(x[i] * y[indx[i]])\n 复数无共轭点积", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Gthr [label="?gthr\n收集稀疏向量\n y[i] = x[indx[i]]\n 从稠密向量提取稀疏向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Gthrz [label="?gthrz\n收集并归零\n y[i] = x[indx[i]]\n x[indx[i]] = 0\n 提取后归零原向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Roti [label="?roti\nGivens旋转\n 对稀疏向量进行Givens旋转\n 用于QR分解", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Sctr [label="?sctr\n分散稀疏向量\n y[indx[i]] = x[i]\n 从稀疏向量填充稠密向量", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 应用场景
+    VectorOps [label="向量运算\nVector Operations", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DataMovement [label="数据移动\nData Movement", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    LinearAlgebra [label="线性代数\nLinear Algebra", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 主模块连接
+    Level1Module -> Axpyi [label="提供", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+    Level1Module -> Doti [label="提供", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+    Level1Module -> Dotci [label="提供", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+    Level1Module -> Dotui [label="提供", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+    Level1Module -> Gthr [label="提供", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+    Level1Module -> Gthrz [label="提供", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+    Level1Module -> Roti [label="提供", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+    Level1Module -> Sctr [label="提供", color="#2e7d32", style="bold", penwidth=3, arrowsize=1.2];
+
+    // 功能分类
+    VectorOps -> Axpyi [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="dashed"];
+    VectorOps -> Doti [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="dashed"];
+    VectorOps -> Dotci [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="dashed"];
+    VectorOps -> Dotui [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="dashed"];
+    VectorOps -> Roti [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="dashed"];
+
+    DataMovement -> Gthr [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="dashed"];
+    DataMovement -> Gthrz [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="dashed"];
+    DataMovement -> Sctr [penwidth=3, arrowsize=1.2, label="包含", color="#f57f17", style="dashed"];
+
+    LinearAlgebra -> Doti [penwidth=2, label="使用", color="#666666", style="dotted"];
+    LinearAlgebra -> Axpyi [penwidth=2, label="使用", color="#666666", style="dotted"];
+    LinearAlgebra -> Roti [penwidth=2, label="使用", color="#666666", style="dotted"];
+
+    // 函数关系
+    Gthr -> Doti [penwidth=2, label="→", color="#666666", style="dotted"];
+    Doti -> Axpyi [penwidth=2, label="→", color="#666666", style="dotted"];
+    Axpyi -> Sctr [penwidth=2, label="→", color="#666666", style="dotted"];
+    Gthrz -> Roti [penwidth=2, label="→", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL 稀疏BLAS Level 1: 稀疏向量操作\nMKL Sparse BLAS Level 1: Sparse Vector Operations";
+}

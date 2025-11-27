@@ -1,0 +1,39 @@
+digraph MKLLAPACKGeneralizedEigen {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="11,8",
+           pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    bgcolor="#ffffff";
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+
+    GenEigenModule [label="LAPACK广义特征值问题",
+                    fillcolor="#ffcc80", color="#f57c00",
+                    shape=box, style="bold,rounded",
+                    fontsize=22, penwidth=3];
+
+    GenSymDef [label="广义对称正定\n?dsygv / ?dsygvd / ?dsygvx",
+               fillcolor="#b2dfdb", color="#00695c",
+               shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    GenNonsym [label="广义非对称\n?ggev / ?ggevx / ?ggees",
+               fillcolor="#ffe0b2", color="#e65100",
+               shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    GenSVD [label="广义SVD\n?ggsvd / ?ggsvd3 / ?ggsvp",
+            fillcolor="#bbdefb", color="#1976d2",
+            shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    CSD [label="CSD分解\n?orcsd / ?uncsd",
+         fillcolor="#f8bbd0", color="#c2185b",
+         shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    GenEigenModule -> GenSymDef [penwidth=3.5, arrowsize=1.3];
+    GenEigenModule -> GenNonsym [penwidth=3.5, arrowsize=1.3];
+    GenEigenModule -> GenSVD [penwidth=3.5, arrowsize=1.3];
+    GenEigenModule -> CSD [penwidth=3.5, arrowsize=1.3];
+}

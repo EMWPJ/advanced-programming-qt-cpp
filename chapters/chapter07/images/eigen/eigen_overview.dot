@@ -1,0 +1,29 @@
+digraph EigenOverview {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=12, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=10];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    Eigen [label="Eigen线性代数库", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    Core [label="Core\n核心功能模块\n(Matrix, Array, Vector)", fillcolor="#bbdefb", color="#1565c0", shape=box];
+    Dense [label="Dense\n稠密矩阵和向量运算\n(包含Core, 矩阵分解)", fillcolor="#90caf9", color="#1976d2", shape=box];
+    Sparse [label="Sparse\n稀疏矩阵支持\n(CSR/CSC/COO格式)", fillcolor="#90caf9", color="#1976d2", shape=box];
+    Geometry [label="Geometry\n几何变换模块\n(旋转、平移、缩放)", fillcolor="#90caf9", color="#1976d2", shape=box];
+    Eigenvalues [label="Eigenvalues\n特征值和特征向量\n(对称/非对称矩阵)", fillcolor="#90caf9", color="#1976d2", shape=box];
+
+    Eigen -> Core [label="", color="#1565c0", style="bold", penwidth=2];
+    Eigen -> Dense [label="", color="#1565c0", style="bold", penwidth=2];
+    Eigen -> Sparse [label="", color="#1565c0", style="bold", penwidth=2];
+    Eigen -> Geometry [label="", color="#1565c0", style="bold", penwidth=2];
+    Eigen -> Eigenvalues [label="", color="#1565c0", style="bold", penwidth=2];
+
+    Dense -> Core [label="包含", color="#1976d2", style="dashed"];
+    Geometry -> Dense [label="依赖", color="#1976d2", style="dotted"];
+    Eigenvalues -> Dense [label="依赖", color="#1976d2", style="dotted"];
+
+    labelloc="t";
+    label="Eigen库总体结构图";
+}

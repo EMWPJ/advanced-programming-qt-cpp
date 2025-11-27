@@ -1,0 +1,45 @@
+digraph MKLBLASLevel1 {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    Level1Header [label="BLAS Level 1\n向量运算\n(Vector Operations)", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16];
+
+    BasicOps [label="基本运算\n(Basic Operations)", fillcolor="#e8f5e9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    DotProd [label="点积运算\n?dot, ?sdot\n?dotc, ?dotu", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    NormOps [label="范数运算\n?nrm2\n?asum\n?cabs1", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ScaleOps [label="缩放运算\n?scal", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    AxpyOps [label="向量加减\n?axpy", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    UtilFuncs [label="工具函数\n(Utility Functions)", fillcolor="#e8f5e9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    CopyOps [label="复制运算\n?copy\n?copy_batch\n?copy_batch_strided", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    SwapOps [label="交换运算\n?swap", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MaxMinOps [label="索引查找\ni?amax\ni?amin", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    RotFuncs [label="旋转函数\n(Rotation Functions)", fillcolor="#e8f5e9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    RotOps [label="基本旋转\n?rot\n?rotg", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+    RotmOps [label="改进旋转\n?rotm\n?rotmg", fillcolor="#ffffff", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Level1Header -> BasicOps [penwidth=3.5, arrowsize=1.3, ];
+    Level1Header -> UtilFuncs [penwidth=3.5, arrowsize=1.3, ];
+    Level1Header -> RotFuncs [penwidth=3.5, arrowsize=1.3, ];
+
+    BasicOps -> DotProd [penwidth=3.5, arrowsize=1.3, ];
+    BasicOps -> NormOps [penwidth=3.5, arrowsize=1.3, ];
+    BasicOps -> ScaleOps [penwidth=3.5, arrowsize=1.3, ];
+    BasicOps -> AxpyOps [penwidth=3.5, arrowsize=1.3, ];
+
+    UtilFuncs -> CopyOps [penwidth=3.5, arrowsize=1.3, ];
+    UtilFuncs -> SwapOps [penwidth=3.5, arrowsize=1.3, ];
+    UtilFuncs -> MaxMinOps [penwidth=3.5, arrowsize=1.3, ];
+
+    RotFuncs -> RotOps [penwidth=3.5, arrowsize=1.3, ];
+    RotFuncs -> RotmOps [penwidth=3.5, arrowsize=1.3, ];
+}

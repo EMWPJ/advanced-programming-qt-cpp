@@ -1,0 +1,32 @@
+digraph MKLLAPACKAuxEigenvalue {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,6",
+           pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    bgcolor="#ffffff";
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+
+    EigenAuxModule [label="LAPACK辅助例程 - 特征值辅助",
+                    fillcolor="#b0bec5", color="#546e7a",
+                    shape=box, style="bold,rounded",
+                    fontsize=22, penwidth=3];
+
+    Eigen2x2 [label="2×2特征值\n?laev2 / ?lanv2",
+              fillcolor="#b2dfdb", color="#00695c",
+              shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    EigenReduce [label="特征值约化\n?sytrd / ?hetrd / ?gehrd",
+                 fillcolor="#b2dfdb", color="#00695c",
+                 shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    EigenIter [label="特征值迭代\n?lahqr / ?lahrd",
+               fillcolor="#b2dfdb", color="#00695c",
+               shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    EigenAuxModule -> Eigen2x2 [penwidth=3.5, arrowsize=1.3];
+    EigenAuxModule -> EigenReduce [penwidth=3.5, arrowsize=1.3];
+    EigenAuxModule -> EigenIter [penwidth=3.5, arrowsize=1.3];
+}

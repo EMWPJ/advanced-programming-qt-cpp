@@ -1,0 +1,36 @@
+digraph BoostRandom {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#fff3e0"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fff3e0";
+
+    RandomModule [label="Boost.Random模块\n随机数生成", fillcolor="#ffcc80", color="#e65100", shape=box, style="bold", fontsize=14];
+
+    Generators [label="随机数生成器\nmt19937 (Mersenne Twister)\nlagged_fibonacci\nranlux\n线性同余生成器", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    UniformDist [label="均匀分布\nuniform_int\nuniform_real\n均匀随机数", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    NormalDist [label="正态分布\nnormal_distribution\n高斯分布\n对数正态分布", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    OtherDist [label="其他分布\n指数分布\n泊松分布\n伽马分布\n贝塔分布\n几何分布", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    SeedManagement [label="种子管理\nrandom_device\n固定种子\n时间种子\n可重现性", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    ThreadSafe [label="线程安全\n独立生成器\n线程本地存储\n并行随机数", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    RandomModule -> Generators [label="提供", color="#e65100", style="dashed"];
+    RandomModule -> UniformDist [label="提供", color="#e65100", style="dashed"];
+    RandomModule -> NormalDist [label="提供", color="#e65100", style="dashed"];
+    RandomModule -> OtherDist [label="提供", color="#e65100", style="dashed"];
+    RandomModule -> SeedManagement [label="提供", color="#e65100", style="dashed"];
+    RandomModule -> ThreadSafe [label="支持", color="#e65100", style="dashed"];
+
+    Generators -> UniformDist [label="使用", color="#2e7d32", style="dotted"];
+    Generators -> NormalDist [label="使用", color="#2e7d32", style="dotted"];
+    SeedManagement -> Generators [label="初始化", color="#2e7d32", style="dotted"];
+
+    labelloc="t";
+    label="Boost.Random模块详细结构图";
+}

@@ -1,0 +1,36 @@
+digraph MKLLAPACKAuxFactorization {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,7",
+           pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    bgcolor="#ffffff";
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+
+    FactAuxModule [label="LAPACK辅助例程 - 分解辅助",
+                   fillcolor="#b0bec5", color="#546e7a",
+                   shape=box, style="bold,rounded",
+                   fontsize=22, penwidth=3];
+
+    LUFactAux [label="LU分解辅助\n?getf2 / ?getc2 / ?gesc2",
+               fillcolor="#e1bee7", color="#7b1fa2",
+               shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    CholFactAux [label="Cholesky分解辅助\n?potf2 / ?pbtf2",
+                 fillcolor="#e1bee7", color="#7b1fa2",
+                 shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    QRFactAux [label="QR分解辅助\n?geqr2 / ?geqr2p / ?gelq2",
+               fillcolor="#e1bee7", color="#7b1fa2",
+               shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+    BidiagFactAux [label="双对角化辅助\n?gebd2 / ?labrd",
+                   fillcolor="#e1bee7", color="#7b1fa2",
+                   shape=box, style="bold,rounded", fontsize=15, penwidth=2.5];
+
+    FactAuxModule -> LUFactAux [penwidth=3.5, arrowsize=1.3];
+    FactAuxModule -> CholFactAux [penwidth=3.5, arrowsize=1.3];
+    FactAuxModule -> QRFactAux [penwidth=3.5, arrowsize=1.3];
+    FactAuxModule -> BidiagFactAux [penwidth=3.5, arrowsize=1.3];
+}

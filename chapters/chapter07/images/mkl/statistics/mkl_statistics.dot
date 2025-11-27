@@ -1,0 +1,35 @@
+digraph MKLStatistics {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    StatisticsModule [label="统计函数模块\n统计量计算", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    DescriptiveStats [label="描述性统计\n均值、方差\n标准差、偏度\n峰度、中位数", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Correlation [label="相关性分析\n皮尔逊相关系数\n斯皮尔曼相关系数\n协方差矩阵", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SummaryStats [label="汇总统计\n数据汇总\n分组统计\n多维统计", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    HypothesisTest [label="假设检验\nt检验\n卡方检验\nF检验", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PerformanceOpt [label="性能优化\n向量化计算\n多线程并行\n批量处理", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    StatisticsModule -> DescriptiveStats [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    StatisticsModule -> Correlation [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    StatisticsModule -> SummaryStats [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    StatisticsModule -> HypothesisTest [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    StatisticsModule -> PerformanceOpt [penwidth=3, arrowsize=1.2, label="支持", color="#6a1b9a", style="dashed"];
+
+    DescriptiveStats -> PerformanceOpt [penwidth=2, label="应用", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL 统计函数模块详细结构图";
+}

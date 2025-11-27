@@ -1,0 +1,38 @@
+digraph MKLPDETT {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    PDETTModule [label="PDE TT模块\n时间相关PDE求解器", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    TimeDependentPDE [label="时间相关PDE\n∂u/∂t = L(u)\n抛物型/双曲型\n时间演化问题", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    TimeStepping [label="时间步进方法\n显式方法\n隐式方法\nCrank-Nicolson", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Stability [label="稳定性分析\nCFL条件\n数值稳定性\n时间步长控制", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SpatialDiscretization [label="空间离散化\n有限差分\n有限元\n谱方法", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    AdaptiveTimeStep [label="自适应时间步\n动态步长调整\n误差控制\n效率优化", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Applications [label="应用场景\n热传导方程\n波动方程\n扩散方程\n对流扩散", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PDETTModule -> TimeDependentPDE [penwidth=3, arrowsize=1.2, label="求解", color="#6a1b9a", style="dashed"];
+    PDETTModule -> TimeStepping [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    PDETTModule -> Stability [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    PDETTModule -> SpatialDiscretization [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    PDETTModule -> AdaptiveTimeStep [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    PDETTModule -> Applications [penwidth=3, arrowsize=1.2, label="应用", color="#6a1b9a", style="dashed"];
+
+    TimeStepping -> Stability [penwidth=2, label="考虑", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL PDE TT模块详细结构图";
+}

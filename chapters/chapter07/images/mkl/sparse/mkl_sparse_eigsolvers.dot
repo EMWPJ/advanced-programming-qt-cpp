@@ -1,0 +1,38 @@
+digraph MKLSparseEigSolvers {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    SparseEigSolversModule [label="稀疏特征值求解器模块\n大规模特征值问题", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    LanczosMethod [label="Lanczos方法\n对称矩阵特征值\n三对角化\n部分特征值", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ArnoldiMethod [label="Arnoldi方法\n一般矩阵特征值\nKrylov子空间\nGMRES相关", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    JacobiDavidson [label="Jacobi-Davidson方法\n大规模特征值\n子空间迭代\n鲁棒性强", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PartialEigenvalues [label="部分特征值\n最大/最小特征值\n特征值子集\n内存高效", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ConvergenceControl [label="收敛控制\n收敛准则\n迭代次数\n残差控制", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Applications [label="应用场景\n结构动力学\n量子力学\n主成分分析", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SparseEigSolversModule -> LanczosMethod [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseEigSolversModule -> ArnoldiMethod [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseEigSolversModule -> JacobiDavidson [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseEigSolversModule -> PartialEigenvalues [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseEigSolversModule -> ConvergenceControl [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    SparseEigSolversModule -> Applications [penwidth=3, arrowsize=1.2, label="应用", color="#6a1b9a", style="dashed"];
+
+    LanczosMethod -> PartialEigenvalues [penwidth=2, label="计算", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL 稀疏特征值求解器模块详细结构图";
+}

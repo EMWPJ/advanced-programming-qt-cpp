@@ -1,0 +1,30 @@
+digraph EigenSparseFormat {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    SparseFormat [label="稀疏矩阵存储格式", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    CSR [label="CSR\n按行压缩\n行访问高效", fillcolor="#bbdefb", color="#1565c0", shape=box];
+
+    CSC [label="CSC\n按列压缩\n列访问高效", fillcolor="#c8e6c9", color="#2e7d32", shape=box];
+
+    COO [label="COO\n坐标列表\n构建简单", fillcolor="#fff9c4", color="#f57f17", shape=box];
+
+    BlockSparse [label="Block Sparse\n块级存储\n块操作高效", fillcolor="#e1bee7", color="#7b1fa2", shape=box];
+
+    Selection [label="选择\n行访问多→CSR\n列访问多→CSC\n构建阶段→COO", fillcolor="#f8bbd0", color="#c2185b", shape=ellipse, fontsize=10];
+
+    SparseFormat -> CSR [label="", color="#1565c0", style="bold"];
+    SparseFormat -> CSC [label="", color="#1565c0", style="bold"];
+    SparseFormat -> COO [label="", color="#1565c0", style="bold"];
+    SparseFormat -> BlockSparse [label="", color="#1565c0", style="bold"];
+
+    SparseFormat -> Selection [label="", color="#1565c0", style="dashed"];
+
+    labelloc="t";
+    label="稀疏矩阵存储格式";
+}

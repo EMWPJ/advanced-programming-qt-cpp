@@ -1,0 +1,32 @@
+digraph BoostMultiprecision {
+    graph [fontname="Microsoft YaHei", fontsize=12, bgcolor="#fff3e0"];
+    node [fontname="Microsoft YaHei", fontsize=10, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=8];
+
+    rankdir=TB;
+    bgcolor="#fff3e0";
+
+    MultiprecisionModule [label="Boost.Multiprecision模块\n高精度计算", fillcolor="#ffcc80", color="#e65100", shape=box, style="bold", fontsize=14];
+
+    IntegerTypes [label="高精度整数\ncpp_int (任意精度)\nint128_t, int256_t\n固定精度整数", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    FloatTypes [label="高精度浮点数\ncpp_dec_float\ncpp_bin_float\nmpfr_float\nmpf_float", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse];
+
+    GMPBackend [label="GMP后端\nGNU多精度库\n整数和有理数\n高性能计算", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    MPFRBackend [label="MPFR后端\n多精度浮点库\n高精度浮点运算\n舍入模式控制", fillcolor="#fff9c4", color="#f57f17", shape=ellipse];
+
+    Operations [label="高精度运算\n基本运算\n三角函数\n对数指数\n与标准类型互转", fillcolor="#ffccbc", color="#d84315", shape=ellipse];
+
+    MultiprecisionModule -> IntegerTypes [label="提供", color="#e65100", style="dashed"];
+    MultiprecisionModule -> FloatTypes [label="提供", color="#e65100", style="dashed"];
+    MultiprecisionModule -> GMPBackend [label="支持", color="#e65100", style="dashed"];
+    MultiprecisionModule -> MPFRBackend [label="支持", color="#e65100", style="dashed"];
+    MultiprecisionModule -> Operations [label="提供", color="#e65100", style="dashed"];
+
+    IntegerTypes -> GMPBackend [label="可选", color="#2e7d32", style="dotted"];
+    FloatTypes -> MPFRBackend [label="可选", color="#2e7d32", style="dotted"];
+
+    labelloc="t";
+    label="Boost.Multiprecision模块详细结构图";
+}

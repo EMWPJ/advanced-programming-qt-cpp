@@ -1,0 +1,39 @@
+digraph MKLVSL {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    VSLModule [label="VSL模块\n向量统计库", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    Generators [label="随机数生成器\nMT19937 (Mersenne Twister)\nMCG31 (线性同余)\nMCG59\nMRG32k3a\n多种高质量生成器", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    UniformDist [label="均匀分布\n均匀整数分布\n均匀实数分布\n高质量随机数\n可重现性", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    NormalDist [label="正态分布\n高斯分布\n对数正态分布\nBox-Muller变换\n高质量采样", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    OtherDist [label="其他分布\n指数分布\n泊松分布\n伽马分布\n贝塔分布\n几何分布\n多种连续/离散分布", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    QuasiRandom [label="准随机序列\nSobol序列\nHalton序列\n低差异序列\n蒙特卡洛积分", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ParallelGen [label="并行生成\n线程安全\n独立流\n跳过序列\n并行随机数", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    VSLModule -> Generators [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VSLModule -> UniformDist [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VSLModule -> NormalDist [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VSLModule -> OtherDist [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VSLModule -> QuasiRandom [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VSLModule -> ParallelGen [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed"];
+
+    Generators -> UniformDist [penwidth=2, label="使用", color="#666666", style="dotted"];
+    Generators -> NormalDist [penwidth=2, label="使用", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL VSL模块详细结构图";
+}

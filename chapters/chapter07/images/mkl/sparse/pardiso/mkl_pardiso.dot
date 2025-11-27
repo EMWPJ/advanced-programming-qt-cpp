@@ -1,0 +1,42 @@
+digraph MKLPardiso {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    PardisoModule [label="Pardiso模块\n并行直接稀疏求解器", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    MatrixTypes [label="矩阵类型\n对称正定 (mtype=2)\n对称不定 (mtype=1)\n非对称实矩阵 (mtype=11)\n非对称复矩阵 (mtype=13)", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SymbolicPhase [label="符号分解阶段\nPhase 11\n分析矩阵结构\n符号分解\n内存分配", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    NumericPhase [label="数值分解阶段\nPhase 22\n数值分解\nLU/Cholesky分解\n并行计算", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    SolvePhase [label="求解阶段\nPhase 33\n前向/后向替换\n求解线性系统\n可重用分解", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Parallel [label="并行优化\n多线程并行\n分布式计算\n负载均衡\nNUMA优化", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    MemoryMgmt [label="内存管理\n自动内存分配\n内存重用\n大规模矩阵支持", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    IterativeSolvers [label="迭代求解器\n共轭梯度法(CG)\n双共轭梯度法(BiCG)\nGMRES方法\n内存受限场景", fillcolor="#c5e1a5", color="#558b2f", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PardisoModule -> MatrixTypes [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed"];
+    PardisoModule -> SymbolicPhase [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    PardisoModule -> NumericPhase [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    PardisoModule -> SolvePhase [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    PardisoModule -> Parallel [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed"];
+    PardisoModule -> MemoryMgmt [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed"];
+    PardisoModule -> IterativeSolvers [penwidth=2, label="替代方案", color="#666666", style="dotted"];
+
+    SymbolicPhase -> NumericPhase [label="→", color="#f57f17", style="bold", penwidth=3, arrowsize=1.2];
+    NumericPhase -> SolvePhase [label="→", color="#f57f17", style="bold", penwidth=3, arrowsize=1.2];
+
+    labelloc="t";
+    label="MKL Pardiso模块详细结构图";
+}

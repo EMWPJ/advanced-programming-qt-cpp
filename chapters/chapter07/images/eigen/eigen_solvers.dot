@@ -1,0 +1,30 @@
+digraph EigenSolvers {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=TB;
+    bgcolor="#e3f2fd";
+
+    Solvers [label="特征值求解器", fillcolor="#64b5f6", color="#1565c0", shape=box, style="bold", fontsize=16];
+
+    SelfAdjoint [label="SelfAdjointEigenSolver\n对称矩阵\n最快", fillcolor="#bbdefb", color="#1565c0", shape=box];
+
+    EigenSolver [label="EigenSolver\n一般矩阵\n通用", fillcolor="#c8e6c9", color="#2e7d32", shape=box];
+
+    ComplexEigen [label="ComplexEigenSolver\n复数矩阵", fillcolor="#fff9c4", color="#f57f17", shape=box];
+
+    Generalized [label="GeneralizedEigenSolver\n广义特征值\nAx = λBx", fillcolor="#e1bee7", color="#7b1fa2", shape=box];
+
+    Selection [label="选择依据\n对称→SelfAdjoint\n一般→EigenSolver\n复数→ComplexEigen\n广义→Generalized", fillcolor="#f8bbd0", color="#c2185b", shape=ellipse, fontsize=10];
+
+    Solvers -> SelfAdjoint [label="", color="#1565c0", style="bold"];
+    Solvers -> EigenSolver [label="", color="#1565c0", style="bold"];
+    Solvers -> ComplexEigen [label="", color="#1565c0", style="bold"];
+    Solvers -> Generalized [label="", color="#1565c0", style="bold"];
+
+    Solvers -> Selection [label="", color="#1565c0", style="dashed"];
+
+    labelloc="t";
+    label="特征值求解器选择指南";
+}

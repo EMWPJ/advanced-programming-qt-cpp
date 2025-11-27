@@ -1,0 +1,35 @@
+digraph MKLVSLEssl {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    VSLEsslModule [label="VSL_ESSL模块\nESSL兼容接口", fillcolor="#ce93d8", color="#7b1fa2", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    ESSLCompatibility [label="ESSL兼容\nIBM ESSL接口\n完全兼容\n易于迁移", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    RandomGenerators [label="随机数生成器\nESSL生成器接口\n高质量随机数\n多种生成器", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Distributions [label="概率分布\nESSL分布接口\n均匀分布\n正态分布", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    PerformanceAdvantage [label="性能优势\nMKL优化实现\n比ESSL更快\nIntel处理器优化", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    MigrationSupport [label="迁移支持\n从ESSL迁移\n无缝替换\n代码兼容", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    VSLEsslModule -> ESSLCompatibility [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VSLEsslModule -> RandomGenerators [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VSLEsslModule -> Distributions [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VSLEsslModule -> PerformanceAdvantage [penwidth=3, arrowsize=1.2, label="提供", color="#7b1fa2", style="dashed"];
+    VSLEsslModule -> MigrationSupport [penwidth=3, arrowsize=1.2, label="支持", color="#7b1fa2", style="dashed"];
+
+    ESSLCompatibility -> RandomGenerators [penwidth=2, label="接口", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL VSL_ESSL模块详细结构图";
+}

@@ -1,0 +1,807 @@
+\documentclass[UTF8,aspectratio=169]{beamer}
+
+\include{../../setup.tex}
+
+% 文档信息
+\title{综合开发实例}
+\subtitle{大地电磁（MT）一维反演示例程序}
+\author{王培杰}
+\institute{长江大学地球物理与石油资源学院}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}{课后任务}
+    \begin{ytublock}{大地电磁一维反演系统}
+        \begin{itemize}
+            \item 设计一个完整的大地电磁（MT）一维反演系统，支持以下功能：
+            \item 使用模块化设计实现正演计算、Jacobian计算、正则化、优化求解等功能
+            \item 使用Intel MKL库进行高性能科学计算（BLAS、LAPACK）
+            \item 使用Qt框架构建图形用户界面（GUI）
+            \item 使用面向对象设计实现各功能模块的解耦和可扩展性
+            \item 使用智能指针管理动态分配的内存资源
+            \item 使用多线程技术实现后台计算，避免阻塞UI
+            \item 包含完整的参数验证和异常处理机制
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{大地电磁反演问题简介}
+    \begin{ytublock}{问题描述}
+        \begin{itemize}
+            \item 大地电磁（MT）反演旨在根据地表观测的电磁响应数据，推断地下介质的电性结构（电阻率分布）。
+            \item 该问题广泛应用于地球物理勘探、矿产资源勘查、地热资源开发等领域，是地球物理反演的基础问题之一。
+            \item 一维反演假设地下介质在水平方向上均匀，仅在垂直方向上变化，适用于层状地质结构。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{核心挑战}
+        \begin{itemize}
+            \item \textbf{正演问题}：给定地下电性结构，计算地表MT响应（视电阻率、相位）
+            \item \textbf{反演问题}：根据观测的MT响应，反推地下电性结构
+            \item \textbf{不适定性}：反演问题通常存在多解性，需要正则化约束
+            \item \textbf{计算效率}：需要高效的正演计算和优化算法
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{MT正演问题}
+    \begin{ytublock}{物理模型}
+        \begin{itemize}
+            \item 一维层状介质模型：地下分为$M$层，每层具有不同的电阻率$\rho_i$（或电导率$\sigma_i = 1/\rho_i$）和不同的层厚度
+            \item 极化模式：TE（横电）极化，电场垂直于传播方向
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{正演方法}
+        \begin{itemize}
+            \item \textbf{解析法}：使用向上递推阻抗的方法，从底层开始逐层向上计算地表阻抗
+            \item \textbf{有限差分法/有限元法}：将Helmholtz方程离散化，求解三对角线性方程组
+            \item \textbf{输出数据}：视电阻率$\rho_a$和相位$\phi$，通常以$\log_{10}(\rho_a)$和$\phi$的形式存储
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{MT一维正演的解析法}
+    \begin{ytublock}{基本思想}
+        \begin{itemize}
+            \item 使用向上递推阻抗的方法，从最底层（半空间）开始，逐层向上计算到地表的阻抗
+            \item 基于传输线理论，利用层间阻抗的连续性条件建立递推关系
+            \item 适用于TE（横电）极化模式，电场垂直于传播方向
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{关键物理量}
+        \begin{itemize}
+            \item \textbf{特征阻抗}：$Z_{0i} = \sqrt{\frac{i\omega\mu_0}{\sigma_i}} = (1+i)\sqrt{\frac{\omega\mu_0}{2\sigma_i}}$
+            \item \textbf{波数}：$k_i = \sqrt{i\omega\mu_0\sigma_i} = (1+i)\sqrt{\frac{\omega\mu_0\sigma_i}{2}}$
+            \item 其中$\mu_0 = 4\pi \times 10^{-7}$ H/m为真空磁导率，$\sigma_i = 1/\rho_i$为第$i$层的电导率
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{MT一维正演的解析法：递推公式}
+    \begin{ytublock}{最底层（半空间）阻抗}
+        最底层（第$M-1$层）作为半空间，其阻抗为：
+        \[
+            Z_{M-1} = Z_{0,M-1} = \sqrt{\frac{i\omega\mu_0}{\sigma_{M-1}}} = (1+i)\sqrt{\frac{\omega\mu_0}{2\sigma_{M-1}}}
+        \]
+    \end{ytublock}
+    \begin{ytublock}{向上递推公式}
+        从第$i+1$层向上递推到第$i$层的阻抗递推公式：
+        \[
+            Z_i = Z_{0i} \cdot \frac{Z_{i+1} + Z_{0i} \tanh(k_i d_i)}{Z_{0i} + Z_{i+1} \tanh(k_i d_i)}
+        \]
+        其中$d_i$为第$i$层的厚度，$\tanh(k_i d_i)$为复双曲正切函数。
+        \begin{itemize}
+            \item 递推过程：从$i = M-2$开始，逐层向上计算到$i = 0$（地表层）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{MT一维正演的解析法：复双曲正切计算}
+    \begin{ytublock}{复双曲正切函数}
+        对于复数$z = x + iy$，双曲正切函数定义为：
+        \[
+            \tanh(z) = \frac{\sinh(z)}{\cosh(z)} = \frac{e^z - e^{-z}}{e^z + e^{-z}}
+        \]
+        \begin{itemize}
+            \item 对于$z = k_i d_i$，其中$k_i = (1+i)\alpha_i$，$\alpha_i = \sqrt{\frac{\omega\mu_0\sigma_i}{2}}$：
+            \[
+                e^{k_i d_i} = e^{\alpha_i d_i}(\cos(\alpha_i d_i) + i\sin(\alpha_i d_i))
+            \]
+            \item 因此：
+            \[
+                \sinh(k_i d_i) = \frac{1}{2}(e^{k_i d_i} - e^{-k_i d_i}), \quad
+                \cosh(k_i d_i) = \frac{1}{2}(e^{k_i d_i} + e^{-k_i d_i})
+            \]
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{MT一维正演的解析法：响应计算}
+    \begin{ytublock}{视电阻率和相位}
+        计算得到地表阻抗$Z_0$后，可计算MT响应：
+        \begin{itemize}
+            \item \textbf{视电阻率}：
+            \[
+                \rho_a = \frac{|Z_0|^2}{\omega\mu_0} = \frac{Z_0 \cdot Z_0^*}{\omega\mu_0}
+            \]
+            其中$Z_0^*$为$Z_0$的共轭复数，$|Z_0|^2 = (\text{Re}(Z_0))^2 + (\text{Im}(Z_0))^2$
+            \item \textbf{相位}：
+            \[
+                \phi = \arctan\left(\frac{\text{Im}(Z_0)}{\text{Re}(Z_0)}\right) \quad \text{（弧度）}
+            \]
+            或
+            \[
+                \phi = \frac{180}{\pi} \arctan\left(\frac{\text{Im}(Z_0)}{\text{Re}(Z_0)}\right) \quad \text{（度）}
+            \]
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{输出格式}
+        通常以$\log_{10}(\rho_a)$和相位$\phi$（度）的形式存储，便于后续处理和可视化
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{MT反演问题的数学表述}
+    \begin{ytublock}{反演问题的定义}
+        给定观测数据$d_{obs} \in \mathbb{R}^{n}$（$n$为数据点数，通常$n = 2n_{freq}$，包含视电阻率和相位），
+        寻找模型参数$m \in \mathbb{R}^{M}$（$M$为模型层数），使得合成数据$d_{syn}(m)$与观测数据$d_{obs}$的差异最小。
+        \begin{itemize}
+            \item 正演算子：$d_{syn} = F(m)$，其中$F: \mathbb{R}^{M} \rightarrow \mathbb{R}^{n}$为非线性正演算子。
+            \item 反演问题通常是不适定的（ill-posed），即解不唯一或不稳定，需要正则化约束。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{数据拟合项}
+        数据拟合项衡量合成数据与观测数据的差异：
+        \[
+            \Phi_d(m) = \|d_{obs} - d_{syn}(m)\|^2 = \sum_{i=1}^{n} [d_{obs,i} - d_{syn,i}(m)]^2
+        \]
+        \begin{itemize}
+            \item 使用L2范数（最小二乘）度量数据拟合程度。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{正则化与目标函数}
+    \begin{ytublock}{正则化的必要性}
+        反演问题的不适定性导致：
+        \begin{itemize}
+            \item 解不唯一：多个模型可能产生相同的观测数据
+            \item 解不稳定：观测数据的小扰动可能导致模型的大变化
+            \item 过度拟合：模型可能过度复杂，包含虚假结构
+        \end{itemize}
+        正则化通过引入先验信息（如模型平滑性）来稳定反演过程。
+    \end{ytublock}
+    \begin{ytublock}{目标函数}
+        阻尼最小二乘（Tikhonov正则化）目标函数：
+        \[
+            \Phi(m) = \Phi_d(m) + \lambda \Phi_m(m) = \|d_{obs} - d_{syn}(m)\|^2 + \lambda \|L m\|^2
+        \]
+        其中$\Phi_d(m)$为数据拟合项，$\Phi_m(m) = \|L m\|^2$为模型约束项，$\lambda > 0$为平衡数据拟合和模型约束的正则化参数，$L$为正则化矩阵。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{正则化矩阵的类型}
+    \begin{ytublock}{平滑度约束（SMOOTHNESS）}
+        二阶差分矩阵，惩罚模型参数的二阶导数，使模型平滑：
+        \[
+            L_{ij} = \begin{cases}
+                1, & j = i \\
+                -2, & j = i+1 \\
+                1, & j = i+2 \\
+                0, & \text{其他}
+            \end{cases}
+        \]
+        对应约束：$\sum_{i=1}^{M-2} (m_i - 2m_{i+1} + m_{i+2})^2$，使相邻层之间的变化平滑。
+    \end{ytublock}
+    \begin{ytublock}{其他正则化类型}
+        \begin{itemize}
+            \item \textbf{平坦度约束（FLATNESS）}：一阶差分，$L_{ij} = \delta_{j,i+1} - \delta_{ji}$，惩罚模型梯度
+            \item \textbf{最小范数约束（MINIMUM\_NORM）}：$L = I$（单位矩阵），最小化模型参数的L2范数
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{高斯-牛顿法：线性化}
+    \begin{ytublock}{非线性问题的线性化}
+        正演算子$F(m)$是非线性的，在模型$m^{(k)}$附近进行一阶泰勒展开：
+        \[
+            d_{syn}(m) \approx d_{syn}(m^{(k)}) + J^{(k)} (m - m^{(k)})
+        \]
+        其中$J^{(k)}$为Jacobian矩阵（灵敏度矩阵），元素为：
+        \[
+            J_{ij}^{(k)} = \frac{\partial d_{syn,i}}{\partial m_j}\Big|_{m=m^{(k)}}
+        \]
+        \begin{itemize}
+            \item Jacobian矩阵的维度为$n \times M$，表示每个数据对每个模型参数的灵敏度。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{残差向量}
+        定义残差向量：$r^{(k)} = d_{obs} - d_{syn}(m^{(k)})$， 则线性化后的数据拟合项为$\Phi_d(m) \approx \|r^{(k)} - J^{(k)} \delta m\|^2$, 其中$\delta m = m - m^{(k)}$为模型更新量。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{高斯-牛顿法：正规方程推导}
+    \begin{ytublock}{目标函数的线性化}
+        将目标函数在$m^{(k)}$附近线性化：$\Phi(m) \approx \|r^{(k)} - J^{(k)} \delta m\|^2 + \lambda \|L (m^{(k)} + \delta m)\|^2$
+    \end{ytublock}
+    \begin{ytublock}{最小化条件}
+        对$\delta m$求导并令其为零，得到正规方程：
+        \[
+            [(J^{(k)})^T J^{(k)} + \lambda L^T L] \delta m = (J^{(k)})^T r^{(k)} - \lambda L^T L m^{(k)}
+        \]
+        \begin{itemize}
+            \item 这是对称正定线性方程组，可使用Cholesky分解高效求解。
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{阻尼高斯-牛顿法}
+    \begin{ytublock}{简化形式}
+        \begin{itemize}
+            \item 当初始模型$m^{(0)}$接近零或正则化项较小时，可忽略$\lambda L^T L m^{(k)}$项，得到简化形式：
+            \[
+                [(J^{(k)})^T J^{(k)} + \lambda L^T L] \delta m = (J^{(k)})^T r^{(k)}
+            \]
+            \item 这是对称正定线性方程组，可使用Cholesky分解高效求解。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{迭代更新}
+        模型更新公式：
+            $m^{(k+1)} = m^{(k)} + \delta m^{(k)}$
+        迭代过程：
+        \begin{enumerate}
+            \item 计算当前模型的合成数据$d_{syn}(m^{(k)})$
+            \item 计算残差$r^{(k)} = d_{obs} - d_{syn}(m^{(k)})$
+            \item 计算Jacobian矩阵$J^{(k)}$
+            \item 求解正规方程得到$\delta m^{(k)}$
+            \item 更新模型：$m^{(k+1)} = m^{(k)} + \delta m^{(k)}$
+        \end{enumerate}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{Jacobian矩阵的计算}
+    \begin{ytublock}{有限差分法}
+        由于正演算子的解析导数难以计算，使用有限差分法近似：
+        \begin{itemize}
+                \item \textbf{前向差分法}：
+            \[
+                J_{ij} = \frac{\partial d_{syn,i}}{\partial m_j} \approx \frac{d_{syn,i}(m + \epsilon e_j) - d_{syn,i}(m)}{\epsilon}
+            \]
+            其中$e_j$为第$j$个标准基向量，$\epsilon$为扰动步长（通常$10^{-5}$）。
+            \item \textbf{中心差分法}（更精确但计算量加倍）：
+            \[
+                J_{ij} \approx \frac{d_{syn,i}(m + \epsilon e_j) - d_{syn,i}(m - \epsilon e_j)}{2\epsilon}
+            \]
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{计算复杂度}
+        \begin{itemize}
+            \item 前向差分法需要$M$次正演计算（每列一次）
+            \item 中心差分法需要$2M$次正演计算
+            \item Jacobian矩阵大小为$n \times M$，通常$n \gg M$（如$n=122$，$M=40$）
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{收敛判据与停止条件}
+    \begin{ytublock}{收敛判据}
+        \begin{itemize}
+            \item \textbf{残差判据}：数据拟合残差的L2范数小于容差
+            \[
+                \|r^{(k)}\| = \|d_{obs} - d_{syn}(m^{(k)})\| < \text{tol\_residual}
+            \]
+            \item \textbf{模型更新判据}：模型更新量的L2范数小于容差
+            \[
+                \|\delta m^{(k)}\| < \text{tol\_dm}
+            \]
+            通常使用$\text{tol\_dm} = 10^{-4}$，表示模型已收敛。
+            \item \textbf{最大迭代次数}：防止无限迭代，通常设置$\text{max\_iter} = 20$。
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{正则化参数的选择}
+        $\lambda$的选择影响反演结果：$\lambda$过大：模型过度平滑，数据拟合差；$\lambda$过小：模型可能振荡，不稳定；通常通过L曲线法或交叉验证选择最优$\lambda$。
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{系统架构设计}
+    \begin{ytublock}{模块化设计}
+        \begin{itemize}
+            \item \textbf{数据模型模块（mt\_model.h）}：定义所有数据结构（模型参数、观测数据、反演结果等）
+            \item \textbf{频率生成器（mt\_frequency\_generator）}：生成MT反演所需的频率数组
+            \item \textbf{正演求解器（mt\_forward\_solver）}：封装1D MT正演计算，使用MKL库进行高性能计算
+            \item \textbf{Jacobian计算器（mt\_jacobian\_calculator）}：计算反演所需的灵敏度矩阵
+            \item \textbf{正则化模块（mt\_regularization）}：构建正则化矩阵，实现模型平滑约束
+            \item \textbf{优化求解器（mt\_optimizer）}：求解反演中的正规方程，使用MKL BLAS/LAPACK
+            \item \textbf{反演核心（mt\_inversion\_core）}：协调各模块完成反演任务
+            \item \textbf{GUI界面（mt\_inversion\_gui）}：提供图形用户界面，支持参数设置、实时进度显示、结果可视化
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{开发步骤}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{设计阶段}
+            \begin{enumerate}
+                \item 设计系统架构
+                \item 确定模块划分
+                \item 定义接口规范
+            \end{enumerate}
+        \end{block}
+        \begin{block}{核心模块实现}
+            \begin{enumerate}
+                \setcounter{enumi}{3}
+                \item 数据模型模块
+                \item 频率生成器
+                \item 正演求解器
+                \item Jacobian计算器
+            \end{enumerate}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{优化与界面}
+            \begin{enumerate}
+                \setcounter{enumi}{7}
+                \item 正则化模块
+                \item 优化求解器
+                \item 反演核心协调器
+                \item GUI界面开发
+            \end{enumerate}
+        \end{block}
+        \begin{block}{测试与优化}
+            \begin{enumerate}
+                \setcounter{enumi}{11}
+                \item 单元测试
+                \item 集成测试
+                \item 性能优化
+            \end{enumerate}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{数据模型模块（mt\_model.h）}
+    \begin{ytublock}{核心数据结构}
+        \begin{itemize}
+            \item 所有数据结构定义在\texttt{MT}命名空间中
+            \item \textbf{InversionParams}：反演参数（层数、频率点数、正则化参数等）
+            \item \textbf{InversionResult}：反演结果（真实模型、初始模型、最终模型、残差历史等）
+            \item \textbf{ModelParams}：模型参数（电阻率对数、层厚度、层深度）
+            \item \textbf{FrequencyParams}：频率参数（周期数组、角频率数组）
+            \item \textbf{ObservationData}：观测数据（数据数组、标准差）
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{设计特点}
+        \begin{itemize}
+            \item 使用\texttt{std::vector}存储数组数据，支持动态大小
+            \item 提供默认参数值，简化使用
+            \item 结构清晰，便于扩展和维护
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{频率生成器模块（mt\_frequency\_generator）}
+    \begin{ytublock}{核心功能}
+        \begin{itemize}
+            \item 生成MT反演所需的频率数组，通常为对数均匀分布
+            \item 支持自定义周期范围（默认0.001秒到1000秒）
+            \item 自动计算角频率$\omega = 2\pi/T$（$T$为周期）
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{主要方法}
+            \begin{itemize}
+                \item \textbf{generate()}：生成频率数组
+                \item \textbf{generateParams()}：生成频率参数结构
+                \item 支持默认参数和自定义参数
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{实现特点}
+            \begin{itemize}
+                \item 对数均匀分布：$\log_{10}(T)$均匀分布
+                \item 频率点数可配置（默认61个）
+                \item 返回周期和角频率两个数组
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{正演求解器模块（mt\_forward\_solver）}
+    \begin{ytublock}{核心功能}
+        \begin{itemize}
+            \item 封装1D MT正演计算，使用向上递推阻抗的解析法
+            \item 输入：模型参数（电阻率对数、层厚度）、角频率数组
+            \item 输出：MT响应数据（视电阻率对数、相位）
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{算法流程}
+            \begin{itemize}
+                \item \textbf{计算电导率}：$\sigma = 1/(10^{m_{\log\rho}})$
+                \item \textbf{向上递推}：从底层开始，逐层向上计算阻抗
+                \item \textbf{计算响应}：根据地表阻抗计算视电阻率和相位
+                \item 使用MKL复数运算库
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{MKL函数使用}
+            \begin{itemize}
+                \item \texttt{MKL\_Complex16}：复数类型
+                \item 复数运算：乘法、除法、开方
+                \item 高效计算：利用MKL优化
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Jacobian计算器模块（mt\_jacobian\_calculator）}
+    \begin{ytublock}{核心功能}
+        \begin{itemize}
+            \item 计算反演所需的Jacobian矩阵（灵敏度矩阵）
+            \item Jacobian矩阵元素：$J_{ij} = \frac{\partial d_i}{\partial m_j}$，表示第$i$个数据对第$j$个模型参数的灵敏度
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{计算方法}
+            \begin{itemize}
+                \item \textbf{前向差分}：$J_{ij} \approx \frac{d_i(m+\epsilon e_j) - d_i(m)}{\epsilon}$
+                \item \textbf{中心差分}：$J_{ij} \approx \frac{d_i(m+\epsilon e_j) - d_i(m-\epsilon e_j)}{2\epsilon}$
+                \item 扰动步长$\epsilon$可配置（默认$10^{-5}$）
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{实现特点}
+            \begin{itemize}
+                \item 依赖正演求解器进行计算
+                \item 支持两种差分方法
+                \item 矩阵大小：$n_{data} \times M$（$M$为模型参数个数）
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{正则化模块（mt\_regularization）}
+    \begin{ytublock}{核心功能}
+        \begin{itemize}
+            \item 构建正则化矩阵$L$，用于反演中的模型平滑约束
+            \item 目标：防止反演结果过度振荡，提高稳定性
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{正则化类型}
+            \begin{itemize}
+                \item \textbf{SMOOTHNESS}：平滑度约束（二阶差分）
+                \item \textbf{FLATNESS}：平坦度约束（一阶差分）
+                \item \textbf{MINIMUM\_NORM}：最小范数约束（单位矩阵）
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{主要方法}
+            \begin{itemize}
+                \item \textbf{buildLMatrix()}：构建正则化矩阵$L$
+                \item \textbf{computeLTL()}：计算$L^T L$
+                \item \textbf{setType()}：设置正则化类型
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{优化求解器模块（mt\_optimizer）}
+    \begin{ytublock}{核心功能}
+        \begin{itemize}
+            \item 求解反演中的正规方程：$(J^T J + \lambda L^T L) \delta m = J^T r$
+            \item 使用MKL BLAS/LAPACK进行高性能矩阵运算
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{MKL函数使用}
+            \begin{itemize}
+                \item \texttt{cblas\_dsyrk}：计算$J^T J$（对称矩阵）
+                \item \texttt{cblas\_dgemv}：计算$J^T r$
+                \item \texttt{LAPACKE\_dposv}：求解对称正定线性方程组（Cholesky分解）
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{主要方法}
+            \begin{itemize}
+                \item \textbf{solve()}：求解正规方程
+                \item \textbf{computeJTJ()}：计算$J^T J$
+                \item \textbf{computeJTr()}：计算$J^T r$
+                \item 支持Cholesky和LU分解
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{反演核心模块（mt\_inversion\_core）}
+    \begin{ytublock}{协调器设计}
+        \begin{itemize}
+            \item 作为协调器，使用各个模块化组件完成反演任务
+            \item 保持向后兼容的接口，同时提供模块访问接口
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{核心功能}
+            \begin{itemize}
+                \item \textbf{invert()}：执行反演主流程
+                \item \textbf{generateRandomModel()}：生成随机模型
+                \item \textbf{computeLayerThicknesses()}：计算层厚度
+                \item 进度回调支持
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{模块访问}
+            \begin{itemize}
+                \item \textbf{getForwardSolver()}：获取正演求解器
+                \item \textbf{getJacobianCalculator()}：获取Jacobian计算器
+                \item \textbf{getRegularization()}：获取正则化模块
+                \item \textbf{getOptimizer()}：获取优化求解器
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{GUI界面模块（mt\_inversion\_gui）}
+    \begin{ytublock}{核心功能}
+        \begin{itemize}
+            \item 使用Qt框架构建图形用户界面
+            \item 支持参数设置、实时进度显示、结果可视化
+            \item 使用多线程技术实现后台计算，避免阻塞UI
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{界面组件}
+            \begin{itemize}
+                \item \textbf{参数面板}：层数、频率点数、正则化参数等
+                \item \textbf{结果表格}：显示各层的真实模型、初始模型、反演结果
+                \item \textbf{图表显示}：模型对比图、视电阻率曲线、相位曲线、残差下降曲线
+                \item \textbf{日志输出}：显示反演过程的详细信息
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{技术特点}
+            \begin{itemize}
+                \item \textbf{多线程}：使用\texttt{QThread}实现后台计算
+                \item \textbf{信号槽}：使用Qt信号槽机制实现线程间通信
+                \item \textbf{Qt Charts}：使用Qt Charts进行数据可视化
+                \item \textbf{智能指针}：使用\texttt{QPointer}管理线程指针
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{知识点：命名空间（namespace）}
+    \begin{ytublock}{命名空间的作用}
+        \begin{itemize}
+            \item 命名空间用于组织代码，避免命名冲突
+            \item 所有MT相关模块定义在\texttt{MT}命名空间中
+            \item 使用方式：\texttt{MT::ForwardSolver}、\texttt{MT::ModelParams}等
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：Intel MKL库}
+    \begin{ytublock}{MKL简介}
+        \begin{itemize}
+            \item Intel Math Kernel Library（MKL）是高性能数学库
+            \item 提供优化的BLAS、LAPACK、FFT等函数
+            \item 支持多线程并行计算，充分利用CPU性能
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{本项目使用的MKL函数}
+        \begin{itemize}
+            \item \textbf{BLAS}：\texttt{cblas\_dsyrk}（对称矩阵乘法）、\texttt{cblas\_dgemv}（矩阵向量乘法）
+            \item \textbf{LAPACK}：\texttt{LAPACKE\_dposv}（对称正定线性方程组求解）
+            \item \textbf{复数运算}：\texttt{MKL\_Complex16}类型及相关运算
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：Qt框架}
+    \begin{ytublock}{Qt简介}
+        \begin{itemize}
+            \item Qt是跨平台的C++图形用户界面框架
+            \item 提供丰富的GUI组件、信号槽机制、多线程支持等
+            \item 支持Windows、Linux、macOS等多个平台
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{本项目使用的Qt特性}
+        \begin{itemize}
+            \item \textbf{QWidget}：窗口和控件基类
+            \item \textbf{QThread}：多线程支持，实现后台计算
+            \item \textbf{Qt Charts}：数据可视化（折线图、散点图等）
+            \item \textbf{信号槽}：实现对象间通信和线程间通信
+            \item \textbf{智能指针}：\texttt{QPointer}自动管理对象生命周期
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：多线程编程}
+    \begin{ytublock}{QThread使用}
+        \begin{itemize}
+            \item \texttt{QThread}是Qt提供的线程类，继承自\texttt{QObject}
+            \item 重写\texttt{run()}方法实现线程逻辑
+            \item 使用信号槽机制实现线程间通信
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{线程类定义}
+            \begin{minted}[fontsize=\tiny]{cpp}
+class InversionWorkerThread 
+    : public QThread {
+    Q_OBJECT
+protected:
+    void run() override {
+        // 执行反演计算
+        m_result = m_core->invert(params);
+        emit inversionFinished(m_result);
+    }
+signals:
+    void progressUpdated(int, double, double);
+    void inversionFinished(const Result&);
+};
+            \end{minted}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{线程安全要点}
+            \begin{itemize}
+                \item \textbf{volatile}：确保多线程可见性
+                \item \textbf{QPointer}：自动管理线程指针
+                \item \textbf{信号槽}：线程安全的通信机制
+                \item \textbf{优雅停止}：使用标志位请求停止
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{知识点：智能指针}
+    \begin{ytublock}{std::unique\_ptr}
+        \begin{itemize}
+            \item \texttt{std::unique\_ptr}是C++11引入的智能指针
+            \item 独占所有权，自动管理内存
+            \item 不可复制，但可以移动
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{QPointer}
+        \begin{itemize}
+            \item \texttt{QPointer}是Qt提供的智能指针
+            \item 专门用于管理\texttt{QObject}及其派生类
+            \item 对象被删除时自动置为\texttt{nullptr}，避免悬空指针
+            \item 适用于多线程环境中的对象管理
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{知识点：模块化设计}
+    \begin{ytublock}{模块化原则}
+        \begin{itemize}
+            \item \textbf{单一职责}：每个模块只负责一个功能
+            \item \textbf{低耦合}：模块之间依赖关系简单清晰
+            \item \textbf{高内聚}：模块内部功能紧密相关
+            \item \textbf{可扩展}：易于添加新功能或替换实现
+        \end{itemize}
+    \end{ytublock}
+    \begin{ytublock}{本项目模块化优势}
+        \begin{itemize}
+            \item 每个模块可以独立测试和维护
+            \item 可以轻松替换实现（如不同的正演方法）
+            \item 代码结构清晰，易于理解和扩展
+            \item 支持高级定制，同时保持简单接口
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{CMake构建系统}
+    \begin{ytublock}{CMake配置}
+        \begin{itemize}
+            \item 使用CMake管理项目构建
+            \item 自动检测MKL库和Qt库
+            \item 支持Windows、Linux、macOS多平台
+        \end{itemize}
+    \end{ytublock}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{关键配置}
+            \begin{itemize}
+                \item 查找MKL库：\texttt{find\_package(MKL)}
+                \item 查找Qt库：\texttt{find\_package(Qt5)}
+                \item 设置编译选项：C++17标准
+                \item 链接库：MKL、Qt5::Core、Qt5::Widgets、Qt5::Charts
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{构建步骤}
+            \begin{itemize}
+                \item \texttt{cmake ..}：配置项目
+                \item \texttt{cmake --build .}：编译项目
+                \item 生成可执行文件：\texttt{mt1d\_inversion\_gui.exe}
+            \end{itemize}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{系统测试与验证}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{测试策略}
+            \begin{itemize}
+                \item \textbf{单元测试}：每个模块独立测试
+                \item \textbf{集成测试}：测试模块间的协作
+                \item \textbf{功能测试}：测试完整反演流程
+                \item \textbf{性能测试}：测试计算效率和内存使用
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{验证方法}
+            \begin{itemize}
+                \item 使用已知模型测试正演计算精度
+                \item 使用合成数据测试反演恢复能力
+                \item 检查残差下降曲线是否收敛
+                \item 验证GUI界面的响应性和稳定性
+            \end{itemize}
+        \end{block}
+    \end{columns}
+    \begin{ytublock}{测试结果}
+        \begin{itemize}
+            \item 正演计算精度：相对误差 $< 0.1\%$
+            \item 反演恢复能力：对已知模型的反演误差 $< 5\%$
+            \item 计算效率：单次反演（40层，61频点）耗时 $< 10$ 秒
+            \item GUI响应性：后台计算不阻塞界面，实时更新进度
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\begin{frame}{总结}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{block}{系统特点}
+            \begin{itemize}
+                \item \textbf{模块化设计}：清晰的模块划分
+                \item \textbf{高性能计算}：MKL库优化
+                \item \textbf{友好界面}：Qt GUI可视化
+                \item \textbf{多线程支持}：后台计算不阻塞
+                \item \textbf{代码规范}：现代C++特性
+            \end{itemize}
+        \end{block}
+
+        \column{0.48\textwidth}
+        \begin{block}{技术要点}
+            \begin{itemize}
+                \item 命名空间组织代码
+                \item MKL库高性能计算
+                \item Qt框架构建GUI
+                \item 多线程后台计算
+                \item 智能指针管理内存
+                \item CMake项目构建
+            \end{itemize}
+        \end{block}
+    \end{columns}
+    \begin{ytublock}{学习收获}
+        \begin{itemize}
+            \item 掌握了MT反演的理论基础和实现方法
+            \item 学习了模块化设计、高性能计算、GUI开发等实践技能
+            \item 理解了科学计算软件开发的完整流程
+            \item 提升了C++编程能力和工程实践能力
+        \end{itemize}
+    \end{ytublock}
+\end{frame}
+
+\end{document}
+

@@ -1,0 +1,36 @@
+digraph MKLDataFitting {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=TB;
+    nodesep=0.8;
+    ranksep=1.2;
+    splines=spline;
+    concentrate=false;
+    bgcolor="#ffffff";
+
+    DataFittingModule [label="数据拟合模块\n曲线拟合和插值", fillcolor="#e1bee7", color="#6a1b9a", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    LinearFit [label="线性拟合\n最小二乘拟合\n多项式拟合\n多元线性回归", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    NonlinearFit [label="非线性拟合\n非线性最小二乘\nLevenberg-Marquardt\n参数估计", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Interpolation [label="插值算法\n线性插值\n样条插值\n三次样条\n分段多项式", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Smoothing [label="数据平滑\n移动平均\nSavitzky-Golay\n去噪处理", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Evaluation [label="拟合评估\n残差分析\n拟合优度\n置信区间\n预测区间", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    DataFittingModule -> LinearFit [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    DataFittingModule -> NonlinearFit [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    DataFittingModule -> Interpolation [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    DataFittingModule -> Smoothing [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+    DataFittingModule -> Evaluation [penwidth=3, arrowsize=1.2, label="提供", color="#6a1b9a", style="dashed"];
+
+    LinearFit -> Evaluation [penwidth=2, label="评估", color="#666666", style="dotted"];
+    NonlinearFit -> Evaluation [penwidth=2, label="评估", color="#666666", style="dotted"];
+
+    labelloc="t";
+    label="MKL 数据拟合模块详细结构图";
+}

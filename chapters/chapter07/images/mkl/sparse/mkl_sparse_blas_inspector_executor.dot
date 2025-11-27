@@ -1,0 +1,115 @@
+digraph MKLSparseBLASInspectorExecutor {
+    graph [fontname="Microsoft YaHei", fontsize=20, bgcolor="#ffffff", dpi=300, size="10,8", pad=0.5, margin=0.3];
+    node [fontname="Microsoft YaHei", fontsize=14, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", penwidth=3, color="#666666"];
+
+    rankdir=LR;
+    bgcolor="#ffffff";
+
+    InspectorExecutorModule [label="Inspector-Executor接口\nInspector-Executor Interface", fillcolor="#ffccbc", color="#d84315", shape=box, style="bold,rounded", fontsize=22, penwidth=3];
+
+    // Inspector阶段：矩阵管理
+    InspectorPhase [label="Inspector阶段\n矩阵管理和优化提示", fillcolor="#c8e6c9", color="#2e7d32", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    MatrixCreate [label="矩阵创建\nmkl_sparse_?_create_csr/csc/coo/bsr", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixSetValue [label="设置值\nmkl_sparse_?_set_value", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixUpdateValues [label="更新值\nmkl_sparse_?_update_values", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixOrder [label="矩阵排序\nmkl_sparse_order", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixCopy [label="矩阵复制\nmkl_sparse_copy", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    FormatConvert [label="格式转换\nmkl_sparse_convert_csr/bsr", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 优化提示
+    HintMV [label="MV提示\nmkl_sparse_set_mv_hint", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintSV [label="SV提示\nmkl_sparse_set_sv_hint", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintMM [label="MM提示\nmkl_sparse_set_mm_hint", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintSM [label="SM提示\nmkl_sparse_set_sm_hint", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintDotMV [label="DotMV提示\nmkl_sparse_set_dotmv_hint", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintSymGS [label="SymGS提示\nmkl_sparse_set_symgs_hint", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintMemory [label="内存提示\nmkl_sparse_set_memory_hint", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    HintLUSmoother [label="LU平滑提示\nmkl_sparse_set_lu_smoother_hint", fillcolor="#ffccbc", color="#d84315", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    Optimize [label="执行优化\nmkl_sparse_optimize", fillcolor="#ff6b6b", color="#c92a2a", shape=box, style="bold,rounded", fontsize=11, penwidth=2.5];
+
+    // Executor阶段：执行操作
+    ExecutorPhase [label="Executor阶段\n执行运算", fillcolor="#fff9c4", color="#f57f17", shape=box, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    ExecMV [label="矩阵-向量\nmkl_sparse_?_mv", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecTRSV [label="三角求解\nmkl_sparse_?_trsv", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecMM [label="矩阵-矩阵\nmkl_sparse_?_mm", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecTRSM [label="三角系统\nmkl_sparse_?_trsm", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecAdd [label="矩阵加法\nmkl_sparse_?_add", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSpMM [label="稀疏×稀疏\nmkl_sparse_spmm", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSp2M [label="稀疏×2矩阵\nmkl_sparse_sp2m", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSYPR [label="对称乘积\nmkl_sparse_sypr", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSYRGS [label="对称GS\nmkl_sparse_?_symgs", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecSYRK [label="对称秩K\nmkl_sparse_syrk", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecDotMV [label="点积MV\nmkl_sparse_?_dotmv", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    ExecLUSmoother [label="LU平滑\nmkl_sparse_?_lu_smoother", fillcolor="#fff9c4", color="#f57f17", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    MatrixDestroy [label="矩阵销毁\nmkl_sparse_destroy", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+    MatrixExport [label="矩阵导出\nmkl_sparse_?_export_csr/csc/bsr", fillcolor="#c8e6c9", color="#2e7d32", shape=ellipse, style="bold,rounded", fontsize=16, penwidth=2.5];
+
+    // 主模块连接
+    InspectorExecutorModule -> InspectorPhase [label="包含", color="#d84315", style="bold", penwidth=3, arrowsize=1.2];
+    InspectorExecutorModule -> Optimize [label="包含", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+    InspectorExecutorModule -> ExecutorPhase [label="包含", color="#f57f17", style="bold", penwidth=3, arrowsize=1.2];
+
+    // Inspector阶段流程
+    InspectorPhase -> MatrixCreate [penwidth=3, arrowsize=1.2, label="1.创建", color="#2e7d32", style="solid"];
+    MatrixCreate -> MatrixSetValue [penwidth=3, arrowsize=1.2, label="2.设置值", color="#2e7d32", style="solid"];
+    MatrixSetValue -> MatrixUpdateValues [penwidth=3, arrowsize=1.2, label="3.更新值", color="#2e7d32", style="solid"];
+    MatrixUpdateValues -> MatrixOrder [penwidth=3, arrowsize=1.2, label="4.排序", color="#2e7d32", style="solid"];
+    MatrixOrder -> FormatConvert [penwidth=3, arrowsize=1.2, label="5.转换", color="#2e7d32", style="solid"];
+
+    // 优化提示
+    MatrixCreate -> HintMV [penwidth=3, arrowsize=1.2, label="设置提示", color="#d84315", style="dashed"];
+    MatrixCreate -> HintMM [penwidth=3, arrowsize=1.2, label="设置提示", color="#d84315", style="dashed"];
+    MatrixCreate -> HintSV [penwidth=3, arrowsize=1.2, label="设置提示", color="#d84315", style="dashed"];
+    MatrixCreate -> HintSM [penwidth=3, arrowsize=1.2, label="设置提示", color="#d84315", style="dashed"];
+    MatrixCreate -> HintDotMV [penwidth=3, arrowsize=1.2, label="设置提示", color="#d84315", style="dashed"];
+    MatrixCreate -> HintSymGS [penwidth=3, arrowsize=1.2, label="设置提示", color="#d84315", style="dashed"];
+    MatrixCreate -> HintMemory [penwidth=3, arrowsize=1.2, label="设置提示", color="#d84315", style="dashed"];
+    MatrixCreate -> HintLUSmoother [penwidth=3, arrowsize=1.2, label="设置提示", color="#d84315", style="dashed"];
+
+    // 执行优化
+    HintMV -> Optimize [label="→", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+    HintMM -> Optimize [label="→", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+    HintSV -> Optimize [label="→", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+    HintSM -> Optimize [label="→", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+    HintDotMV -> Optimize [label="→", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+    HintSymGS -> Optimize [label="→", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+    HintMemory -> Optimize [label="→", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+    HintLUSmoother -> Optimize [label="→", color="#c92a2a", style="bold", penwidth=3, arrowsize=1.2];
+
+    // Executor阶段
+    Optimize -> ExecutorPhase [label="优化后执行", color="#f57f17", style="bold", penwidth=3, arrowsize=1.2];
+
+    ExecutorPhase -> ExecMV [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecTRSV [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecMM [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecTRSM [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecAdd [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecSpMM [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecSp2M [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecSYPR [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecSYRGS [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecSYRK [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecDotMV [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+    ExecutorPhase -> ExecLUSmoother [penwidth=3, arrowsize=1.2, label="执行", color="#f57f17", style="solid"];
+
+    // 提示与执行的关系
+    HintMV -> ExecMV [penwidth=2, label="优化", color="#666666", style="dotted"];
+    HintMM -> ExecMM [penwidth=2, label="优化", color="#666666", style="dotted"];
+    HintSV -> ExecTRSV [penwidth=2, label="优化", color="#666666", style="dotted"];
+    HintSM -> ExecTRSM [penwidth=2, label="优化", color="#666666", style="dotted"];
+    HintDotMV -> ExecDotMV [penwidth=2, label="优化", color="#666666", style="dotted"];
+    HintSymGS -> ExecSYRGS [penwidth=2, label="优化", color="#666666", style="dotted"];
+    HintLUSmoother -> ExecLUSmoother [penwidth=2, label="优化", color="#666666", style="dotted"];
+
+    // 清理
+    ExecutorPhase -> MatrixExport [penwidth=3, arrowsize=1.2, label="导出结果", color="#2e7d32", style="dashed"];
+    MatrixExport -> MatrixDestroy [penwidth=3, arrowsize=1.2, label="销毁", color="#2e7d32", style="dashed"];
+
+    labelloc="t";
+    label="MKL 稀疏BLAS Inspector-Executor接口\nMKL Sparse BLAS Inspector-Executor Interface";
+}

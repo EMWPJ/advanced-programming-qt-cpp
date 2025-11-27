@@ -1,0 +1,23 @@
+digraph EigenTypes {
+    graph [fontname="Microsoft YaHei", fontsize=14, bgcolor="#e3f2fd"];
+    node [fontname="Microsoft YaHei", fontsize=11, style="filled,rounded"];
+    edge [fontname="Microsoft YaHei", fontsize=9];
+
+    rankdir=LR;
+    bgcolor="#e3f2fd";
+
+    Matrix [label="Matrix\n线性代数\n矩阵运算", fillcolor="#bbdefb", color="#1565c0", shape=box];
+
+    Array [label="Array\n元素级运算\n.*, ./, .min()", fillcolor="#c8e6c9", color="#2e7d32", shape=box];
+
+    Vector [label="Vector\n向量运算\n点积、叉积", fillcolor="#fff9c4", color="#f57f17", shape=box];
+
+    Conversion [label="可转换\n零开销", fillcolor="#e1bee7", color="#7b1fa2", shape=ellipse, fontsize=10];
+
+    Matrix -> Conversion [label="array()", color="#1565c0", style="dashed"];
+    Array -> Conversion [label="matrix()", color="#1565c0", style="dashed"];
+    Vector -> Matrix [label="特例", color="#1565c0", style="dotted"];
+
+    labelloc="t";
+    label="Matrix、Array、Vector 三大基础类型";
+}
